@@ -1,0 +1,1146 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+  .dh-wrap-{{ section.id }} *,
+  .dh-wrap-{{ section.id }} *::before,
+  .dh-wrap-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .dh-wrap-{{ section.id }} {
+    --dh-accent:          {{ section.settings.accent_color }};
+    --dh-subtitle-color:  {{ section.settings.subtitle_color }};
+    --dh-title-color:     {{ section.settings.title_color }};
+    --dh-desc-color:      {{ section.settings.desc_color }};
+    --dh-btn-text:        {{ section.settings.btn_text_color }};
+    --dh-btn-bg:          {{ section.settings.btn_bg_color }};
+    --dh-btn-border:      {{ section.settings.btn_border_color }};
+    --dh-btn-hover-text:  {{ section.settings.btn_hover_text_color }};
+    --dh-btn-hover-bg:    {{ section.settings.btn_hover_bg_color }};
+    --dh-subtitle-size:   {{ section.settings.subtitle_size_desktop }}px;
+    --dh-title-size:      {{ section.settings.title_size_desktop }}px;
+    --dh-desc-size:       {{ section.settings.desc_size_desktop }}px;
+    --dh-btn-size:        {{ section.settings.btn_size_desktop }}px;
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.hero_height }}vh;
+    min-height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-family: 'Outfit', sans-serif;
+    background: #0a0c14;
+  }
+
+  /* ── TWO-LAYER CROSSFADE BACKGROUNDS ── */
+  .dh-wrap-{{ section.id }} .dh-bg-a,
+  .dh-wrap-{{ section.id }} .dh-bg-b {
+    position: absolute; inset: 0;
+    will-change: opacity;
+    transition: opacity 1.4s ease;
+  }
+  .dh-wrap-{{ section.id }} .dh-bg-a { z-index: 0; opacity: 1; }
+  .dh-wrap-{{ section.id }} .dh-bg-b { z-index: 0; opacity: 0; }
+  .dh-wrap-{{ section.id }} .dh-bg-a img,
+  .dh-wrap-{{ section.id }} .dh-bg-b img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    /* prevent browser from softening on scale */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .dh-wrap-{{ section.id }} .dh-overlay {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      /* strong left panel for text legibility */
+      linear-gradient(to right,
+        rgba(4,6,14,.92) 0%,
+        rgba(4,6,14,.78) 30%,
+        rgba(4,6,14,.30) 55%,
+        transparent 75%
+      ),
+      /* subtle top vignette */
+      linear-gradient(to bottom,
+        rgba(4,6,14,.25) 0%,
+        transparent 35%
+      );
+  }
+
+  /* ── LAYOUT ── */
+  .dh-wrap-{{ section.id }} .dh-inner {
+    position: relative; z-index: 2;
+    width: 100%; height: 100%;
+    max-width: 1440px;
+    margin: 0 auto; padding: 60px 48px;
+    display: grid;
+    grid-template-columns: minmax(380px, 480px) 1fr;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    gap: 0 40px;
+  }
+  /* left text: vertically centered */
+  .dh-wrap-{{ section.id }} .dh-text {
+    grid-column: 1; grid-row: 1;
+    align-self: center;
+  }
+  /* cards outer: bottom-right, spanning into row 2 */
+  .dh-wrap-{{ section.id }} .dh-cards-outer {
+    grid-column: 2; grid-row: 1 / 3;
+    align-self: end;
+    padding-bottom: 64px;
+  }
+
+  /* ── LEFT TEXT ── */
+  .dh-wrap-{{ section.id }} .dh-text {
+    max-width: 440px;
+    position: relative;
+  }
+
+  /* thin vertical gold rule to the left */
+  .dh-wrap-{{ section.id }} .dh-text::before {
+    content: '';
+    position: absolute;
+    left: -28px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--dh-accent) 30%, var(--dh-accent) 70%, transparent);
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: opacity .6s .05s ease, transform .7s .05s cubic-bezier(.22,1,.36,1);
+  }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-text::before {
+    opacity: .55; transform: scaleY(1);
+  }
+
+  /* subtitle: italic serif with shimmer */
+  .dh-wrap-{{ section.id }} .dh-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: var(--dh-subtitle-size);
+    letter-spacing: .14em;
+    color: var(--dh-subtitle-color);
+    text-shadow: 0 1px 12px rgba(0,0,0,.6);
+    margin-bottom: 16px;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity .5s .05s ease, transform .55s .05s cubic-bezier(.22,1,.36,1);
+    position: relative;
+  }
+  .dh-wrap-{{ section.id }} .dh-subtitle::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.18) 50%, transparent 100%);
+    transform: translateX(-100%);
+    transition: none;
+  }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-subtitle::after {
+    transform: translateX(100%);
+    transition: transform .9s .55s ease;
+  }
+
+  /* title: each word wrapped in a clip container for wipe-up reveal */
+  .dh-wrap-{{ section.id }} .dh-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: var(--dh-title-size);
+    line-height: .92; letter-spacing: .025em;
+    color: var(--dh-title-color); text-transform: uppercase;
+    text-shadow: 0 2px 24px rgba(0,0,0,.55), 0 1px 4px rgba(0,0,0,.4);
+    margin-bottom: 28px;
+  }
+  .dh-wrap-{{ section.id }} .dh-title-line {
+    display: block;
+    overflow: hidden;
+    line-height: 1.05;
+  }
+  .dh-wrap-{{ section.id }} .dh-title-inner {
+    display: block;
+    transform: translateY(105%);
+    transition: transform .65s cubic-bezier(.22,1,.36,1);
+  }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-title-inner:nth-child(1) { transform: translateY(0); transition-delay: .12s; }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-title-line:nth-child(1) .dh-title-inner { transform: translateY(0); transition-delay: .12s; }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-title-line:nth-child(2) .dh-title-inner { transform: translateY(0); transition-delay: .22s; }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-title-line:nth-child(3) .dh-title-inner { transform: translateY(0); transition-delay: .30s; }
+
+  /* desc: fade + fine upward drift */
+  .dh-wrap-{{ section.id }} .dh-desc {
+    font-size: var(--dh-desc-size); line-height: 1.8;
+    color: var(--dh-desc-color); margin-bottom: 40px; max-width: 320px;
+    text-shadow: 0 1px 8px rgba(0,0,0,.5);
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .5s .38s ease, transform .5s .38s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* button: premium outlined pill with fill-slide on hover */
+  .dh-wrap-{{ section.id }} .dh-btn-wrap {
+    display: inline-block; opacity: 0; transform: translateY(10px);
+    transition: opacity .45s .5s ease, transform .45s .5s cubic-bezier(.22,1,.36,1);
+  }
+  .dh-wrap-{{ section.id }} .dh-btn {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 15px 32px; border-radius: 2px;
+    border: 1px solid var(--dh-btn-border);
+    background: var(--dh-btn-bg);
+    color: var(--dh-btn-text); font-family: 'Outfit', sans-serif;
+    font-size: var(--dh-btn-size); font-weight: 400; letter-spacing: .2em;
+    text-transform: uppercase; cursor: pointer; text-decoration: none;
+    position: relative; overflow: hidden;
+    transition: color .4s ease, border-color .4s ease;
+  }
+  .dh-wrap-{{ section.id }} .dh-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--dh-btn-hover-bg);
+    transform: translateX(-101%);
+    transition: transform .45s cubic-bezier(.77,0,.18,1);
+    z-index: 0;
+  }
+  .dh-wrap-{{ section.id }} .dh-btn:hover::before { transform: translateX(0); }
+  .dh-wrap-{{ section.id }} .dh-btn:hover { color: var(--dh-btn-hover-text); border-color: var(--dh-btn-hover-bg); }
+  .dh-wrap-{{ section.id }} .dh-btn span,
+  .dh-wrap-{{ section.id }} .dh-btn svg { position: relative; z-index: 1; }
+  .dh-wrap-{{ section.id }} .dh-btn svg {
+    transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+    opacity: .7;
+  }
+  .dh-wrap-{{ section.id }} .dh-btn:hover svg { transform: translateX(5px); opacity: 1; }
+
+  /* text-in states */
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-subtitle { opacity: 1; transform: translateX(0); }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-desc     { opacity: 1; transform: translateY(0); }
+  .dh-wrap-{{ section.id }}.dh-text-in .dh-btn-wrap { opacity: 1; transform: translateY(0); }
+
+  /* ── CARDS TRACK ── */
+  .dh-wrap-{{ section.id }} .dh-cards {
+    display: flex; align-items: flex-end;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .dh-wrap-{{ section.id }} .dh-card {
+    position: relative; flex: 0 0 auto;
+    width: clamp(120px,11vw,155px); height: clamp(200px,28vh,310px);
+    border-radius: 14px; overflow: hidden; cursor: pointer;
+    transition: width .65s cubic-bezier(.22,1,.36,1),
+                height .65s cubic-bezier(.22,1,.36,1),
+                transform .5s cubic-bezier(.22,1,.36,1),
+                box-shadow .5s ease,
+                opacity .3s ease;
+    box-shadow: 0 8px 28px rgba(0,0,0,.4);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  /* hover: subtle lift + border brightens — no zoom */
+  .dh-wrap-{{ section.id }} .dh-card:hover:not(.dh-active):not(.dh-hidden):not(.dh-will-return) {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 48px rgba(0,0,0,.55);
+    border-color: rgba(255,255,255,.22);
+  }
+  .dh-wrap-{{ section.id }} .dh-card.dh-active {
+    width: clamp(155px,14vw,195px); height: clamp(230px,32vh,350px);
+    border: 1px solid rgba(240,192,64,.5);
+    animation: dhPulse{{ section.id }} 3s ease infinite;
+  }
+  @keyframes dhPulse{{ section.id }} {
+    0%,100% { box-shadow: 0 0 0 0px rgba(240,192,64,.25), 0 24px 60px rgba(0,0,0,.6); }
+    50%      { box-shadow: 0 0 0 7px rgba(240,192,64,.0),  0 24px 60px rgba(0,0,0,.6); }
+  }
+  .dh-wrap-{{ section.id }} .dh-card img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    transition: filter .5s ease;
+  }
+  /* on hover: gentle desaturate-to-resaturate feel instead of zoom */
+  .dh-wrap-{{ section.id }} .dh-card:hover:not(.dh-active) img {
+    filter: brightness(1.08) saturate(1.12);
+  }
+  .dh-wrap-{{ section.id }} .dh-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(5,7,18,.88) 0%, transparent 55%);
+  }
+  .dh-wrap-{{ section.id }} .dh-card-dot {
+    position: absolute; top: 14px; right: 14px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--dh-accent); opacity: 0; transform: scale(0);
+    transition: opacity .3s, transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .dh-wrap-{{ section.id }} .dh-card.dh-active .dh-card-dot { opacity: 1; transform: scale(1); }
+  /* hidden = card whose bg is currently fullscreen
+     max-width collapses the slot smoothly without reflow thrash */
+  .dh-wrap-{{ section.id }} .dh-card.dh-hidden {
+    opacity: 0 !important;
+    transform: scale(0.88) !important;
+    pointer-events: none;
+    max-width: 0 !important;
+    margin: 0 !important;
+    overflow: hidden;
+    transition: opacity 0.3s ease,
+                transform 0.3s ease,
+                max-width 0.5s cubic-bezier(.22,1,.36,1),
+                margin 0.5s cubic-bezier(.22,1,.36,1);
+  }
+  /* re-entering: card slides up from below into position */
+  .dh-wrap-{{ section.id }} .dh-card.dh-will-return {
+    opacity: 0;
+    transform: translateY(18px) scale(0.9);
+    transition: none;
+  }
+  .dh-wrap-{{ section.id }} .dh-card.dh-returning {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+    transition: opacity 0.55s cubic-bezier(.22,1,.36,1) 0.1s,
+                transform 0.6s cubic-bezier(.22,1,.36,1) 0.1s;
+  }
+  .dh-wrap-{{ section.id }} .dh-card-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 40px 16px 16px;
+    background: linear-gradient(to top, rgba(4,6,14,.92) 0%, rgba(4,6,14,.6) 50%, transparent 100%);
+  }
+  .dh-wrap-{{ section.id }} .dh-card-region {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 400;
+    font-size: .92rem; letter-spacing: .12em;
+    text-transform: none;
+    color: var(--dh-accent); margin-bottom: 4px;
+    display: block;
+    /* always visible */
+    opacity: 1; transform: none;
+    transition: none;
+  }
+  .dh-wrap-{{ section.id }} .dh-card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.15rem,1.8vw,1.85rem);
+    color: #fff; line-height: 1.05; letter-spacing: .04em;
+  }
+  /* thin gold line above label on active card */
+  .dh-wrap-{{ section.id }} .dh-card.dh-active .dh-card-label::before {
+    content: '';
+    display: block;
+    width: 28px; height: 1px;
+    background: var(--dh-accent);
+    margin-bottom: 8px;
+    opacity: .8;
+  }
+
+
+  /* ── MOBILE CARD IMAGE TOGGLE ── */
+  .dh-wrap-{{ section.id }} .dh-card-img-mobile { display: none; }
+  @media (max-width: 768px) {
+    .dh-wrap-{{ section.id }} .dh-card-img-desktop { display: none; }
+    .dh-wrap-{{ section.id }} .dh-card-img-mobile  { display: block; }
+  }
+
+  /* ── CARD-TO-BG PORTAL TRANSITION ── */
+  .dh-portal {
+    position: fixed;
+    border-radius: 20px;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform, opacity, border-radius;
+  }
+  .dh-portal img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  /* ── PROGRESS + UI ── */
+  .dh-wrap-{{ section.id }} .dh-progress {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: rgba(255,255,255,.12); z-index: 3;
+  }
+  .dh-wrap-{{ section.id }} .dh-progress-fill {
+    height: 100%; background: linear-gradient(to right, var(--dh-accent), #ffde7a); width: 0%;
+  }
+  /* ── BOTTOM BAR: counter left, nav arrows center ── */
+  .dh-wrap-{{ section.id }} .dh-bottom-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 72px; z-index: 3;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 48px;
+  }
+  .dh-wrap-{{ section.id }} .dh-counter {
+    position: absolute; left: 48px;
+    display: flex; align-items: baseline; gap: 5px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
+    letter-spacing: .1em; color: rgba(255,255,255,.3);
+  }
+  .dh-wrap-{{ section.id }} .dh-counter .dh-cur {
+    color: #fff; font-size: 1.35rem;
+  }
+  /* nav arrows */
+  .dh-wrap-{{ section.id }} .dh-nav-arrows {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .dh-wrap-{{ section.id }} .dh-nav-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.06);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: #fff;
+    transition: background .3s, border-color .3s, transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .dh-wrap-{{ section.id }} .dh-nav-btn:hover {
+    background: var(--dh-accent);
+    border-color: var(--dh-accent);
+    color: #0a0c14;
+    transform: scale(1.1);
+  }
+  .dh-wrap-{{ section.id }} .dh-nav-btn svg { display: block; }
+  /* keep dots hidden but functional for JS */
+  .dh-wrap-{{ section.id }} .dh-nav-dots { display: none; }
+
+  /* ── MOBILE FONT SIZES ── */
+  @media (max-width: 768px) {
+    .dh-wrap-{{ section.id }} {
+      --dh-subtitle-size: {{ section.settings.subtitle_size_mobile }}px;
+      --dh-title-size:    {{ section.settings.title_size_mobile }}px;
+      --dh-desc-size:     {{ section.settings.desc_size_mobile }}px;
+      --dh-btn-size:      {{ section.settings.btn_size_mobile }}px;
+    }
+  }
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .dh-wrap-{{ section.id }} .dh-overlay {
+      background: linear-gradient(to bottom,rgba(5,7,15,.25) 0%,rgba(5,7,15,.65) 55%,rgba(5,7,15,.92) 100%);
+    }
+    .dh-wrap-{{ section.id }} .dh-inner {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+      padding: 0 22px 88px;
+    }
+    .dh-wrap-{{ section.id }} .dh-text {
+      grid-column: 1; grid-row: 1;
+      align-self: end; padding-bottom: 24px;
+    }
+    .dh-wrap-{{ section.id }} .dh-cards-outer {
+      grid-column: 1; grid-row: 2;
+      padding-bottom: 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .dh-wrap-{{ section.id }} .dh-cards-outer::-webkit-scrollbar { display: none; }
+    .dh-wrap-{{ section.id }} .dh-cards { justify-content: flex-start; gap: 10px; }
+    .dh-wrap-{{ section.id }} .dh-card           { width: 110px !important; height: 200px !important; }
+    .dh-wrap-{{ section.id }} .dh-card.dh-active  { width: 135px !important; height: 220px !important; }
+    .dh-wrap-{{ section.id }} .dh-bottom-bar { padding: 0 22px; }
+    .dh-wrap-{{ section.id }} .dh-counter { left: 22px; }
+  }
+  @media (max-width: 480px) {
+    .dh-wrap-{{ section.id }} .dh-title { font-size: 2.8rem; }
+    .dh-wrap-{{ section.id }} .dh-card           { width: 95px !important; height: 175px !important; }
+    .dh-wrap-{{ section.id }} .dh-card.dh-active  { width: 118px !important; height: 195px !important; }
+  }
+</style>
+
+{%- assign first_block = section.blocks | first -%}
+{%- assign first_bg    = first_block.settings.background_image -%}
+
+<div class="dh-wrap-{{ section.id }}">
+
+  <!-- BG Layer A (visible on load) -->
+  <div class="dh-bg-a">
+    {%- if first_bg != blank -%}
+      <img src="{{ first_bg | image_url: width: 2000 }}" alt="" loading="eager">
+    {%- endif -%}
+  </div>
+  <!-- BG Layer B (swapped in on transition, populated by JS) -->
+  <div class="dh-bg-b"><img src="" alt="" style="display:none"></div>
+
+  <div class="dh-overlay"></div>
+
+  <div class="dh-inner">
+
+    <!-- LEFT TEXT -->
+    <div class="dh-text">
+      <p class="dh-subtitle" id="dh-sub-{{ section.id }}">{{ first_block.settings.subtitle }}</p>
+      <h2 class="dh-title" id="dh-tit-{{ section.id }}">
+        {%- assign title_lines = first_block.settings.title | split: "\n" -%}
+        {%- for line in title_lines -%}
+          <span class="dh-title-line"><span class="dh-title-inner">{{ line }}</span></span>
+        {%- endfor -%}
+      </h2>
+      <p class="dh-desc"     id="dh-dsc-{{ section.id }}">{{ first_block.settings.description }}</p>
+      <div class="dh-btn-wrap">
+        <a href="{{ first_block.settings.button_url | default: '#' }}" class="dh-btn" id="dh-btn-{{ section.id }}">
+          <span style="text-shadow:text-shadow: 2px 2px 4px black;">{{ first_block.settings.button_label | default: 'Discover Location' }}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="dh-cards-outer" id="dh-outer-{{ section.id }}">
+    <div class="dh-cards">
+      {%- for block in section.blocks -%}
+        {%- assign card_img = block.settings.card_image -%}
+        {%- if card_img == blank -%}{%- assign card_img = block.settings.background_image -%}{%- endif -%}
+        {%- assign bg_img = block.settings.background_image -%}
+        {%- assign mobile_bg = block.settings.mobile_background_image -%}
+        <div class="dh-card{% if forloop.first %} dh-active{% endif %}"
+          data-index="{{ forloop.index0 }}"
+          data-bg="{% if bg_img != blank %}{{ bg_img | image_url: width: 2000 }}{% endif %}"
+          data-subtitle="{{ block.settings.subtitle | escape }}"
+          data-title="{{ block.settings.title | escape }}"
+          data-desc="{{ block.settings.description | escape }}"
+          data-btn-label="{{ block.settings.button_label | default: 'Discover Location' | escape }}"
+          data-btn-url="{{ block.settings.button_url | default: '#' }}"
+          data-mobile-bg="{% if mobile_bg != blank %}{{ mobile_bg | image_url: width: 2000 }}{% endif %}"
+          {{ block.shopify_attributes }}>
+          {%- assign mobile_img = block.settings.mobile_card_image -%}
+          {%- if card_img != blank -%}
+            {%- if mobile_img != blank -%}
+              <img class="dh-card-img-desktop" src="{{ card_img | image_url: width: 600 }}" alt="{{ block.settings.card_name | escape }}"
+                   loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}">
+              <img class="dh-card-img-mobile" src="{{ mobile_img | image_url: width: 600 }}" alt="{{ block.settings.card_name | escape }}"
+                   loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}">
+            {%- else -%}
+              <img src="{{ card_img | image_url: width: 600 }}" alt="{{ block.settings.card_name | escape }}"
+                   loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}">
+            {%- endif -%}
+          {%- else -%}
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a2540,#2d3a5c)"></div>
+          {%- endif -%}
+          <div class="dh-card-overlay"></div>
+          <div class="dh-card-dot"></div>
+          <div class="dh-card-label">
+            <div class="dh-card-region">{{ block.settings.card_region }}</div>
+            <div class="dh-card-name">{{ block.settings.card_name }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    </div><!-- /dh-cards-outer -->
+
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="dh-progress">
+    <div class="dh-progress-fill" id="dh-prog-{{ section.id }}"></div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="dh-bottom-bar">
+    <div class="dh-counter">
+      <span class="dh-cur" id="dh-cur-{{ section.id }}">1</span>
+      <span>/</span>
+      <span>{{ section.blocks.size }}</span>
+    </div>
+    <div class="dh-nav-arrows">
+      <button class="dh-nav-btn" id="dh-prev-{{ section.id }}" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="dh-nav-btn" id="dh-next-{{ section.id }}" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <!-- hidden dots for JS compat -->
+    <div class="dh-nav-dots">
+      {%- for block in section.blocks -%}
+        <div class="dh-dot{% if forloop.first %} dh-active{% endif %}" data-index="{{ forloop.index0 }}"></div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var sid   = '{{ section.id }}';
+  var wrap  = document.querySelector('.dh-wrap-' + sid);
+  var bgA   = wrap.querySelector('.dh-bg-a');
+  var bgB   = wrap.querySelector('.dh-bg-b');
+  var cards = wrap.querySelectorAll('.dh-card');
+  var dots  = wrap.querySelectorAll('.dh-dot');
+  var fill  = document.getElementById('dh-prog-' + sid);
+  var cur   = document.getElementById('dh-cur-'  + sid);
+  var subEl = document.getElementById('dh-sub-'  + sid);
+  var titEl = document.getElementById('dh-tit-'  + sid);
+  var dscEl = document.getElementById('dh-dsc-'  + sid);
+  var btnEl = document.getElementById('dh-btn-'  + sid);
+  var DELAY = {{ section.settings.auto_delay | default: 5000 }};
+  var active  = 0;
+  var front   = 'a'; /* which bg layer is currently on top */
+  var autoTimer;
+
+  /* ── ALWAYS look up cards by data-index, never by DOM position ── */
+  function cardByIndex(idx) {
+    for (var i = 0; i < cards.length; i++) {
+      if (parseInt(cards[i].dataset.index, 10) === idx) return cards[i];
+    }
+    return null;
+  }
+  var totalCards = cards.length;
+
+  /* ── INSTANT BG LOAD (no animation — portal handles visuals) ── */
+  function loadBg(url) {
+    var incoming = (front === 'a') ? bgB : bgA;
+    var outgoing = (front === 'a') ? bgA : bgB;
+    var inImg = incoming.querySelector('img');
+    if (!inImg) { inImg = document.createElement('img'); inImg.alt = ''; incoming.appendChild(inImg); }
+    inImg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    inImg.src = url || '';
+    inImg.style.display = '';
+    /* snap the incoming layer visible instantly (portal covers the seam) */
+    incoming.style.transition = 'none';
+    incoming.style.opacity    = '1';
+    outgoing.style.transition = 'none';
+    outgoing.style.opacity    = '0';
+    front = (front === 'a') ? 'b' : 'a';
+  }
+
+  /* ── PORTAL: card rect → full screen → dissolve ── */
+  function portalTransition(cardEl, url, onMidpoint) {
+    var wRect  = wrap.getBoundingClientRect();
+    var cRect  = cardEl.getBoundingClientRect();
+    var cImg   = cardEl.querySelector('img');
+
+    /* build the clone */
+    var portal = document.createElement('div');
+    portal.className = 'dh-portal';
+    var pImg = document.createElement('img');
+    pImg.src = cImg ? cImg.src : (url || '');
+    pImg.alt = '';
+    portal.appendChild(pImg);
+
+    /* start position = card's screen rect */
+    portal.style.cssText = [
+      'left:'          + cRect.left   + 'px',
+      'top:'           + cRect.top    + 'px',
+      'width:'         + cRect.width  + 'px',
+      'height:'        + cRect.height + 'px',
+      'border-radius:20px',
+      'opacity:1',
+      'transition:none'
+    ].join(';');
+
+    document.body.appendChild(portal);
+    void portal.offsetWidth;
+
+    /* animate to full viewport */
+    var dur = 480;
+    portal.style.transition = [
+      'left '          + dur + 'ms cubic-bezier(.4,0,.2,1)',
+      'top '           + dur + 'ms cubic-bezier(.4,0,.2,1)',
+      'width '         + dur + 'ms cubic-bezier(.4,0,.2,1)',
+      'height '        + dur + 'ms cubic-bezier(.4,0,.2,1)',
+      'border-radius ' + dur + 'ms cubic-bezier(.4,0,.2,1)',
+      'opacity '       + (dur * 1.2) + 'ms ease'
+    ].join(',');
+
+    portal.style.left         = wRect.left   + 'px';
+    portal.style.top          = wRect.top    + 'px';
+    portal.style.width        = wRect.width  + 'px';
+    portal.style.height       = wRect.height + 'px';
+    portal.style.borderRadius = '0px';
+
+    /* at midpoint: swap real background underneath, start text */
+    setTimeout(function() {
+      loadBg(url);
+      if (onMidpoint) onMidpoint();
+    }, dur * 0.55);
+
+    /* fade out portal so the real bg shows through */
+    setTimeout(function() {
+      portal.style.opacity = '0';
+    }, dur * 0.7);
+
+    /* remove portal element */
+    setTimeout(function() {
+      if (portal.parentNode) portal.parentNode.removeChild(portal);
+    }, dur * 1.6);
+  }
+
+  /* ── ACTIVATE ── */
+  function activate(idx, fromCard) {
+    if (idx === active) return;
+    var prev = active;
+    active = idx;
+
+    var d = cards[idx].dataset;
+    /* use mobile bg if set and viewport is narrow */
+    var bgUrl = (window.innerWidth <= 768 && d.mobileBg) ? d.mobileBg : (d.bg || '');
+
+    var cIdx  = cardByIndex(idx);   /* the card becoming the new background */
+    var cPrev = cardByIndex(prev);  /* the card being returned to the row */
+
+    if (fromCard) {
+      /* 1. Fade out the target card (it becomes the BG) */
+      if (cIdx) {
+        cIdx.classList.remove('dh-active', 'dh-returning', 'dh-will-return');
+        cIdx.classList.add('dh-hidden');
+      }
+
+      /* 2. Move prev card to END of row instantly (no transition), then animate in */
+      if (cPrev) {
+        var cardsTrack = wrap.querySelector('.dh-cards');
+        cPrev.style.transition = 'none';
+        cPrev.classList.remove('dh-active', 'dh-hidden', 'dh-returning');
+        cPrev.classList.add('dh-will-return');
+        cardsTrack.appendChild(cPrev);
+        void cPrev.offsetWidth;
+        setTimeout(function() {
+          cPrev.style.transition = '';
+          cPrev.classList.remove('dh-will-return');
+          cPrev.classList.add('dh-returning');
+          setTimeout(function() { cPrev.classList.remove('dh-returning'); }, 700);
+        }, 280);
+      }
+
+      /* 3. Portal transition */
+      portalTransition(fromCard, bgUrl, function() {
+        updateText(d);
+      });
+    } else {
+      /* ── AUTO-ADVANCE: pure opacity crossfade, sequenced ── */
+      var incoming = (front === 'a') ? bgB : bgA;
+      var outgoing = (front === 'a') ? bgA : bgB;
+
+      var inImg = incoming.querySelector('img');
+      if (!inImg) { inImg = document.createElement('img'); inImg.alt = ''; incoming.appendChild(inImg); }
+      inImg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+
+      function doFade() {
+        incoming.style.transition = 'none';
+        incoming.style.opacity    = '0';
+        void incoming.offsetWidth;
+        incoming.style.transition = 'opacity 1.4s ease';
+        incoming.style.opacity    = '1';
+        outgoing.style.transition = 'opacity 1.4s ease';
+        outgoing.style.opacity    = '0';
+        front = (front === 'a') ? 'b' : 'a';
+      }
+
+      if (!bgUrl || inImg.complete) {
+        inImg.src = bgUrl;
+        doFade();
+      } else {
+        inImg.onload  = doFade;
+        inImg.onerror = doFade;
+        inImg.src = bgUrl;
+      }
+
+      /* hide target card */
+      if (cIdx) {
+        cIdx.classList.remove('dh-active', 'dh-returning', 'dh-will-return');
+        cIdx.classList.add('dh-hidden');
+      }
+
+      /* move prev card to END of row instantly, then animate it in */
+      if (cPrev) {
+        var cardsTrack = wrap.querySelector('.dh-cards');
+        cPrev.style.transition = 'none';
+        cPrev.classList.remove('dh-active', 'dh-hidden', 'dh-returning');
+        cPrev.classList.add('dh-will-return');
+        cardsTrack.appendChild(cPrev);
+        void cPrev.offsetWidth;
+        setTimeout(function() {
+          cPrev.style.transition = '';
+          cPrev.classList.remove('dh-will-return');
+          cPrev.classList.add('dh-returning');
+          setTimeout(function() { cPrev.classList.remove('dh-returning'); }, 650);
+        }, 300);
+      }
+
+      setTimeout(function() { updateText(d); }, 220);
+    }
+
+    var dPrev = dots[prev]; var dIdx = dots[idx];
+    if (dPrev) dPrev.classList.remove('dh-active');
+    if (dIdx)  dIdx.classList.add('dh-active');
+    cur.textContent = idx + 1;
+    resetAuto();
+  }
+
+  function buildTitle(raw) {
+    /* wrap each \n-separated line in a clip+inner div for wipe-up */
+    return (raw || '').split('\n').map(function(line) {
+      return '<span class="dh-title-line"><span class="dh-title-inner">' + line + '</span></span>';
+    }).join('');
+  }
+
+  function updateText(d) {
+    wrap.classList.remove('dh-text-in');
+    void wrap.offsetWidth;
+    setTimeout(function() {
+      subEl.textContent = d.subtitle || '';
+      titEl.innerHTML   = buildTitle(d.title);
+      dscEl.textContent = d.desc || '';
+      btnEl.innerHTML   = '<span>' + (d.btnLabel || 'Discover Location') + '</span>' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      btnEl.href = d.btnUrl || '#';
+      void wrap.offsetWidth;
+      wrap.classList.add('dh-text-in');
+    }, 160);
+  }
+
+  /* ── AUTO ADVANCE ── */
+  function startProgress() {
+    fill.style.transition = 'none';
+    fill.style.width = '0%';
+    void fill.offsetWidth;
+    fill.style.transition = 'width ' + DELAY + 'ms linear';
+    fill.style.width = '100%';
+  }
+  function resetAuto() {
+    clearTimeout(autoTimer);
+    startProgress();
+    autoTimer = setTimeout(function() {
+      var nextIdx  = (active + 1) % totalCards;
+      var nextCard = cardByIndex(nextIdx);
+      activate(nextIdx, nextCard);
+    }, DELAY);
+  }
+
+  /* ── EVENTS ── */
+  cards.forEach(function(c) {
+    c.addEventListener('click', function() {
+      activate(parseInt(c.dataset.index, 10), c);
+    });
+  });
+  dots.forEach(function(d) {
+    d.addEventListener('click', function() { activate(parseInt(d.dataset.index, 10)); });
+  });
+
+  /* ── PREV / NEXT BUTTONS ── */
+  var prevBtn = document.getElementById('dh-prev-' + sid);
+  var nextBtn = document.getElementById('dh-next-' + sid);
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    var idx = (active - 1 + cards.length) % cards.length;
+    activate(idx, cardByIndex(idx));
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    var idx = (active + 1) % cards.length;
+    activate(idx, cardByIndex(idx));
+  });
+
+  /* ── INIT ── */
+  /* first card is the initial background — hide it without transition */
+  var initCard = cardByIndex(0);
+  if (initCard) {
+    initCard.style.transition = 'none';
+    initCard.classList.add('dh-hidden');
+    initCard.classList.remove('dh-active');
+    void initCard.offsetWidth;
+    initCard.style.transition = '';
+  }
+  wrap.classList.add('dh-text-in');
+  resetAuto();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Destination Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "hero_height",
+      "label": "Hero height (vh)",
+      "min": 60,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "auto_delay",
+      "label": "Auto-advance delay (ms)",
+      "min": 3000,
+      "max": 9500,
+      "step": 500,
+      "default": 5000
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / gold colour",
+      "default": "#f0c040"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle colour",
+      "default": "#f0c040"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description colour",
+      "default": "#8a8f9e"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button background colour",
+      "default": "#00000000"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Button border colour",
+      "default": "#f0c040"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_text_color",
+      "label": "Button hover text colour",
+      "default": "#0a0c14"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_bg_color",
+      "label": "Button hover background colour",
+      "default": "#f0c040"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Font Sizes"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_desktop",
+      "label": "Subtitle size (desktop)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Title size (desktop)",
+      "min": 32,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "desc_size_desktop",
+      "label": "Description size (desktop)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "btn_size_desktop",
+      "label": "Button text size (desktop)",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Mobile Font Sizes"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "label": "Subtitle size (mobile)",
+      "min": 9,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title size (mobile)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "desc_size_mobile",
+      "label": "Description size (mobile)",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "btn_size_mobile",
+      "label": "Button text size (mobile)",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    }
+  ],
+  "blocks": [
+    {
+      "type": "destination",
+      "name": "Destination",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Full-screen background image"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Card thumbnail — desktop (optional, falls back to background)"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_card_image",
+          "label": "Card thumbnail — mobile (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_background_image",
+          "label": "Full-screen background — mobile (optional, falls back to desktop)"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle / region",
+          "default": "Sierra Nevada · USA"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Title (add line break for two-line effect)",
+          "default": "Yosemite\nNational Park"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "A wilderness revered for its breathtaking granite cliffs, ancient sequoias, and thundering waterfalls."
+        },
+        {
+          "type": "text",
+          "id": "card_region",
+          "label": "Card region label",
+          "default": "California"
+        },
+        {
+          "type": "text",
+          "id": "card_name",
+          "label": "Card destination name",
+          "default": "Yosemite"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Discover Location"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Destination Hero",
+      "blocks": [
+        {
+          "type": "destination",
+          "settings": {
+            "subtitle": "Sierra Nevada · USA",
+            "title": "Yosemite\nNational Park",
+            "description": "A wilderness revered for its breathtaking granite cliffs, ancient sequoias, and thundering waterfalls. Every trail tells a story.",
+            "card_region": "California",
+            "card_name": "Yosemite",
+            "button_label": "Discover Location"
+          }
+        },
+        {
+          "type": "destination",
+          "settings": {
+            "subtitle": "Cappadocia · Turkey",
+            "title": "Göreme\nValley",
+            "description": "Surreal landscapes carved by volcanic ash, punctuated by fairy chimneys and ancient cave dwellings beneath open skies.",
+            "card_region": "Cappadocia",
+            "card_name": "Göreme",
+            "button_label": "Discover Location"
+          }
+        },
+        {
+          "type": "destination",
+          "settings": {
+            "subtitle": "Engadin · Switzerland",
+            "title": "Saint\nMoritz Alps",
+            "description": "Crystalline lakes mirror snow-capped peaks in this legendary alpine resort, where luxury meets raw mountain grandeur.",
+            "card_region": "Switzerland",
+            "card_name": "St. Moritz",
+            "button_label": "Discover Location"
+          }
+        },
+        {
+          "type": "destination",
+          "settings": {
+            "subtitle": "Patagonia · Chile",
+            "title": "Torres del\nPaine",
+            "description": "Jagged granite towers pierce the sky above turquoise lakes and sweeping steppes at the end of the world.",
+            "card_region": "Chile",
+            "card_name": "Patagonia",
+            "button_label": "Discover Location"
+          }
+        },
+        {
+          "type": "destination",
+          "settings": {
+            "subtitle": "South Aegean · Greece",
+            "title": "Santorini\nCaldera",
+            "description": "Whitewashed villages cling to volcanic cliffs above the deep blue Aegean, glowing amber at the edge of every sunset.",
+            "card_region": "Greece",
+            "card_name": "Santorini",
+            "button_label": "Discover Location"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

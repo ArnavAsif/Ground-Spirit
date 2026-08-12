@@ -1,0 +1,222 @@
+<style>
+  /* ═══════════════════════════════════════
+     SCIENCE BAR — section styles
+  ═══════════════════════════════════════ */
+  .gw-science-bar {
+    background: {{ section.settings.bg_color }};
+    border-top: 1px solid {{ section.settings.border_color }};
+    border-bottom: 1px solid {{ section.settings.border_color }};
+    padding-left: 52px;
+    padding-right: 52px;
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  .gw-science-bar-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks | where: 'type', 'stat' | size }}, 1fr);
+    text-align: center;
+  }
+  .gw-sci-stat {
+    padding: {{ section.settings.cell_padding }}px 20px;
+    border-right: 1px solid rgba(255,255,255,.06);
+  }
+  .gw-sci-stat:last-child { border-right: none; }
+
+  /* ── Number: starts invisible, rises up on trigger ── */
+  .gw-sci-num {
+    font-family: 'Bebas Neue', sans-serif;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1);
+  }
+  .gw-sci-label {
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-top: 7px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity .45s ease, transform .45s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Triggered state ── */
+  .gw-science-bar.is-counted .gw-sci-num,
+  .gw-science-bar.is-counted .gw-sci-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger per column */
+  .gw-sci-stat:nth-child(1) .gw-sci-num  { transition-delay: .00s; }
+  .gw-sci-stat:nth-child(1) .gw-sci-label{ transition-delay: .08s; }
+  .gw-sci-stat:nth-child(2) .gw-sci-num  { transition-delay: .12s; }
+  .gw-sci-stat:nth-child(2) .gw-sci-label{ transition-delay: .20s; }
+  .gw-sci-stat:nth-child(3) .gw-sci-num  { transition-delay: .24s; }
+  .gw-sci-stat:nth-child(3) .gw-sci-label{ transition-delay: .32s; }
+  .gw-sci-stat:nth-child(4) .gw-sci-num  { transition-delay: .36s; }
+  .gw-sci-stat:nth-child(4) .gw-sci-label{ transition-delay: .44s; }
+  .gw-sci-stat:nth-child(5) .gw-sci-num  { transition-delay: .48s; }
+  .gw-sci-stat:nth-child(5) .gw-sci-label{ transition-delay: .56s; }
+
+  @media (max-width: 1060px) {
+    .gw-science-bar-inner { grid-template-columns: repeat(2, 1fr); }
+    .gw-sci-stat:nth-child(2) { border-right: none; }
+  }
+  @media (max-width: 660px) {
+    .gw-science-bar { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+
+<div class="gw-science-bar" id="{{ section.settings.section_id | default: 'science' }}">
+  <div class="gw-science-bar-inner">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'stat' %}
+          <div class="gw-sci-stat reveal d{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <div class="gw-sci-num"
+              data-target="{{ block.settings.stat_number }}"
+              style="color: {{ block.settings.num_color }};
+                     font-size: {{ block.settings.num_font_size }}px;">
+              {{ block.settings.stat_number }}
+            </div>
+            <div class="gw-sci-label"
+              style="color: {{ block.settings.label_color }};
+                     font-size: {{ block.settings.label_font_size }}px;">
+              {{ block.settings.stat_label }}
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+(function() {
+  var bar = document.getElementById('{{ section.settings.section_id | default: "science" }}');
+  if (!bar) return;
+
+  /* ── Parse a stat string like "68%", "21+", "14", "4.8★" ──
+     Returns { prefix, number, suffix }
+     e.g. "68%" → { prefix:'', number:68, suffix:'%' }
+          "21+" → { prefix:'', number:21, suffix:'+' }
+          "4.8★"→ { prefix:'', number:4.8, suffix:'★' }
+          "$2k" → { prefix:'$', number:2, suffix:'k' }  */
+  function parse(raw) {
+    var s = (raw || '').trim();
+    /* strip leading non-numeric chars as prefix */
+    var prefixMatch = s.match(/^([^0-9]*)/);
+    var prefix = prefixMatch ? prefixMatch[1] : '';
+    s = s.slice(prefix.length);
+    /* read the number (int or float) */
+    var numMatch = s.match(/^([0-9]+(?:\.[0-9]+)?)/);
+    if (!numMatch) return { prefix: prefix, number: null, suffix: s };
+    var number = parseFloat(numMatch[1]);
+    var suffix = s.slice(numMatch[1].length);
+    return { prefix: prefix, number: number, suffix: suffix };
+  }
+
+  /* ── Easing: ease-out cubic ── */
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  /* ── Animate a single number el ── */
+  function countUp(el, parsed, duration) {
+    if (parsed.number === null) return; /* non-numeric, no count-up */
+    var isFloat   = parsed.number % 1 !== 0;
+    var decimals  = isFloat ? (String(parsed.number).split('.')[1] || '').length : 0;
+    var start     = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      var elapsed  = ts - start;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased    = easeOut(progress);
+      var current  = eased * parsed.number;
+      el.textContent = parsed.prefix + current.toFixed(decimals) + parsed.suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = parsed.prefix + parsed.number.toFixed(decimals) + parsed.suffix;
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ── Trigger once on scroll into view ── */
+  var triggered = false;
+
+  function trigger() {
+    if (triggered) return;
+    triggered = true;
+
+    /* 1. Add class → CSS fade-up starts */
+    bar.classList.add('is-counted');
+
+    /* 2. Kick off count-up for each stat, staggered to match CSS delay */
+    var nums = bar.querySelectorAll('.gw-sci-num');
+    var DURATION = 1600; /* ms for the count animation */
+
+    nums.forEach(function(el, i) {
+      var parsed = parse(el.dataset.target || el.textContent);
+      var delay  = i * 120; /* 120ms stagger between columns */
+      setTimeout(function() { countUp(el, parsed, DURATION); }, delay);
+    });
+  }
+
+  /* IntersectionObserver: fire when bar is ≥20% visible */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) { trigger(); io.disconnect(); }
+      });
+    }, { threshold: 0.2 });
+    io.observe(bar);
+  } else {
+    /* Fallback: trigger immediately */
+    trigger();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Science Bar",
+  "tag": "div",
+  "settings": [
+    { "type": "text",  "id": "section_id",   "label": "Section Anchor ID",  "default": "science" },
+    { "type": "header","content": "Color Controls" },
+    { "type": "color", "id": "bg_color",     "label": "Background Color",   "default": "#4a5645" },
+    { "type": "color", "id": "border_color", "label": "Border Color",        "default": "#5d6e57" },
+    { "type": "header","content": "Layout Controls" },
+    { "type": "range", "id": "cell_padding", "label": "Cell Padding (px)",   "min": 20, "max": 80, "step": 4, "default": 40 },
+    { "type": "range", "id": "margin_top",   "label": "Margin Top (px)",     "min": 0, "max": 80, "step": 4, "default": 0 },
+    { "type": "range", "id": "margin_bottom","label": "Margin Bottom (px)",  "min": 0, "max": 80, "step": 4, "default": 0 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "header","content": "Stat Content" },
+        { "type": "text",  "id": "stat_number",    "label": "Number / Value",      "default": "68%" },
+        { "type": "text",  "id": "stat_label",     "label": "Label",               "default": "Report pain reduction" },
+        { "type": "header","content": "Typography" },
+        { "type": "range", "id": "num_font_size",  "label": "Number Font Size (px)","min": 24, "max": 96, "step": 2, "default": 56 },
+        { "type": "range", "id": "label_font_size","label": "Label Font Size (px)", "min": 8,  "max": 18, "step": 1, "default": 11 },
+        { "type": "header","content": "Colors" },
+        { "type": "color", "id": "num_color",   "label": "Number Color",  "default": "#f2f5f1" },
+        { "type": "color", "id": "label_color", "label": "Label Color",   "default": "#ffffff72" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Science Bar",
+      "blocks": [
+        { "type": "stat", "settings": { "stat_number": "68%", "stat_label": "Report pain reduction"  } },
+        { "type": "stat", "settings": { "stat_number": "85%", "stat_label": "Improved sleep quality" } },
+        { "type": "stat", "settings": { "stat_number": "21+", "stat_label": "Peer-reviewed studies"  } },
+        { "type": "stat", "settings": { "stat_number": "14",  "stat_label": "Days to feel the shift" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

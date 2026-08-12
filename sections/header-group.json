@@ -1,0 +1,106 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "horizontal_ticker_Qy3HTX": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "text_ddV9rE": {
+          "type": "text",
+          "settings": {
+            "title": "Lorem ipsum"
+          }
+        },
+        "text_UGjjyg": {
+          "type": "text",
+          "settings": {
+            "title": "Lorem ipsum"
+          }
+        },
+        "text_f9Bcab": {
+          "type": "text",
+          "settings": {
+            "title": "Lorem ipsum"
+          }
+        }
+      },
+      "block_order": [
+        "text_ddV9rE",
+        "text_UGjjyg",
+        "text_f9Bcab"
+      ],
+      "disabled": true,
+      "settings": {
+        "speed": 3,
+        "text_spacing": 3,
+        "text_size": "1.75",
+        "italic_text": false,
+        "uppercase_text": false,
+        "bold_text": false,
+        "color_scheme": "scheme-3",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "header": {
+      "type": "header",
+      "disabled": true,
+      "custom_css": [
+        ".header__menu-item span {font-size: 15px;}",
+        "@media screen and (min-width: 750px) {.list-menu__item {font-size: 12px; }}"
+      ],
+      "settings": {
+        "logo_position": "middle-center",
+        "collection_title_colors": "",
+        "collection_title_alignment": "",
+        "menu": "main-menu",
+        "menu_1": "main-menu",
+        "menu_type_desktop": "dropdown",
+        "menu_hover": true,
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": true,
+        "color_scheme": "scheme-2",
+        "menu_color_scheme": "scheme-2",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "header_custom_WxiTxV": {
+      "type": "header-custom",
+      "name": "Custom Header new",
+      "settings": {
+        "logo": "shopify://shop_images/Brand_Logo_Grounded-Spirit.png",
+        "logo_transparent": "shopify://shop_images/1.svg",
+        "logo_text": "Maison",
+        "logo_width": 120,
+        "logo_width_mobile": 90,
+        "menu": "main-menu",
+        "wishlist_url": "",
+        "cart_count_bg": "#7a8c72",
+        "cart_count_color": "#ffffff",
+        "cart_count_bg_transparent": "#ffffff",
+        "cart_count_color_transparent": "#111111",
+        "sticky_enabled": true,
+        "transparent_home": true
+      }
+    }
+  },
+  "order": [
+    "horizontal_ticker_Qy3HTX",
+    "header",
+    "header_custom_WxiTxV"
+  ]
+}

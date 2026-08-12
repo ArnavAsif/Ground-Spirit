@@ -1,0 +1,696 @@
+{%- liquid
+  assign footer_bg    = section.settings.footer_bg    | default: '#1a1a2e'
+  assign text_color   = section.settings.text_color   | default: '#ffffff'
+  assign muted_color  = section.settings.muted_color  | default: '#999999'
+  assign accent_color = section.settings.accent_color | default: '#e05a3a'
+  assign above_bg     = section.settings.above_bg     | default: '#fde8e8'
+-%}
+
+{%- style -%}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+
+.wf-root,
+.wf-root *,
+.wf-root *::before,
+.wf-root *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.wf-root {
+  --bg:     {{ footer_bg }};
+  --text:   {{ text_color }};
+  --muted:  {{ muted_color }};
+  --accent: {{ accent_color }};
+  --above:  {{ above_bg }};
+  --fd: 'Cormorant Garamond', Georgia, serif;
+  --fb: 'Jost', Arial, sans-serif;
+  position: relative;
+  width: 100%;
+  font-family: var(--fb);
+}
+
+/* ══════════════════════════════════════════
+   WAVE DIVIDER
+   • .wf-wave sits BETWEEN the page and footer
+   • top half = above_bg (page bg), bottom half = footer_bg
+   • SVG paths fill footer_bg so wave "cuts" into the page
+   • No negative margins, no overlaps, no gaps ever
+══════════════════════════════════════════ */
+.wf-wave {
+  display: block;
+  width: 100%;
+  /* height of the wave area */
+  height: 110px;
+  background: var(--above);  /* top portion = page background */
+  overflow: hidden;
+  line-height: 0;
+  position: relative;
+}
+
+/* The SVG fills the full wave container */
+.wf-wave svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* stretch horizontally so animation looks smooth */
+}
+
+/* Three animated layers */
+.wf-wave__a { animation: wfSlide  12s linear infinite; }
+.wf-wave__b { animation: wfSlide  18s linear infinite reverse; opacity: .45; }
+.wf-wave__c { animation: wfSlide   8s linear infinite; opacity: .25; }
+
+@keyframes wfSlide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ══════════════════════════════════════════
+   FOOTER BODY
+══════════════════════════════════════════ */
+.wf-body {
+  position: relative;
+  background: var(--bg);
+}
+
+/* subtle noise grain */
+.wf-body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wf-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 56px 60px 44px;
+}
+
+/* ══════════════════════════════════════════
+   GRID
+══════════════════════════════════════════ */
+.wf-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.6fr;
+  gap: 48px 56px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+/* ── Brand ── */
+.wf-brand__logo {
+  display: block;
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 18px;
+  object-fit: contain;
+}
+.wf-brand__name {
+  font-family: var(--fd);
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.wf-brand__tagline {
+  font-size: 10.5px;
+  font-weight: 300;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 2;
+  max-width: 220px;
+}
+
+/* ── Link columns ── */
+.wf-col__title {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 22px;
+}
+.wf-col__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.wf-col__list a {
+  font-size: 11.5px;
+  font-weight: 300;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  transition: color .25s;
+}
+.wf-col__list a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -3px;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width .35s cubic-bezier(.4,0,.2,1);
+}
+.wf-col__list a:hover { color: var(--text); }
+.wf-col__list a:hover::after { width: 100%; }
+
+.wf-col details { display: contents; }
+.wf-col summary  { display: none; }
+
+/* ── Newsletter ── */
+.wf-nl__eyebrow {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.wf-nl__heading {
+  font-family: var(--fd);
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 22px;
+}
+.wf-nl__row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(255,255,255,.16);
+  margin-bottom: 28px;
+  transition: border-color .25s;
+}
+.wf-nl__row:focus-within { border-color: var(--accent); }
+.wf-nl__input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--fb);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: .1em;
+  color: var(--text);
+  padding: 10px 0;
+}
+.wf-nl__input::placeholder { color: rgba(255,255,255,.22); }
+.wf-nl__btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--fb);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0 0 0 16px;
+  white-space: nowrap;
+  transition: opacity .2s;
+}
+.wf-nl__btn:hover { opacity: .55; }
+
+/* ── Socials ── */
+.wf-socials { display: flex; gap: 8px; flex-wrap: wrap; }
+.wf-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.03);
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .22s, border-color .22s, background .22s, transform .2s;
+}
+.wf-social:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  background: rgba(255,255,255,.08);
+  transform: translateY(-2px);
+}
+.wf-social svg { display: block; width: 14px; height: 14px; pointer-events: none; }
+
+/* ── Bottom bar ── */
+.wf-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 28px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.wf-copy {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.22);
+}
+.wf-policy { display: flex; gap: 24px; flex-wrap: wrap; }
+.wf-policy a {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.22);
+  text-decoration: none;
+  transition: color .2s;
+}
+.wf-policy a:hover { color: rgba(255,255,255,.5); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .wf-grid { grid-template-columns: 1fr 1fr; }
+  .wf-inner { padding: 48px 40px 36px; }
+}
+
+@media (max-width: 767px) {
+  .wf-wave { height: 70px; }
+  .wf-inner { padding: 32px 20px 28px; }
+  .wf-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 28px;
+  }
+  .wf-brand {
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .wf-col { border-bottom: 1px solid rgba(255,255,255,.06); }
+  .wf-col details { display: block; }
+  .wf-col summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wf-col summary::-webkit-details-marker { display: none; }
+  .wf-col summary .wf-col__title { margin-bottom: 0; }
+  .wf-col summary::after {
+    content: '';
+    width: 7px; height: 7px;
+    border-right: 1px solid var(--muted);
+    border-bottom: 1px solid var(--muted);
+    transform: rotate(45deg);
+    transition: transform .25s;
+    flex-shrink: 0;
+    margin-top: -4px;
+  }
+  .wf-col details[open] summary::after { transform: rotate(-135deg); margin-top: 4px; }
+  .wf-col__list { padding: 0 0 16px; }
+  .wf-nl { padding-top: 28px; }
+  .wf-nl__heading { font-size: 19px; }
+  .wf-bottom { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 20px; }
+  .wf-policy { gap: 14px; }
+}
+{%- endstyle -%}
+
+<div class="wf-root">
+
+  {%- comment -%}
+    ══ WAVE ══════════════════════════════════════════
+    .wf-wave background = page background (above_bg)
+    SVG path fill       = footer background (footer_bg)
+
+    This means:
+    • Top area of wave div = page colour  ✓
+    • SVG wave shape      = footer colour ✓
+    • Bottom of wave div  = footer colour ✓
+    Zero overlap, zero gap, works with ANY two colours.
+
+    The SVG is 200% wide and slides left continuously.
+    ═════════════════════════════════════════════════
+  {%- endcomment -%}
+
+  <div class="wf-wave" aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 2880 110"
+      preserveAspectRatio="none"
+      style="width:200%;height:100%;display:block;"
+    >
+      <!-- Layer A — primary wave -->
+      <g class="wf-wave__a">
+        <path
+          d="M0,55 C120,90 240,20 360,55 C480,90 600,18 720,55
+             C840,92 960,20 1080,55 C1200,90 1320,22 1440,55
+             C1560,90 1680,20 1800,55 C1920,90 2040,18 2160,55
+             C2280,92 2400,20 2520,55 C2640,90 2760,22 2880,55
+             L2880,110 L0,110 Z"
+          fill="{{ footer_bg }}"
+        />
+      </g>
+      <!-- Layer B — slower reverse -->
+      <g class="wf-wave__b">
+        <path
+          d="M0,72 C180,32 360,100 540,68 C720,36 900,95 1080,65
+             C1260,35 1440,98 1620,68 C1800,38 1980,95 2160,65
+             C2340,35 2520,98 2700,68 C2760,60 2820,62 2880,65
+             L2880,110 L0,110 Z"
+          fill="{{ footer_bg }}"
+        />
+      </g>
+      <!-- Layer C — fast subtle -->
+      <g class="wf-wave__c">
+        <path
+          d="M0,40 C240,80 480,10 720,50 C960,90 1200,12 1440,50
+             C1680,88 1920,10 2160,50 C2400,90 2640,12 2880,50
+             L2880,110 L0,110 Z"
+          fill="{{ footer_bg }}"
+        />
+      </g>
+    </svg>
+  </div>
+
+  <div class="wf-body">
+    <div class="wf-inner">
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="wf-grid">
+          {%- for block in section.blocks -%}
+
+            {%- if block.type == 'brand' -%}
+              <div class="wf-brand" {{ block.shopify_attributes }}>
+                {%- if block.settings.logo != blank -%}
+                  <img class="wf-brand__logo"
+                    src="{{ block.settings.logo | image_url: width: 280 }}"
+                    alt="{{ block.settings.brand_name | default: shop.name }}"
+                    width="140" height="auto" loading="lazy">
+                {%- else -%}
+                  <p class="wf-brand__name">{{ block.settings.brand_name | default: shop.name }}</p>
+                {%- endif -%}
+                {%- if block.settings.tagline != blank -%}
+                  <p class="wf-brand__tagline">{{ block.settings.tagline }}</p>
+                {%- endif -%}
+              </div>
+
+            {%- elsif block.type == 'links' -%}
+              <div class="wf-col" {{ block.shopify_attributes }}>
+                <details open>
+                  <summary><span class="wf-col__title">{{ block.settings.title }}</span></summary>
+                  {%- if linklists[block.settings.menu].links.size > 0 -%}
+                    <ul class="wf-col__list">
+                      {%- for link in linklists[block.settings.menu].links -%}
+                        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </details>
+              </div>
+
+            {%- elsif block.type == 'newsletter' -%}
+              <div class="wf-nl" {{ block.shopify_attributes }}>
+                {%- if block.settings.label != blank -%}
+                  <p class="wf-nl__eyebrow">{{ block.settings.label }}</p>
+                {%- endif -%}
+                {%- if block.settings.heading != blank -%}
+                  <p class="wf-nl__heading">{{ block.settings.heading }}</p>
+                {%- endif -%}
+                {%- form 'customer', id: 'wf-nl-form' -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <div class="wf-nl__row">
+                    <input class="wf-nl__input" type="email" name="contact[email]"
+                      placeholder="{{ block.settings.placeholder | default: 'Your email address' }}"
+                      autocomplete="email" required>
+                    <button class="wf-nl__btn" type="submit">
+                      {{ block.settings.btn_label | default: 'Subscribe' }}
+                    </button>
+                  </div>
+                {%- endform -%}
+                <div class="wf-socials">
+                  {%- if block.settings.social_instagram != blank -%}
+                    <a href="{{ block.settings.social_instagram }}" class="wf-social" aria-label="Instagram" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.social_x != blank -%}
+                    <a href="{{ block.settings.social_x }}" class="wf-social" aria-label="X / Twitter" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.social_facebook != blank -%}
+                    <a href="{{ block.settings.social_facebook }}" class="wf-social" aria-label="Facebook" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.social_tiktok != blank -%}
+                    <a href="{{ block.settings.social_tiktok }}" class="wf-social" aria-label="TikTok" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.social_pinterest != blank -%}
+                    <a href="{{ block.settings.social_pinterest }}" class="wf-social" aria-label="Pinterest" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.23-5.22 1.23-5.22s-.31-.63-.31-1.56c0-1.46.85-2.55 1.9-2.55.9 0 1.33.67 1.33 1.48 0 .9-.57 2.26-.87 3.51-.25 1.05.52 1.9 1.54 1.9 1.85 0 3.1-2.39 3.1-5.22 0-2.15-1.45-3.75-4.07-3.75-2.96 0-4.79 2.22-4.79 4.69 0 .85.25 1.45.64 1.91.18.21.2.29.14.53-.05.17-.15.59-.19.75-.06.24-.25.33-.46.24-1.3-.54-1.9-1.99-1.9-3.62 0-2.69 2.27-5.93 6.78-5.93 3.63 0 6.01 2.64 6.01 5.47 0 3.75-2.07 6.56-5.12 6.56-1.02 0-1.99-.55-2.32-1.18l-.63 2.45c-.23.88-.84 1.97-1.25 2.64.94.29 1.94.45 2.97.45 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="wf-bottom">
+        <p class="wf-copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+        {%- if section.settings.policy_links and linklists[section.settings.policy_menu].links.size > 0 -%}
+          <div class="wf-policy">
+            {%- for link in linklists[section.settings.policy_menu].links -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.innerWidth <= 767) {
+    document.querySelectorAll('.wf-col details').forEach(function (d) {
+      d.removeAttribute('open');
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "footer",
+  "class": "wf-footer-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎨 Colours"
+    },
+    {
+      "type": "color",
+      "id": "above_bg",
+      "label": "Page Background (section above footer)",
+      "info": "Set this to match the background colour of the last section above the footer — e.g. #fde8e8. The wave top will blend into it perfectly.",
+      "default": "#fde8e8"
+    },
+    {
+      "type": "color",
+      "id": "footer_bg",
+      "label": "Footer Background",
+      "info": "The wave shape and footer body share this colour — seamless join guaranteed.",
+      "default": "#1a1a2e"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted Text",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent — links & labels",
+      "default": "#e05a3a"
+    },
+    {
+      "type": "header",
+      "content": "📐 Wave Size"
+    },
+    {
+      "type": "range",
+      "id": "wave_height",
+      "label": "Wave Height (px)",
+      "min": 50,
+      "max": 180,
+      "step": 5,
+      "default": 110
+    },
+    {
+      "type": "header",
+      "content": "Bottom Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "policy_links",
+      "label": "Show Policy Links",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "policy_menu",
+      "label": "Policy Links Menu",
+      "default": "footer"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo Image"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name (shown if no logo)",
+          "default": "Maison"
+        },
+        {
+          "type": "textarea",
+          "id": "tagline",
+          "label": "Tagline",
+          "default": "Crafted for those who appreciate the quiet luxury of timeless form."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "name": "Link Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column Title",
+          "default": "Explore"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "main-menu"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter + Social",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Eyebrow Label",
+          "default": "Stay in the loop"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Join our world of quiet luxury"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Input Placeholder",
+          "default": "Your email address"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label",
+          "default": "Subscribe"
+        },
+        {
+          "type": "header",
+          "content": "Social Links"
+        },
+        {
+          "type": "url",
+          "id": "social_instagram",
+          "label": "Instagram URL"
+        },
+        {
+          "type": "url",
+          "id": "social_x",
+          "label": "X / Twitter URL"
+        },
+        {
+          "type": "url",
+          "id": "social_facebook",
+          "label": "Facebook URL"
+        },
+        {
+          "type": "url",
+          "id": "social_tiktok",
+          "label": "TikTok URL"
+        },
+        {
+          "type": "url",
+          "id": "social_pinterest",
+          "label": "Pinterest URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer",
+      "blocks": [
+        { "type": "brand" },
+        { "type": "links", "settings": { "title": "Shop" } },
+        { "type": "links", "settings": { "title": "Help" } },
+        { "type": "newsletter" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+}

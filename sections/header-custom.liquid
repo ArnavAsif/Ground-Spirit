@@ -1,0 +1,874 @@
+{% comment %}
+  ============================================================
+  Premium Clothing Header  |  header.liquid
+  INSTALL:
+  1. Online Store → Themes → Edit code
+  2. Sections → Add new section → name it: header
+  3. Paste this file → Save
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign logo_width        = section.settings.logo_width        | default: 120
+  assign logo_width_mobile = section.settings.logo_width_mobile | default: 90
+  assign sticky_enabled    = section.settings.sticky_enabled
+  assign transparent_home  = section.settings.transparent_home
+-%}
+
+{%- style -%}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;500&display=swap');
+
+.nh,.nh *,.nh *::before,.nh *::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── SVG protection ── */
+.nh__icon-btn svg,
+.nh__drawer-icon svg{
+  display:block !important;
+  width:26px !important;
+  height:26px !important;
+  fill:none !important;
+  stroke:currentColor !important;
+  stroke-width:1.5px !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+  pointer-events:none;
+  flex-shrink:0;
+}
+.nh__search-form svg{
+  display:block !important;
+  width:20px !important;
+  height:20px !important;
+  fill:none !important;
+  stroke:#bbb !important;
+  stroke-width:1.5px !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+  flex-shrink:0;
+}
+.nh__nav-item svg{
+  display:inline-block !important;
+  width:10px !important;
+  height:10px !important;
+  fill:none !important;
+  stroke:currentColor !important;
+  stroke-width:2px !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+  margin-left:4px;
+  vertical-align:middle;
+  transition:transform .25s ease;
+  flex-shrink:0;
+}
+.nh__nav-item:hover > .nh__nav-btn svg,
+.nh__nav-item:focus-within > .nh__nav-btn svg{
+  transform:rotate(180deg);
+}
+.nh__drawer-toggle svg{
+  display:block !important;
+  width:14px !important;
+  height:14px !important;
+  fill:none !important;
+  stroke:currentColor !important;
+  stroke-width:2px !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+  transition:transform .25s ease;
+}
+.nh__drawer-row.is-open .nh__drawer-toggle svg{transform:rotate(180deg)}
+
+/* ── Root ── */
+.nh{
+  position:relative;
+  width:100%;
+  z-index:1000;
+  transition:background .45s ease, box-shadow .45s ease, border-color .45s ease, backdrop-filter .45s ease;
+}
+.nh--sticky{
+  position:fixed;
+  top:0;left:0;right:0;
+}
+
+/* Solid — default non-homepage, still glassy */
+.nh--solid{
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(18px) saturate(1.5);
+  -webkit-backdrop-filter:blur(18px) saturate(1.5);
+  border-bottom:1px solid rgba(255,255,255,.25);
+}
+
+/* Transparent — homepage before scroll */
+.nh--transparent{
+  background:transparent;
+  border-bottom:1px solid transparent;
+}
+
+/* Scrolled — deep blur glass */
+.nh--scrolled{
+  background:rgba(255,255,255,.72) !important;
+  backdrop-filter:blur(28px) saturate(2) !important;
+  -webkit-backdrop-filter:blur(28px) saturate(2) !important;
+  border-bottom:1px solid rgba(255,255,255,.28) !important;
+  box-shadow:0 4px 48px rgba(0,0,0,.09) !important;
+}
+
+.nh-spacer{display:block}
+
+/* ── Inner grid ── */
+.nh__inner{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  max-width:1440px;
+  margin:0 auto;
+  padding:0 52px;
+  height:72px;
+  gap:24px;
+}
+
+/* ── Logo ── */
+.nh__logo{
+  display:flex;align-items:center;
+  text-decoration:none;flex-shrink:0;
+}
+.nh__logo-default,
+.nh__logo-transparent{
+  width:{{ logo_width }}px;
+  height:auto;transition:opacity .2s;
+}
+.nh__logo-default:hover,
+.nh__logo-transparent:hover{opacity:.72}
+.nh__logo-text{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:22px;font-weight:400;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:inherit;text-decoration:none;
+  line-height:1;transition:opacity .2s;
+}
+.nh__logo-text:hover{opacity:.65}
+
+/* ── Transparent logo swap ── */
+/* Default: always show standard logo, always hide transparent logo */
+.nh__logo-default     { display:block; }
+.nh__logo-transparent { display:none;  }
+
+/* Only when header IS transparent AND has NOT yet scrolled: swap them */
+.nh--transparent:not(.nh--scrolled) .nh__logo-default     { display:none;  }
+.nh--transparent:not(.nh--scrolled) .nh__logo-transparent { display:block; }
+
+/* Once scrolled (nh--scrolled is added by JS), revert to default logo */
+.nh--transparent.nh--scrolled .nh__logo-default     { display:block; }
+.nh--transparent.nh--scrolled .nh__logo-transparent { display:none;  }
+
+/* ── Colour: transparent (before scroll) = white text ── */
+.nh--transparent:not(.nh--scrolled) .nh__logo-text,
+.nh--transparent:not(.nh--scrolled) .nh__nav-btn,
+.nh--transparent:not(.nh--scrolled) .nh__icon-btn{color:#fff}
+.nh--transparent:not(.nh--scrolled) .nh__nav-underline{background:#fff}
+.nh--transparent:not(.nh--scrolled) .nh__cart-count{background:{{ section.settings.cart_count_bg_transparent }};color:{{ section.settings.cart_count_color_transparent }}}
+
+/* ── Colour: solid / scrolled = dark text ── */
+.nh--solid .nh__logo-text,
+.nh--solid .nh__nav-btn,
+.nh--solid .nh__icon-btn,
+.nh--transparent.nh--scrolled .nh__logo-text,
+.nh--transparent.nh--scrolled .nh__nav-btn,
+.nh--transparent.nh--scrolled .nh__icon-btn{color:#111}
+
+/* ── Nav ── */
+.nh__nav{
+  display:flex;align-items:center;
+  gap:32px;justify-content:center;
+}
+.nh__nav-item{
+  position:relative;
+  display:flex;align-items:center;
+}
+.nh__nav-btn{
+  position:relative;
+  display:inline-flex;align-items:center;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;
+  text-decoration:none;color:inherit;
+  padding:4px 0;
+  background:none;border:none;cursor:pointer;
+  transition:opacity .2s;white-space:nowrap;
+}
+.nh__nav-btn:hover{opacity:.6}
+.nh__nav-underline{
+  position:absolute;left:0;bottom:-2px;
+  width:0%;height:1px;
+  background:currentColor;
+  transition:width .3s cubic-bezier(.4,0,.2,1);
+}
+.nh__nav-item:hover .nh__nav-underline,
+.nh__nav-item.is-active .nh__nav-underline{width:100%}
+/* For items with chevron, underline stops before the arrow */
+.nh__nav-item--has-children:hover .nh__nav-underline,
+.nh__nav-item--has-children.is-active .nh__nav-underline{width:calc(100% - 16px)}
+
+/* ── Dropdown ── */
+.nh__dropdown{
+  position:absolute;
+  top:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%) translateY(-8px);
+  min-width:210px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(24px) saturate(1.8);
+  -webkit-backdrop-filter:blur(24px) saturate(1.8);
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 20px 60px rgba(0,0,0,.13), 0 4px 12px rgba(0,0,0,.05);
+  padding:8px 0;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
+  z-index:500;
+}
+/* Arrow notch */
+.nh__dropdown::before{
+  content:'';
+  position:absolute;
+  top:-5px;left:50%;
+  transform:translateX(-50%) rotate(45deg);
+  width:9px;height:9px;
+  background:rgba(255,255,255,.94);
+  border-left:1px solid rgba(0,0,0,.08);
+  border-top:1px solid rgba(0,0,0,.08);
+}
+/* Invisible hover bridge */
+.nh__nav-item--has-children::after{
+  content:'';
+  position:absolute;
+  top:100%;
+  left:-20px;right:-20px;
+  height:20px;
+  background:transparent;
+}
+/* Show on hover + focus-within */
+.nh__nav-item:hover .nh__dropdown,
+.nh__nav-item:focus-within .nh__dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.nh__dropdown-link{
+  display:block;
+  padding:11px 22px;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#222;text-decoration:none;
+  white-space:nowrap;
+  transition:background .15s, color .15s;
+}
+.nh__dropdown-link:hover{
+  background:rgba(0,0,0,.04);
+  color:#000;
+}
+.nh__dropdown-link.is-active{color:#000;font-weight:500}
+.nh__dropdown-divider{
+  height:1px;background:rgba(0,0,0,.07);
+  margin:6px 16px;
+}
+
+/* ── Icons ── */
+.nh__icons{
+  display:flex;align-items:center;
+  gap:18px;justify-content:flex-end;
+}
+.nh__icon-btn{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  background:none;border:none;cursor:pointer;
+  padding:6px;color:inherit;
+  text-decoration:none;
+  transition:opacity .2s;line-height:0;
+}
+.nh__icon-btn:hover{opacity:.5}
+
+.nh__cart-count{
+  position:absolute;
+  top:-4px;right:-5px;
+  min-width:17px;height:17px;
+  padding:0 4px;
+  background:{{ section.settings.cart_count_bg }};
+  color:{{ section.settings.cart_count_color }};
+  font-family:'Montserrat',sans-serif;
+  font-size:9px;font-weight:500;letter-spacing:0;
+  border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  line-height:1;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), background .4s;
+}
+.nh__cart-count[data-count="0"]{transform:scale(0)}
+
+/* ── Search overlay ── */
+.nh__search-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.42);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  z-index:1100;opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.nh__search-overlay.is-open{opacity:1;pointer-events:auto}
+.nh__search-box{
+  position:absolute;top:0;left:0;right:0;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  padding:28px 52px;display:flex;align-items:center;gap:16px;
+  transform:translateY(-100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.nh__search-overlay.is-open .nh__search-box{transform:translateY(0)}
+.nh__search-form{
+  flex:1;display:flex;align-items:center;
+  border-bottom:1px solid #ddd;gap:12px;padding-bottom:10px;
+}
+.nh__search-input{
+  flex:1;border:none;outline:none;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:24px;font-weight:300;letter-spacing:.04em;
+  color:#111;background:transparent;
+}
+.nh__search-input::placeholder{color:#ccc;font-style:italic}
+.nh__search-close{
+  background:none;border:none;cursor:pointer;
+  font-family:'Montserrat',sans-serif;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:#aaa;padding:8px;transition:color .2s;
+}
+.nh__search-close:hover{color:#111}
+
+/* ── Hamburger ── */
+.nh__hamburger{
+  display:none;flex-direction:column;justify-content:center;
+  gap:5px;background:none;border:none;cursor:pointer;
+  padding:4px;width:34px;height:34px;color:inherit;
+}
+.nh__hamburger span{
+  display:block;height:1px;background:currentColor;
+  transition:transform .3s, opacity .3s, width .3s;
+  transform-origin:center;
+}
+.nh__hamburger span:nth-child(1){width:24px}
+.nh__hamburger span:nth-child(2){width:16px}
+.nh__hamburger span:nth-child(3){width:20px}
+.nh__hamburger.is-open span:nth-child(1){transform:translateY(6px) rotate(45deg);width:24px}
+.nh__hamburger.is-open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nh__hamburger.is-open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);width:24px}
+
+/* ── Mobile drawer ── */
+.nh__drawer-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.42);
+  z-index:1190;opacity:0;pointer-events:none;transition:opacity .38s ease;
+}
+.nh__drawer-overlay.is-open{opacity:1;pointer-events:auto}
+.nh__mobile-drawer{
+  position:fixed;top:0;left:0;bottom:0;
+  width:min(300px,82vw);
+  background:rgba(14,14,16,.92);
+  backdrop-filter:blur(28px) saturate(1.6);
+  -webkit-backdrop-filter:blur(28px) saturate(1.6);
+  z-index:1200;transform:translateX(-100%);
+  transition:transform .42s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  padding:0 0 40px;overflow-y:auto;
+  border-right:1px solid rgba(255,255,255,.07);
+}
+.nh__mobile-drawer.is-open{transform:translateX(0)}
+.nh__drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.nh__drawer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.92);text-decoration:none;
+}
+.nh__drawer-logo img{
+  width:{{ logo_width_mobile }}px;
+  height:auto;
+}
+.nh__drawer-close{
+  background:none;border:none;cursor:pointer;
+  font-size:22px;color:rgba(255,255,255,.35);line-height:1;padding:4px;transition:color .2s;
+}
+.nh__drawer-close:hover{color:rgba(255,255,255,.9)}
+.nh__drawer-nav{padding:16px 0;display:flex;flex-direction:column;flex:1}
+
+.nh__drawer-row{border-bottom:1px solid rgba(255,255,255,.06)}
+.nh__drawer-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;
+}
+.nh__drawer-link{
+  flex:1;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.82);text-decoration:none;
+  padding:16px 0;display:block;transition:opacity .2s;
+}
+.nh__drawer-link:hover{opacity:1;color:#fff}
+.nh__drawer-toggle{
+  background:none;border:none;cursor:pointer;
+  padding:10px 0 10px 14px;color:rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center;
+  transition:color .2s;
+}
+.nh__drawer-toggle:hover{color:rgba(255,255,255,.8)}
+
+/* Mobile accordion sub */
+.nh__drawer-sub{
+  max-height:0;overflow:hidden;
+  transition:max-height .32s cubic-bezier(.4,0,.2,1);
+  background:rgba(0,0,0,.25);
+}
+.nh__drawer-row.is-open .nh__drawer-sub{max-height:800px}
+.nh__drawer-sub-link{
+  display:block;padding:12px 28px 12px 38px;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transition:color .15s;
+}
+.nh__drawer-sub-link:last-child{border-bottom:none}
+.nh__drawer-sub-link:hover{color:rgba(255,255,255,.9)}
+
+.nh__drawer-icons{
+  display:flex;gap:28px;
+  padding:24px 28px 0;align-items:center;
+  border-top:1px solid rgba(255,255,255,.08);
+  margin-top:auto;
+}
+.nh__drawer-icon{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.65);text-decoration:none;background:none;border:none;cursor:pointer;
+  transition:color .2s;line-height:0;
+}
+.nh__drawer-icon:hover{color:#fff}
+
+/* ── Mobile logo size ── */
+@media(max-width:1024px){
+  .nh__logo-default,
+  .nh__logo-transparent{
+    width:{{ logo_width_mobile }}px;
+  }
+}
+
+/* ── Responsive ── */
+@media(min-width:1025px) and (max-width:1100px){
+  .nh__inner{padding:0 32px}
+  .nh__nav{gap:22px}
+}
+@media(max-width:1024px){
+  .nh__inner{grid-template-columns:auto 1fr auto;padding:0 20px;height:62px}
+  .nh__nav{display:none}
+  .nh__hamburger{display:flex}
+  .nh__icons .nh__icon-btn.nh--hide-mobile{display:none}
+}
+@media(min-width:1025px){
+  .nh__hamburger{display:none}
+  .nh__mobile-drawer,.nh__drawer-overlay{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .nh,.nh__dropdown,.nh__search-box,.nh__mobile-drawer{transition:none!important}
+}
+{%- endstyle -%}
+
+{%- assign is_home = false -%}
+{%- if template.name == 'index' -%}{%- assign is_home = true -%}{%- endif -%}
+
+{%- assign header_classes = 'nh' -%}
+{%- if sticky_enabled -%}{%- assign header_classes = header_classes | append: ' nh--sticky' -%}{%- endif -%}
+{%- if transparent_home and is_home -%}
+  {%- assign header_classes = header_classes | append: ' nh--transparent' -%}
+{%- else -%}
+  {%- assign header_classes = header_classes | append: ' nh--solid' -%}
+{%- endif -%}
+
+<header class="{{ header_classes }}" id="nh-{{ section.id }}" role="banner">
+  <div class="nh__inner">
+
+    {%- comment -%} LOGO {%- endcomment -%}
+    <a href="{{ routes.root_url }}" class="nh__logo" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        <img class="nh__logo-default"
+          src="{{ section.settings.logo | image_url: width: 400 }}"
+          alt="{{ shop.name }}"
+          width="{{ logo_width }}"
+          loading="eager">
+        {%- if section.settings.logo_transparent != blank -%}
+          <img class="nh__logo-transparent"
+            src="{{ section.settings.logo_transparent | image_url: width: 400 }}"
+            alt="{{ shop.name }}"
+            width="{{ logo_width }}"
+            loading="eager">
+        {%- endif -%}
+      {%- else -%}
+        <span class="nh__logo-text">{{ section.settings.logo_text | default: shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    {%- comment -%} NAV with dropdown support {%- endcomment -%}
+    <nav class="nh__nav" aria-label="Main navigation">
+      {%- for link in section.settings.menu.links -%}
+        {%- if link.links.size > 0 -%}
+          <div class="nh__nav-item nh__nav-item--has-children">
+            <button class="nh__nav-btn{% if link.active %} is-active{% endif %}" aria-haspopup="true" aria-expanded="false" data-nav-parent type="button">
+              {{- link.title -}}
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              <span class="nh__nav-underline"></span>
+            </button>
+            <div class="nh__dropdown" role="menu">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}" class="nh__dropdown-link{% if child.active %} is-active{% endif %}" role="menuitem">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <div class="nh__nav-item{% if link.active %} is-active{% endif %}">
+            <a href="{{ link.url }}" class="nh__nav-btn">
+              {{- link.title -}}
+              <span class="nh__nav-underline"></span>
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    {%- comment -%} ICONS {%- endcomment -%}
+    <div class="nh__icons">
+      <button class="nh__icon-btn nh--hide-mobile" id="nh-search-btn-{{ section.id }}" aria-label="Search" type="button">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      {%- if section.settings.wishlist_url != blank -%}
+        <a href="{{ section.settings.wishlist_url }}" class="nh__icon-btn nh--hide-mobile" aria-label="Wishlist">
+          <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="nh__icon-btn" aria-label="Cart" id="nh-cart-link-{{ section.id }}">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="nh__cart-count" id="nh-cart-count-{{ section.id }}" aria-label="Cart items" data-count="{{ cart.item_count }}">{{- cart.item_count -}}</span>
+      </a>
+      <button class="nh__hamburger" id="nh-burger-{{ section.id }}" aria-label="Open menu" aria-expanded="false" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+{%- assign show_spacer = false -%}
+{%- if sticky_enabled -%}
+  {%- if transparent_home and is_home -%}
+    {%- assign show_spacer = false -%}
+  {%- else -%}
+    {%- assign show_spacer = true -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if show_spacer -%}
+  <div class="nh-spacer" id="nh-spacer-{{ section.id }}" style="height:72px" aria-hidden="true"></div>
+{%- endif -%}
+
+{%- comment -%} SEARCH {%- endcomment -%}
+<div class="nh__search-overlay" id="nh-search-{{ section.id }}" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="nh__search-box">
+    <form class="nh__search-form" action="{{ routes.search_url }}" method="get" role="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:20px;height:20px;fill:none;stroke:#bbb;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="nh__search-input" type="search" name="q" placeholder="Search for products…" autocomplete="off" id="nh-search-input-{{ section.id }}">
+      <input type="hidden" name="type" value="product">
+    </form>
+    <button class="nh__search-close" id="nh-search-close-{{ section.id }}" type="button" aria-label="Close">Close</button>
+  </div>
+</div>
+
+{%- comment -%} MOBILE DRAWER {%- endcomment -%}
+<div class="nh__drawer-overlay" id="nh-doverlay-{{ section.id }}" aria-hidden="true"></div>
+<nav class="nh__mobile-drawer" id="nh-drawer-{{ section.id }}" aria-label="Mobile navigation" aria-hidden="true">
+  <div class="nh__drawer-head">
+    <a href="{{ routes.root_url }}" class="nh__drawer-logo">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}" width="{{ logo_width_mobile }}">
+      {%- else -%}
+        {{ section.settings.logo_text | default: shop.name }}
+      {%- endif -%}
+    </a>
+    <button class="nh__drawer-close" id="nh-drawer-close-{{ section.id }}" aria-label="Close menu" type="button">&times;</button>
+  </div>
+  <div class="nh__drawer-nav">
+    {%- for link in section.settings.menu.links -%}
+      <div class="nh__drawer-row" data-drawer-row>
+        <div class="nh__drawer-top">
+          <a href="{{ link.url }}" class="nh__drawer-link">{{ link.title }}</a>
+          {%- if link.links.size > 0 -%}
+            <button class="nh__drawer-toggle" aria-label="Expand {{ link.title | escape }}" data-drawer-toggle type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          {%- endif -%}
+        </div>
+        {%- if link.links.size > 0 -%}
+          <div class="nh__drawer-sub" data-drawer-sub>
+            {%- for child in link.links -%}
+              <a href="{{ child.url }}" class="nh__drawer-sub-link">{{ child.title }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="nh__drawer-icons">
+    <button class="nh__drawer-icon" id="nh-drawer-search-{{ section.id }}" aria-label="Search" type="button">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="nh__drawer-icon" aria-label="Wishlist">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </a>
+    <a href="{{ routes.cart_url }}" class="nh__drawer-icon" aria-label="Cart" style="position:relative">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="nh__cart-count" id="nh-cart-count-m-{{ section.id }}" data-count="{{ cart.item_count }}">{{- cart.item_count -}}</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+(function () {
+  'use strict';
+  var sid    = '{{ section.id }}';
+  var header = document.getElementById('nh-' + sid);
+  var spacer = document.getElementById('nh-spacer-' + sid);
+  if (!header) return;
+
+  var isSticky = header.classList.contains('nh--sticky');
+
+  /* ── Scroll → blur glass (works for both solid and transparent) ── */
+  if (isSticky) {
+    var THRESHOLD = 40;
+    function onScroll() {
+      header.classList.toggle('nh--scrolled', window.scrollY > THRESHOLD);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ── Spacer height sync ── */
+  if (spacer && isSticky) {
+    function syncSpacer() { spacer.style.height = header.offsetHeight + 'px'; }
+    syncSpacer();
+    window.addEventListener('resize', syncSpacer, { passive: true });
+  }
+
+  /* ── Desktop dropdowns: aria-expanded on click for keyboard users ── */
+  var parentBtns = Array.prototype.slice.call(header.querySelectorAll('[data-nav-parent]'));
+  parentBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      parentBtns.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nh__nav-item')) {
+      parentBtns.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+    }
+  });
+
+  /* ── Search ── */
+  var sOverlay = document.getElementById('nh-search-' + sid);
+  var sInput   = document.getElementById('nh-search-input-' + sid);
+  var sBtn     = document.getElementById('nh-search-btn-' + sid);
+  var sClose   = document.getElementById('nh-search-close-' + sid);
+  var sDrwBtn  = document.getElementById('nh-drawer-search-' + sid);
+
+  function openSearch()  { if (!sOverlay) return; sOverlay.classList.add('is-open'); if (sInput) setTimeout(function(){sInput.focus();},80); document.body.style.overflow='hidden'; }
+  function closeSearch() { if (!sOverlay) return; sOverlay.classList.remove('is-open'); document.body.style.overflow=''; }
+
+  if (sBtn)    sBtn.addEventListener('click', openSearch);
+  if (sDrwBtn) sDrwBtn.addEventListener('click', function(){ closeDrawer(); openSearch(); });
+  if (sClose)  sClose.addEventListener('click', closeSearch);
+  if (sOverlay) sOverlay.addEventListener('click', function(e){ if(e.target===sOverlay) closeSearch(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeSearch(); closeDrawer(); } });
+
+  /* ── Mobile drawer ── */
+  var burger   = document.getElementById('nh-burger-' + sid);
+  var drawer   = document.getElementById('nh-drawer-' + sid);
+  var dOverlay = document.getElementById('nh-doverlay-' + sid);
+  var dClose   = document.getElementById('nh-drawer-close-' + sid);
+
+  function openDrawer() {
+    if (!drawer) return;
+    drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden','false');
+    if (dOverlay){ dOverlay.classList.add('is-open'); dOverlay.setAttribute('aria-hidden','false'); }
+    if (burger)  { burger.classList.add('is-open');   burger.setAttribute('aria-expanded','true'); }
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    if (!drawer) return;
+    drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden','true');
+    if (dOverlay){ dOverlay.classList.remove('is-open'); dOverlay.setAttribute('aria-hidden','true'); }
+    if (burger)  { burger.classList.remove('is-open');   burger.setAttribute('aria-expanded','false'); }
+    document.body.style.overflow = '';
+  }
+  if (burger)   burger.addEventListener('click', function(){ drawer.classList.contains('is-open') ? closeDrawer() : openDrawer(); });
+  if (dClose)   dClose.addEventListener('click', closeDrawer);
+  if (dOverlay) dOverlay.addEventListener('click', closeDrawer);
+
+  /* ── Mobile accordion submenus ── */
+  var rows = Array.prototype.slice.call(document.querySelectorAll('[data-drawer-row]'));
+  rows.forEach(function(row){
+    var toggle = row.querySelector('[data-drawer-toggle]');
+    if (!toggle) return;
+    toggle.addEventListener('click', function(){
+      var wasOpen = row.classList.contains('is-open');
+      rows.forEach(function(r){ r.classList.remove('is-open'); });
+      if (!wasOpen) row.classList.add('is-open');
+    });
+  });
+
+  /* ── Live cart count ── */
+  var countEls = [
+    document.getElementById('nh-cart-count-'   + sid),
+    document.getElementById('nh-cart-count-m-' + sid)
+  ].filter(Boolean);
+
+  function updateCount(n) {
+    countEls.forEach(function(el){
+      el.textContent = n > 0 ? n : '';
+      el.setAttribute('data-count', n);
+    });
+  }
+  function fetchCart() {
+    fetch('/cart.js').then(function(r){return r.json();})
+      .then(function(d){ updateCount(d.item_count||0); }).catch(function(){});
+  }
+  window.addEventListener('focus', fetchCart);
+  document.addEventListener('cart:updated', function(e){
+    e.detail && typeof e.detail.itemCount!=='undefined' ? updateCount(e.detail.itemCount) : fetchCart();
+  });
+  document.addEventListener('cart-update', fetchCart);
+  document.addEventListener('click', function(e){
+    if (e.target.closest('form[action="/cart/add"]')) setTimeout(fetchCart, 400);
+  });
+
+  countEls.forEach(function(el){
+    if (parseInt(el.getAttribute('data-count'),10)===0) el.style.transform='scale(0)';
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "div",
+  "class": "nh-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image (leave blank to use text)"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_transparent",
+      "label": "Logo for Transparent Header"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text (used if no image)",
+      "default": "Maison"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo Width — Desktop (px)",
+      "min": 60,
+      "max": 280,
+      "step": 4,
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "label": "Logo Width — Mobile (px)",
+      "min": 40,
+      "max": 200,
+      "step": 2,
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "Wishlist Page URL (leave blank to hide)"
+    },
+    {
+      "type": "header",
+      "content": "Cart Badge Colors"
+    },
+    {
+      "type": "color",
+      "id": "cart_count_bg",
+      "label": "Badge Background",
+      "default": "#7a8c72"
+    },
+    {
+      "type": "color",
+      "id": "cart_count_color",
+      "label": "Badge Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cart_count_bg_transparent",
+      "label": "Badge BG (on transparent header)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cart_count_color_transparent",
+      "label": "Badge Text (on transparent header)",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Behaviour"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_enabled",
+      "label": "Enable Sticky Header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_home",
+      "label": "Transparent on Homepage (becomes solid on scroll)",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Header"
+    }
+  ]
+}
+{% endschema %}

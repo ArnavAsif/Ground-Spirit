@@ -1,0 +1,397 @@
+{% comment %}
+  HOW IT WORKS — hover to reveal description
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+  .gw-how-{{ sid }} {
+    background: {{ section.settings.bg_color }};
+    padding-top:    {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left:  clamp(20px, 4vw, 52px);
+    padding-right: clamp(20px, 4vw, 52px);
+    margin-top:    {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .gw-how-{{ sid }} .s-inner {
+    max-width: {{ section.settings.content_width }}px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .gw-how-{{ sid }} .s-label {
+    color: {{ section.settings.label_color }};
+    font-size: {{ section.settings.label_font_size }}px;
+  }
+  .gw-how-{{ sid }} .s-title {
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_font_size_desktop }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+  }
+  .gw-how-{{ sid }} .s-title span,
+  .gw-how-{{ sid }} .s-title em { color: {{ section.settings.title_accent_color }}; }
+
+  .gw-how-{{ sid }}-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    margin-top: 40px;
+    align-items: center;
+  }
+
+  /* ── Steps ── */
+  .gw-how-{{ sid }}-steps { display: flex; flex-direction: column; }
+
+  .gw-how-{{ sid }}-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid {{ section.settings.border_color }};
+    cursor: pointer;
+    position: relative;
+  }
+  .gw-how-{{ sid }}-step:first-child { padding-top: 0; }
+  .gw-how-{{ sid }}-step:last-child  { border-bottom: none; padding-bottom: 0; }
+
+  /* Number */
+  .gw-how-{{ sid }}-num {
+    font-family: 'Bebas Neue', sans-serif;
+    line-height: 1;
+    margin-left:12px;
+    flex-shrink: 0;
+    min-width: 44px;
+    transition: color .35s ease;
+  }
+
+  /* Title — always visible */
+  .gw-how-{{ sid }}-title {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    transition: color .3s ease;
+  }
+
+  /* Description — hidden by default, ONLY reveals on hover */
+  .gw-how-{{ sid }}-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition: max-height .45s cubic-bezier(.4,0,.2,1),
+                opacity .35s ease .08s,
+                margin-top .35s ease;
+  }
+
+  /* HOVER ONLY — no is-active */
+  .gw-how-{{ sid }}-step:hover .gw-how-{{ sid }}-desc {
+    max-height: 160px;
+    opacity: 1;
+    margin-top: 10px;
+  }
+
+  /* Dim non-hovered steps */
+  .gw-how-{{ sid }}-step {
+    opacity: .45;
+    transition: opacity .3s ease;
+  }
+  .gw-how-{{ sid }}-step:hover {
+    opacity: 1;
+  }
+
+  /* Active accent line — hover only */
+  .gw-how-{{ sid }}-step::before {
+    content: '';
+    position: absolute;
+    left: -clamp(20px, 4vw, 52px);
+    top: 0; bottom: 0;
+    width: 2px;
+    background: {{ section.settings.accent_color }};
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  .gw-how-{{ sid }}-step:hover::before { transform: scaleY(1); }
+
+  /* ── Visual column ── */
+  .gw-how-{{ sid }}-visual {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    border: 1px solid {{ section.settings.border_color }};
+    width: 100%;
+    max-height: 70vh;
+    background: {{ section.settings.img_bg }};
+  }
+  .gw-how-{{ sid }}-visual img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity .45s ease;
+  }
+  .gw-how-{{ sid }}-visual img.is-hidden { opacity: 0; }
+
+  /* Image overlay tag */
+  .gw-how-{{ sid }}-tag {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 48px 22px 22px;
+    background: linear-gradient(to top,
+      {{ section.settings.bg_color }}ee 0%,
+      {{ section.settings.bg_color }}00 100%);
+    z-index: 2;
+  }
+  .gw-how-{{ sid }}-tag strong {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: .05em;
+    color: {{ section.settings.tag_title_color }};
+    margin-bottom: 4px;
+    font-size: {{ section.settings.tag_title_font_size_desktop }}px;
+    transition: opacity .3s ease;
+  }
+  .gw-how-{{ sid }}-tag span {
+    color: {{ section.settings.tag_text_color }};
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: {{ section.settings.tag_text_font_size_desktop }}px;
+    transition: opacity .3s ease;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1060px) {
+    .gw-how-{{ sid }}-grid { grid-template-columns: 1fr; gap: 40px; }
+    .gw-how-{{ sid }}-visual { order: -1; aspect-ratio: 16/9; max-height: 44vw; }
+    .gw-how-{{ sid }}-step::before { display: none; }
+  }
+  @media (max-width: 660px) {
+    .gw-how-{{ sid }} { padding-left: 20px; padding-right: 20px; }
+    .gw-how-{{ sid }}-grid { margin-top: 32px; gap: 28px; }
+    .gw-how-{{ sid }}-visual { aspect-ratio: 4/3; max-height: none; }
+    .gw-how-{{ sid }} .s-title { font-size: {{ section.settings.title_font_size_mobile }}px; }
+    .gw-how-{{ sid }} .s-label { font-size: {{ section.settings.label_font_size_mobile }}px; }
+  }
+</style>
+
+<section class="gw-how-{{ sid }}" id="{{ section.settings.section_id | default: 'how' }}">
+  <div class="s-inner">
+    <div>
+      <span class="s-label">{{ section.settings.section_label }}</span>
+      <h2 class="s-title">{{ section.settings.section_title }}</h2>
+    </div>
+
+    {%- comment -%} Build image array for JS {%- endcomment -%}
+    {%- assign step_imgs_arr = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'step' -%}
+        {%- if block.settings.step_image != blank -%}
+          {%- assign img_src = block.settings.step_image | image_url: width: 800 -%}
+        {%- else -%}
+          {%- assign img_src = block.settings.step_image_url -%}
+        {%- endif -%}
+        {%- unless forloop.first -%}{%- assign step_imgs_arr = step_imgs_arr | append: '||' -%}{%- endunless -%}
+        {%- assign step_imgs_arr = step_imgs_arr | append: img_src -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    <div class="gw-how-{{ sid }}-grid">
+
+      <!-- Steps column -->
+      <div class="gw-how-{{ sid }}-steps" id="gwHowSteps-{{ sid }}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <div class="gw-how-{{ sid }}-step"
+              data-step-idx="{{ forloop.index | minus: 1 }}"
+              data-tag-title="Step {{ forloop.index }} — {{ block.settings.step_title }}"
+              data-tag-text="{{ block.settings.step_short }}"
+              {{ block.shopify_attributes }}>
+
+              <div class="gw-how-{{ sid }}-num"
+                style="color:{{ block.settings.num_color }};font-size:{{ block.settings.num_font_size }}px;">
+                0{{ forloop.index }}
+              </div>
+
+              <div style="flex:1;">
+                <div class="gw-how-{{ sid }}-title"
+                  style="color:{{ block.settings.title_color }};
+                         font-size:{{ block.settings.title_font_size }}px;
+                         font-weight:{{ block.settings.title_font_weight }};">
+                  {{ block.settings.step_title }}
+                </div>
+                <div class="gw-how-{{ sid }}-desc"
+                  style="color:{{ block.settings.desc_color }};
+                         font-size:{{ block.settings.desc_font_size }}px;">
+                  {{ block.settings.step_desc }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <!-- Visual column -->
+      <div class="gw-how-{{ sid }}-visual" id="gwHowVisual-{{ sid }}"
+        data-step-imgs="{{ step_imgs_arr | escape }}">
+
+        {%- assign first_step = section.blocks | where: 'type', 'step' | first -%}
+        {%- if first_step.settings.step_image != blank -%}
+          <img id="gwHowImg-{{ sid }}"
+            src="{{ first_step.settings.step_image | image_url: width: 800 }}"
+            alt="{{ first_step.settings.step_title }}">
+        {%- else -%}
+          <img id="gwHowImg-{{ sid }}"
+            src="{{ first_step.settings.step_image_url }}"
+            alt="{{ first_step.settings.step_title }}">
+        {%- endif -%}
+
+        <div class="gw-how-{{ sid }}-tag">
+          <strong id="gwHowTagTitle-{{ sid }}">Step 1 — {{ first_step.settings.step_title }}</strong>
+          <span id="gwHowTagText-{{ sid }}">{{ first_step.settings.step_short }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var sid      = '{{ sid }}';
+  var stepsEl  = document.getElementById('gwHowSteps-'    + sid);
+  var imgEl    = document.getElementById('gwHowImg-'      + sid);
+  var tagTitle = document.getElementById('gwHowTagTitle-' + sid);
+  var tagText  = document.getElementById('gwHowTagText-'  + sid);
+  var visual   = document.getElementById('gwHowVisual-'   + sid);
+  if (!stepsEl || !imgEl || !visual) return;
+
+  var raw  = (visual.dataset.stepImgs || '').trim();
+  var imgs = raw ? raw.split('||') : [];
+  var current = -1;
+
+  /* Preload all images */
+  imgs.forEach(function(src){ if (src){ var p = new Image(); p.src = src; } });
+
+  imgEl.style.transition = 'opacity .45s ease';
+
+  function setStep(idx) {
+    if (idx === current) return;
+    current = idx;
+
+    /* Crossfade image */
+    var newSrc = imgs[idx];
+    if (newSrc && newSrc.trim()) {
+      imgEl.style.opacity = '0';
+      var loader = new Image();
+      loader.onload = loader.onerror = function() {
+        imgEl.src = newSrc;
+        void imgEl.offsetWidth;
+        imgEl.style.opacity = '1';
+      };
+      loader.src = newSrc;
+    }
+
+    /* Update tag */
+    var activeStep = stepsEl.querySelector('[data-step-idx="' + idx + '"]');
+    if (activeStep) {
+      if (tagTitle) tagTitle.textContent = activeStep.dataset.tagTitle || '';
+      if (tagText)  tagText.textContent  = activeStep.dataset.tagText  || '';
+    }
+  }
+
+  /* Hover switches image + tag */
+  stepsEl.querySelectorAll('[data-step-idx]').forEach(function(step) {
+    step.addEventListener('mouseenter', function() {
+      setStep(parseInt(this.dataset.stepIdx, 10));
+    });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "How It Works",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text",   "id": "section_id",    "label": "Section Anchor ID", "default": "how" },
+    { "type": "text",   "id": "section_label", "label": "Section Label",     "default": "Simple Setup" },
+    { "type": "liquid", "id": "section_title", "label": "Section Title",     "default": "Ready in <em>3 steps</em>" },
+    { "type": "header", "content": "Typography" },
+    { "type": "range",  "id": "title_font_size_desktop", "label": "Title Size Desktop (px)", "min": 24, "max": 80, "step": 2, "default": 40 },
+    { "type": "range",  "id": "title_font_size_mobile",  "label": "Title Size Mobile (px)",  "min": 18, "max": 60, "step": 2, "default": 32 },
+    { "type": "range",  "id": "label_font_size",         "label": "Label Size (px)",         "min": 10, "max": 20, "step": 1, "default": 15 },
+    { "type": "range",  "id": "label_font_size_mobile",  "label": "Label Size Mobile (px)",  "min": 10, "max": 20, "step": 1, "default": 13 },
+    { "type": "select", "id": "title_font_weight", "label": "Title Font Weight",
+      "options": [{ "value": "300", "label": "Light" },{ "value": "400", "label": "Regular" }], "default": "400" },
+    { "type": "header", "content": "Image Tag Text" },
+    { "type": "range",  "id": "tag_title_font_size_desktop", "label": "Tag Title Size (px)",        "min": 10, "max": 32, "step": 1, "default": 17 },
+    { "type": "range",  "id": "tag_text_font_size_desktop",  "label": "Tag Body Size (px)",         "min": 8,  "max": 20, "step": 1, "default": 12 },
+    { "type": "color",  "id": "tag_title_color", "label": "Tag Title Color", "default": "#1a1a1a" },
+    { "type": "color",  "id": "tag_text_color",  "label": "Tag Body Color",  "default": "#6b6b65" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color",  "id": "bg_color",          "label": "Background",       "default": "#FBF9F6" },
+    { "type": "color",  "id": "img_bg",            "label": "Image Placeholder BG", "default": "#f0ece6" },
+    { "type": "color",  "id": "border_color",      "label": "Border Color",     "default": "#e8e4de" },
+    { "type": "color",  "id": "accent_color",      "label": "Active Step Line", "default": "#7a8c72" },
+    { "type": "color",  "id": "title_color",       "label": "Title Color",      "default": "#1a1a1a" },
+    { "type": "color",  "id": "label_color",       "label": "Label Color",      "default": "#7a8c72" },
+    { "type": "color",  "id": "title_accent_color","label": "Title Accent",     "default": "#7a8c72" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range",  "id": "padding_top",    "label": "Padding Top (px)",       "min": 0,   "max": 160, "step": 4,  "default": 56 },
+    { "type": "range",  "id": "padding_bottom", "label": "Padding Bottom (px)",    "min": 0,   "max": 160, "step": 4,  "default": 56 },
+    { "type": "range",  "id": "margin_top",     "label": "Margin Top (px)",        "min": 0,   "max": 80,  "step": 4,  "default": 0  },
+    { "type": "range",  "id": "margin_bottom",  "label": "Margin Bottom (px)",     "min": 0,   "max": 80,  "step": 4,  "default": 0  },
+    { "type": "range",  "id": "content_width",  "label": "Max Content Width (px)", "min": 800, "max": 1600,"step": 40, "default": 1400 }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "header",       "content": "Content" },
+        { "type": "text",         "id": "step_title",     "label": "Step Title",               "default": "Connect the Cable" },
+        { "type": "textarea",     "id": "step_desc",      "label": "Description (on hover)",   "default": "Plug the round end into the snap-port on your mat. Plug the flat end into the ground port of any standard outlet." },
+        { "type": "text",         "id": "step_short",     "label": "Short Caption (on image)", "default": "Plug the cable into the mat port." },
+        { "type": "image_picker", "id": "step_image",     "label": "Step Image" },
+        { "type": "text",         "id": "step_image_url", "label": "Image URL (fallback)",     "default": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&q=80" },
+        { "type": "header", "content": "Typography" },
+        { "type": "range",  "id": "title_font_size",   "label": "Title Size (px)",   "min": 10, "max": 24, "step": 1, "default": 13 },
+        { "type": "select", "id": "title_font_weight", "label": "Title Weight",
+          "options": [{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"600","label":"Bold"}], "default": "500" },
+        { "type": "range",  "id": "desc_font_size",    "label": "Desc Size (px)",    "min": 10, "max": 20, "step": 1, "default": 13 },
+        { "type": "range",  "id": "num_font_size",     "label": "Number Size (px)",  "min": 18, "max": 60, "step": 1, "default": 35 },
+        { "type": "header", "content": "Colors" },
+        { "type": "color",  "id": "title_color", "label": "Title Color",  "default": "#1a1a1a" },
+        { "type": "color",  "id": "desc_color",  "label": "Desc Color",   "default": "#6b6b65" },
+        { "type": "color",  "id": "num_color",   "label": "Number Color", "default": "#7a8c72" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works",
+      "blocks": [
+        { "type": "step", "settings": { "step_title": "Connect the Cable",      "step_desc": "Plug the round end into the snap-port on your mat. Plug the flat end into the ground port (round hole) of any standard outlet. No current flows — only earth connection.", "step_short": "Plug the cable into the mat port.", "step_image_url": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&q=80" } },
+        { "type": "step", "settings": { "step_title": "Place Bare Skin on Mat", "step_desc": "Rest bare feet, wrists, or any skin directly on the mat. The carbon-silver conductive weave transfers earth's free electrons to your body within seconds of contact.",         "step_short": "Electrons flow immediately on contact.", "step_image_url": "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=800&q=80" } },
+        { "type": "step", "settings": { "step_title": "Feel the Difference",    "step_desc": "Most users notice warmth or tingling within minutes. Sleep benefits appear in 7–14 days. Inflammation and pain reduction is measurable within 4 weeks of consistent daily use.",  "step_short": "Feel the warmth and calm.", "step_image_url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

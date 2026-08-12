@@ -1,0 +1,174 @@
+<style>
+  /* ═══════════════════════════════════════
+     FAQ — section styles
+  ═══════════════════════════════════════ */
+  .gw-faq-section {
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: 52px;
+    padding-right: 52px;
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  .gw-faq-inner  { max-width: {{ section.settings.content_width }}px; margin: 0 auto; }
+  .gw-faq-hd     { text-align: center; margin-bottom: 64px; }
+  .gw-faq-item   { border-bottom: 1px solid var(--border); overflow: hidden; }
+  .gw-faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 0; cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    transition: color .3s; gap: 20px; user-select: none;
+  }
+  .gw-faq-q:hover { color: var(--sage-lt); }
+  .gw-faq-icon {
+    width: 26px; height: 26px; border-radius: 50%;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; font-weight: 700;
+    transition: transform .45s cubic-bezier(.34,1.56,.64,1), background .3s, border-color .3s;
+  }
+  .gw-faq-item.open .gw-faq-icon {
+    transform: rotate(45deg);
+    background: var(--sage); color: var(--bg); border-color: var(--sage) !important;
+  }
+  .gw-faq-a       { max-height: 0; overflow: hidden; transition: max-height .5s cubic-bezier(.22,1,.36,1); }
+  .gw-faq-a-inner { padding: 0 0 22px; font-weight: 300; line-height: 1.88; }
+  .gw-faq-item.open .gw-faq-a { max-height: 400px; }
+
+  @media (max-width: 660px) {
+    .gw-faq-section { padding: 72px 24px; }
+  }
+</style>
+
+<section class="gw-faq-section" id="{{ section.settings.section_id | default: 'faq' }}">
+  <div class="gw-faq-inner">
+    <div class="gw-faq-hd reveal">
+      <span class="s-label"
+        style="display: block; text-align: center; margin-bottom: 8px;
+               color: {{ section.settings.label_color }};
+               font-size: {{ section.settings.label_font_size }}px;">
+        {{ section.settings.section_label }}
+      </span>
+      <h2 class="s-title"
+        style="text-align: center;
+               color: {{ section.settings.title_color }};
+               font-size: {{ section.settings.title_font_size_desktop }}px;
+               font-weight: {{ section.settings.title_font_weight }};">
+        {{ section.settings.section_title }}
+      </h2>
+    </div>
+
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'faq_item' %}
+          <div class="gw-faq-item reveal d{{ forloop.index | modulo: 5 | plus: 1 }}"
+            style="border-bottom-color: {{ block.settings.border_color }};"
+            {{ block.shopify_attributes }}>
+            <div class="gw-faq-q"
+              style="color: {{ block.settings.question_color }};
+                     font-size: {{ block.settings.question_font_size }}px;
+                     font-weight: {{ block.settings.question_font_weight }};">
+              {{ block.settings.question }}
+              <span class="gw-faq-icon"
+                style="border: 1px solid {{ block.settings.icon_border }};
+                       color: {{ block.settings.icon_color }};">+</span>
+            </div>
+            <div class="gw-faq-a">
+              <div class="gw-faq-a-inner"
+                style="color: {{ block.settings.answer_color }};
+                       font-size: {{ block.settings.answer_font_size }}px;
+                       line-height: {{ block.settings.answer_line_height }};">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+(function() {
+  /* Scoped FAQ toggle — works even if multiple FAQ sections on a page */
+  var section = document.currentScript.previousElementSibling;
+  /* Walk up to find the section */
+  var el = document.currentScript;
+  while (el && el.tagName !== 'SECTION') el = el.previousElementSibling || el.parentElement;
+
+  document.querySelectorAll('.gw-faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item    = this.closest('.gw-faq-item');
+      var wasOpen = item.classList.contains('open');
+      /* Close all items in the same section */
+      var parentSection = item.closest('.gw-faq-section');
+      parentSection.querySelectorAll('.gw-faq-item').forEach(function(i) {
+        i.classList.remove('open');
+      });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "header",  "content": "Content Controls" },
+    { "type": "text",    "id": "section_id",             "label": "Section Anchor ID",          "default": "faq" },
+    { "type": "text",    "id": "section_label",          "label": "Label",                      "default": "Questions Answered" },
+    { "type": "text",    "id": "section_title",          "label": "Title",                      "default": "Frequently Asked" },
+    { "type": "header",  "content": "Typography" },
+    { "type": "range",   "id": "title_font_size_desktop","label": "Title Font Size Desktop (px)","min": 24, "max": 80, "step": 2, "default": 52 },
+    { "type": "range",   "id": "label_font_size",        "label": "Label Font Size (px)",        "min": 10, "max": 20, "step": 1, "default": 15 },
+    { "type": "select",  "id": "title_font_weight",      "label": "Title Font Weight",
+      "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }], "default": "400" },
+    { "type": "header",  "content": "Color Controls" },
+    { "type": "color",   "id": "bg_color",               "label": "Background Color",           "default": "#080c09" },
+    { "type": "color",   "id": "title_color",            "label": "Title Color",                 "default": "#f2f5f1" },
+    { "type": "color",   "id": "label_color",            "label": "Label Color",                 "default": "#8fa889" },
+    { "type": "header",  "content": "Layout Controls" },
+    { "type": "range",   "id": "padding_top",            "label": "Padding Top (px)",            "min": 40, "max": 160, "step": 5, "default": 100 },
+    { "type": "range",   "id": "padding_bottom",         "label": "Padding Bottom (px)",         "min": 40, "max": 160, "step": 5, "default": 100 },
+    { "type": "range",   "id": "margin_top",             "label": "Margin Top (px)",             "min": 0,  "max": 80,  "step": 4, "default": 0 },
+    { "type": "range",   "id": "margin_bottom",          "label": "Margin Bottom (px)",          "min": 0,  "max": 80,  "step": 4, "default": 0 },
+    { "type": "range",   "id": "content_width",          "label": "Max Content Width (px)",      "min": 400, "max": 1200, "step": 40, "default": 800 }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        { "type": "header",  "content": "Q & A" },
+        { "type": "text",    "id": "question",            "label": "Question",           "default": "Is grounding actually safe?" },
+        { "type": "textarea","id": "answer",              "label": "Answer",             "default": "Completely. Our mats connect only to the ground (earth) terminal of your outlet — the same terminal that protects you from electrical faults. Zero current flows through your body." },
+        { "type": "header",  "content": "Typography" },
+        { "type": "range",   "id": "question_font_size",  "label": "Question Font Size (px)",  "min": 12, "max": 24, "step": 1, "default": 17 },
+        { "type": "select",  "id": "question_font_weight","label": "Question Font Weight",
+          "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "600", "label": "Bold" }], "default": "400" },
+        { "type": "range",   "id": "answer_font_size",    "label": "Answer Font Size (px)",    "min": 11, "max": 18, "step": 1, "default": 14 },
+        { "type": "range",   "id": "answer_line_height",  "label": "Answer Line Height",       "min": 1.2, "max": 2.4, "step": 0.1, "default": 1.9 },
+        { "type": "header",  "content": "Colors" },
+        { "type": "color",   "id": "question_color",      "label": "Question Color",    "default": "#dde4db" },
+        { "type": "color",   "id": "answer_color",        "label": "Answer Color",      "default": "#72756f" },
+        { "type": "color",   "id": "icon_color",          "label": "Icon Color",        "default": "#6e7c68" },
+        { "type": "color",   "id": "icon_border",         "label": "Icon Border Color", "default": "#28352a" },
+        { "type": "color",   "id": "border_color",        "label": "Divider Color",     "default": "#1e2b1f" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "faq_item", "settings": { "question": "Is grounding actually safe?",       "answer": "Completely. Our mats connect only to the ground (earth) terminal of your outlet — the same terminal that protects you from electrical faults. Zero current flows through your body." } },
+        { "type": "faq_item", "settings": { "question": "How long before I notice results?", "answer": "Many people feel warmth or a quiet tingling within their first session. For sleep and pain benefits, most customers report a noticeable shift within 7–14 days of consistent nightly use." } },
+        { "type": "faq_item", "settings": { "question": "What are the mats made from?",      "answer": "Our mats use a proprietary blend of natural carbon and silver fibres woven into an organic cotton or natural rubber base. All materials are non-toxic and hypoallergenic." } },
+        { "type": "faq_item", "settings": { "question": "Do you ship internationally?",      "answer": "Yes — we ship to over 60 countries with free tracked shipping on all orders. Most orders arrive within 3–7 business days." } },
+        { "type": "faq_item", "settings": { "question": "What if it doesn't work for me?",  "answer": "We offer a full 60-day money-back guarantee — no questions, no forms, no hassle. If you use your mat consistently for two months and don't feel a meaningful difference, contact us for a complete refund." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,182 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_8tE4aG": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_pF3QwH": {
+          "type": "heading",
+          "settings": {
+            "heading": "We’re Here for You",
+            "heading_size": "h1"
+          }
+        },
+        "text_rFKpBB": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_eJBEF8": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_pF3QwH",
+        "text_rFKpBB",
+        "buttons_eJBEF8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Desktop_-_32_4.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 10,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "image_banner_nHFRbc": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_JViVQN": {
+          "type": "heading",
+          "settings": {
+            "heading": "We’re Here for You",
+            "heading_size": "h2"
+          }
+        },
+        "text_kBkBrF": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_i9N7N6": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_JViVQN",
+        "text_kBkBrF",
+        "buttons_i9N7N6"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/1.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 10,
+        "image_height": "adapt",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 68
+      }
+    },
+    "multicolumn_QJmFaC": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_ppKPke": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_ppKPke"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "third",
+        "image_ratio": "circle",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_8tE4aG",
+    "image_banner_nHFRbc",
+    "form",
+    "multicolumn_QJmFaC"
+  ]
+}

@@ -1,0 +1,969 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "destination_hero_3dirDB": {
+      "type": "destination-hero",
+      "blocks": {
+        "destination_KXgGxg": {
+          "type": "destination",
+          "settings": {
+            "background_image": "shopify://shop_images/5994.jpg",
+            "subtitle": "Earthing Technology · Science-Backed",
+            "title": "SLEEP\nGROUNDED<br>\nWAKE HEALED",
+            "description": "Restore your body's natural electrical balance. Fall asleep faster, wake pain-free, and feel more alive every day.",
+            "card_region": "Best Seller",
+            "card_name": "Sleep Mat",
+            "button_label": "SHOP MATS",
+            "button_url": "shopify://collections/all"
+          }
+        },
+        "destination_EAbt4T": {
+          "type": "destination",
+          "settings": {
+            "background_image": "shopify://shop_images/2148657849.jpg",
+            "subtitle": "Desk Grounding · Work Restored",
+            "title": "GROUND\nWHILE\nYOU WORK",
+            "description": "Stay earthed all day at your desk. Reduce tension, sharpen focus, and end every workday feeling genuinely calm.",
+            "card_region": "New Arrival",
+            "card_name": "Desk Pad",
+            "button_label": "SHOP MATS",
+            "button_url": "shopify://collections/all"
+          }
+        },
+        "destination_UDEVRB": {
+          "type": "destination",
+          "settings": {
+            "background_image": "shopify://shop_images/28729.jpg",
+            "subtitle": "Yoga · Deeper Practice",
+            "title": "PRACTISE\nROOTED\nIN EARTH",
+            "description": "Our conductive yoga mat grounds you during every asana. Deeper practice, reduced inflammation, faster recovery.",
+            "card_region": "Bestseller",
+            "card_name": "Yoga Mat",
+            "button_label": "SHOP MATS",
+            "button_url": "shopify://collections/all"
+          }
+        },
+        "destination_ycf9nD": {
+          "type": "destination",
+          "settings": {
+            "background_image": "shopify://shop_images/3548.jpg",
+            "subtitle": "Earthing Technology · Science-Backed",
+            "title": "EARTH\nWHEREVER\nYOU GO",
+            "description": "Never lose your grounding routine when you travel. Our compact travel kit works with any standard outlet worldwide.",
+            "card_region": "Portable",
+            "card_name": "Travel Kit",
+            "button_label": "SHOP MATS",
+            "button_url": "shopify://collections/all"
+          }
+        },
+        "destination_gtaJQe": {
+          "type": "destination",
+          "settings": {
+            "background_image": "shopify://shop_images/11673.jpg",
+            "subtitle": "Desk Grounding · Balance Restored",
+            "title": "RESET\nWHILE\nYOU WORK",
+            "description": "Reconnect with the earth while you work. \nReduce stress, improve focus, and stay balanced \nthroughout your entire workday.",
+            "card_region": "Greece",
+            "card_name": "Reset",
+            "button_label": "SHOP MATS",
+            "button_url": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "destination_KXgGxg",
+        "destination_EAbt4T",
+        "destination_UDEVRB",
+        "destination_ycf9nD",
+        "destination_gtaJQe"
+      ],
+      "name": "Destination Hero",
+      "settings": {
+        "hero_height": 100,
+        "auto_delay": 7000,
+        "accent_color": "#f0c040",
+        "subtitle_color": "#f2f2f2",
+        "title_color": "#ffffff",
+        "desc_color": "#fafafa",
+        "btn_text_color": "#ffffff",
+        "btn_bg_color": "rgba(0,0,0,0)",
+        "btn_border_color": "#f0c040",
+        "btn_hover_text_color": "#0a0c14",
+        "btn_hover_bg_color": "#f0c040",
+        "subtitle_size_desktop": 14,
+        "title_size_desktop": 80,
+        "desc_size_desktop": 14,
+        "btn_size_desktop": 12,
+        "subtitle_size_mobile": 12,
+        "title_size_mobile": 44,
+        "desc_size_mobile": 13,
+        "btn_size_mobile": 11
+      }
+    },
+    "trust_trip_xYXhRy": {
+      "type": "trust-trip",
+      "blocks": {
+        "trust_item_wCXqth": {
+          "type": "trust_item",
+          "settings": {
+            "text": "4.9 Stars · 2,400+ Reviews",
+            "icon": "star",
+            "font_size": 11,
+            "font_weight": "400",
+            "text_color": "#fbf9f6",
+            "icon_color": "#6e7c68"
+          }
+        },
+        "trust_item_gbqBiQ": {
+          "type": "trust_item",
+          "settings": {
+            "text": "60-Day Money Back",
+            "icon": "shield",
+            "font_size": 11,
+            "font_weight": "400",
+            "text_color": "#fbf9f6",
+            "icon_color": "#6e7c68"
+          }
+        },
+        "trust_item_GHnHJc": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Free Worldwide Shipping",
+            "icon": "box",
+            "font_size": 11,
+            "font_weight": "400",
+            "text_color": "#fbf9f6",
+            "icon_color": "#6e7c68"
+          }
+        },
+        "trust_item_bCUCBj": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Ships Within 24 Hours",
+            "icon": "clock",
+            "font_size": 11,
+            "font_weight": "400",
+            "text_color": "#fbf9f6",
+            "icon_color": "#6e7c68"
+          }
+        },
+        "trust_item_jqypTz": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Trust Item",
+            "icon": "star",
+            "font_size": 11,
+            "font_weight": "400",
+            "text_color": "#fbf9f6",
+            "icon_color": "#6e7c68"
+          }
+        },
+        "trust_item_V7epGz": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Carbon + Silver Fibre",
+            "icon": "leaf",
+            "font_size": 11,
+            "font_weight": "400",
+            "text_color": "#fbf9f6",
+            "icon_color": "#6e7c68"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_wCXqth",
+        "trust_item_gbqBiQ",
+        "trust_item_GHnHJc",
+        "trust_item_bCUCBj",
+        "trust_item_jqypTz",
+        "trust_item_V7epGz"
+      ],
+      "name": "Trust Strip",
+      "settings": {
+        "bg_color": "#111712",
+        "marquee_speed": 24,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "content_width": 1440
+      }
+    },
+    "custom_feature_products_jMNmJC": {
+      "type": "custom-feature-products",
+      "name": "Featured Products",
+      "settings": {
+        "collection": "products",
+        "products_limit": 3,
+        "columns": 3,
+        "img_ratio": "4/3",
+        "section_id": "products",
+        "section_label": "The Collection",
+        "section_title": "Shop <span style=\"color:#6E7C68\">Grounding Mats</span>",
+        "view_all_text": "All products",
+        "title_font_size_desktop": 60,
+        "label_font_size": 11,
+        "name_font_size": 22,
+        "desc_font_size": 13,
+        "bg_color": "#fbf9f6",
+        "title_color": "#1a1a1a",
+        "label_color": "#7a8c72",
+        "view_all_color": "#888880",
+        "card_bg": "#ffffff",
+        "card_border": "#e8e4de",
+        "card_border_hover": "#b5c4af",
+        "img_bg": "#f0ece6",
+        "name_color": "#1a1a1a",
+        "price_color": "#b66f3e",
+        "compare_color": "#aaa9a3",
+        "desc_color": "#6b6b65",
+        "title_accent_color": "#7a8c72",
+        "name_hover_color": "#1a1a1a",
+        "btn_color": "#b66f3e",
+        "btn_border": "#b66f3e",
+        "btn_hover_bg": "#b66f3e",
+        "btn_hover_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "content_width": 1440,
+        "card_radius": 6
+      }
+    },
+    "how_it_work_CM4ynk": {
+      "type": "how-it-work",
+      "blocks": {
+        "step_aX9kpw": {
+          "type": "step",
+          "settings": {
+            "step_title": "Connect the Cable",
+            "step_desc": "Plug the round end into the snap-port on your mat. Plug the flat end into the ground port (round hole) of any standard outlet. No current flows — only earth connection.",
+            "step_short": "Plug the cable's round end into the mat port. Flat end into the wall ground port.",
+            "step_image": "shopify://shop_images/ChatGPT_Image_Mar_12_2026_10_04_49_AM.png",
+            "step_image_url": "",
+            "title_font_size": 13,
+            "title_font_weight": "500",
+            "desc_font_size": 13,
+            "num_font_size": 35,
+            "title_color": "#1a1a1a",
+            "desc_color": "#6b6b65",
+            "num_color": "#7a8c72"
+          }
+        },
+        "step_FQGfn3": {
+          "type": "step",
+          "settings": {
+            "step_title": "Place Bare Skin on Mat",
+            "step_desc": "Rest bare feet, wrists, or any skin directly on the mat. The carbon-silver conductive weave transfers earth's free electrons to your body within seconds of contact.",
+            "step_short": "Electrons flow immediately on contact.",
+            "step_image": "shopify://shop_images/ChatGPT_Image_Mar_12_2026_10_06_00_AM.png",
+            "step_image_url": "",
+            "title_font_size": 13,
+            "title_font_weight": "500",
+            "desc_font_size": 13,
+            "num_font_size": 35,
+            "title_color": "#1a1a1a",
+            "desc_color": "#6b6b65",
+            "num_color": "#7a8c72"
+          }
+        },
+        "step_VW8c3H": {
+          "type": "step",
+          "settings": {
+            "step_title": "Feel the Difference",
+            "step_desc": "Most users notice warmth or tingling within minutes. Sleep benefits appear in 7–14 days. Inflammation and pain reduction is measurable within 4 weeks of consistent daily use.",
+            "step_short": "Feel the warmth and calm. Consistent daily use brings lasting change.",
+            "step_image": "shopify://shop_images/ChatGPT_Image_Mar_12_2026_10_09_31_AM.png",
+            "step_image_url": "",
+            "title_font_size": 13,
+            "title_font_weight": "500",
+            "desc_font_size": 13,
+            "num_font_size": 35,
+            "title_color": "#1a1a1a",
+            "desc_color": "#6b6b65",
+            "num_color": "#7a8c72"
+          }
+        }
+      },
+      "block_order": [
+        "step_aX9kpw",
+        "step_FQGfn3",
+        "step_VW8c3H"
+      ],
+      "custom_css": [
+        "@media only screen and (max-width: 767px) {section#how {padding-top: 0; }}"
+      ],
+      "name": "How It Works",
+      "settings": {
+        "section_id": "how",
+        "section_label": "Simple Setup",
+        "section_title": "Ready in <span style=\"color:#6E7C68\">3 steps</span>",
+        "title_font_size_desktop": 60,
+        "title_font_size_mobile": 32,
+        "label_font_size": 15,
+        "label_font_size_mobile": 13,
+        "title_font_weight": "400",
+        "tag_title_font_size_desktop": 17,
+        "tag_text_font_size_desktop": 12,
+        "tag_title_color": "#1a1a1a",
+        "tag_text_color": "#6b6b65",
+        "bg_color": "#fbf9f6",
+        "img_bg": "#f0ece6",
+        "border_color": "#e8e4de",
+        "accent_color": "#7a8c72",
+        "title_color": "#1a1a1a",
+        "label_color": "#7a8c72",
+        "title_accent_color": "#7a8c72",
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "content_width": 1400
+      }
+    },
+    "science_bar_YEYRaY": {
+      "type": "science-bar",
+      "blocks": {
+        "stat_cUGWtm": {
+          "type": "stat",
+          "settings": {
+            "stat_number": "68%",
+            "stat_label": "Report pain reduction",
+            "num_font_size": 56,
+            "label_font_size": 11,
+            "num_color": "#f2f5f1",
+            "label_color": "#ffffff73"
+          }
+        },
+        "stat_TWrKQY": {
+          "type": "stat",
+          "settings": {
+            "stat_number": "85%",
+            "stat_label": "Improved sleep quality",
+            "num_font_size": 56,
+            "label_font_size": 11,
+            "num_color": "#f2f5f1",
+            "label_color": "#ffffff73"
+          }
+        },
+        "stat_VQ9WVg": {
+          "type": "stat",
+          "settings": {
+            "stat_number": "21+",
+            "stat_label": "Peer-reviewed studies",
+            "num_font_size": 56,
+            "label_font_size": 11,
+            "num_color": "#f2f5f1",
+            "label_color": "#ffffff73"
+          }
+        },
+        "stat_BnDMnr": {
+          "type": "stat",
+          "settings": {
+            "stat_number": "14",
+            "stat_label": "Days to feel the shift",
+            "num_font_size": 56,
+            "label_font_size": 11,
+            "num_color": "#f2f5f1",
+            "label_color": "#ffffff73"
+          }
+        }
+      },
+      "block_order": [
+        "stat_cUGWtm",
+        "stat_TWrKQY",
+        "stat_VQ9WVg",
+        "stat_BnDMnr"
+      ],
+      "name": "Science Bar",
+      "settings": {
+        "section_id": "science",
+        "bg_color": "#4a5645",
+        "border_color": "#5d6e57",
+        "cell_padding": 40,
+        "margin_top": 0,
+        "margin_bottom": 0
+      }
+    },
+    "product_showcase_t3F4Mh": {
+      "type": "product-showcase",
+      "blocks": {
+        "feature_niWDMn": {
+          "type": "feature",
+          "settings": {
+            "feat_title": "All-Night Grounding",
+            "feat_sub": "Fits any bed · works through a single cotton sheet",
+            "icon": "moon",
+            "title_font_size": 13,
+            "desc_font_size": 12,
+            "title_color": "#1a1a1a",
+            "desc_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        },
+        "feature_3jeRU7": {
+          "type": "feature",
+          "settings": {
+            "feat_title": "Pure Carbon + Silver Fibre",
+            "feat_sub": "No plastics in the conductive layer · hypoallergenic",
+            "icon": "leaf",
+            "title_font_size": 13,
+            "desc_font_size": 12,
+            "title_color": "#1a1a1a",
+            "desc_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        },
+        "feature_QfRF6e": {
+          "type": "feature",
+          "settings": {
+            "feat_title": "USA Plug Included",
+            "feat_sub": "Ground port only · zero electrical current through body",
+            "icon": "bolt",
+            "title_font_size": 13,
+            "desc_font_size": 12,
+            "title_color": "#1a1a1a",
+            "desc_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        },
+        "feature_zyNipf": {
+          "type": "feature",
+          "settings": {
+            "feat_title": "60-Day Guarantee",
+            "feat_sub": "Full refund if you don't feel the difference",
+            "icon": "shield",
+            "title_font_size": 13,
+            "desc_font_size": 12,
+            "title_color": "#1a1a1a",
+            "desc_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        }
+      },
+      "block_order": [
+        "feature_niWDMn",
+        "feature_3jeRU7",
+        "feature_QfRF6e",
+        "feature_zyNipf"
+      ],
+      "custom_css": [
+        "span.gw-sp__atc-text {font-size: 12px;}"
+      ],
+      "name": "Product Showcase",
+      "settings": {
+        "section_id": "spotlight",
+        "section_label": "Featured Product",
+        "section_title": "Deep Sleep Mat — <span style=\"color:#6E7C68\">Our #1 Bestseller</span>",
+        "product": "grounded-spirit-mat",
+        "product_label": "Deep Sleep Mat",
+        "product_title_fallback": "Our Bestselling Mat",
+        "price_fallback": "$89",
+        "compare_price_fallback": "$119",
+        "save_pill": "Save 25%",
+        "show_stars": true,
+        "star_text": "4.9 · 2,400+ reviews",
+        "btn_text": "Add to Cart",
+        "below_btn_text": "Free shipping · 60-day guarantee · Ships in 24h",
+        "title_font_size": 60,
+        "label_font_size": 11,
+        "product_title_size": 42,
+        "price_font_size": 32,
+        "bg_color": "#fbf9f6",
+        "content_bg": "#ffffff",
+        "img_bg": "#f0ece6",
+        "card_border": "#e8e4de",
+        "card_border_hover": "#b5c4af",
+        "accent_color": "#eddace",
+        "title_color": "#1a1a1a",
+        "label_color": "#7a8c72",
+        "desc_color": "#6b6b65",
+        "compare_color": "#aaa9a3",
+        "price_color": "#b66f3e",
+        "btn_color": "#b66f3e",
+        "btn_border": "#b66f3e",
+        "btn_hover_bg": "#b66f3e",
+        "btn_hover_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "content_padding": 48,
+        "content_width": 1360,
+        "min_height": 560,
+        "photo_ratio": 1,
+        "content_ratio": 1,
+        "card_radius": 6
+      }
+    },
+    "custom_review_yqr8e9": {
+      "type": "custom-review",
+      "blocks": {
+        "testimonial_zaxREt": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Six years of chronic back pain. Two weeks on the Sleep Mat and I woke up without that familiar ache for the first time. I genuinely could not believe it.",
+            "author_name": "Sarah M.",
+            "author_meta": "✓ Verified · Portland, OR",
+            "star_count": 5,
+            "quote_font_size": 16,
+            "quote_line_height": 1.8,
+            "stars_font_size": 13,
+            "card_bg": "#161e17",
+            "card_border": "#1e2b1f",
+            "stars_color": "#6e7c68",
+            "quote_color": "#c7cec5",
+            "name_color": "#f2f5f1",
+            "meta_color": "#6e7c68",
+            "avatar_bg_dark": "#4a5645",
+            "avatar_bg_light": "#6e7c68",
+            "avatar_text_color": "#080c09"
+          }
+        },
+        "testimonial_66gwHK": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I'm a biochemist. I was thoroughly sceptical. My Oura Ring data proved me wrong — REM sleep up 40% in three weeks.",
+            "author_name": "Dr. David K.",
+            "author_meta": "✓ Verified · London, UK",
+            "star_count": 5,
+            "quote_font_size": 16,
+            "quote_line_height": 1.8,
+            "stars_font_size": 13,
+            "card_bg": "#161e17",
+            "card_border": "#1e2b1f",
+            "stars_color": "#6e7c68",
+            "quote_color": "#c7cec5",
+            "name_color": "#f2f5f1",
+            "meta_color": "#6e7c68",
+            "avatar_bg_dark": "#4a5645",
+            "avatar_bg_light": "#6e7c68",
+            "avatar_text_color": "#080c09"
+          }
+        },
+        "testimonial_XncPRt": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The desk pad changed everything about my afternoons. Less shoulder tension, calmer focus, and my wrist inflammation from typing is finally subsiding.",
+            "author_name": "Lena W.",
+            "author_meta": "✓ Verified · Berlin, DE",
+            "star_count": 5,
+            "quote_font_size": 16,
+            "quote_line_height": 1.8,
+            "stars_font_size": 13,
+            "card_bg": "#161e17",
+            "card_border": "#1e2b1f",
+            "stars_color": "#6e7c68",
+            "quote_color": "#c7cec5",
+            "name_color": "#f2f5f1",
+            "meta_color": "#6e7c68",
+            "avatar_bg_dark": "#4a5645",
+            "avatar_bg_light": "#6e7c68",
+            "avatar_text_color": "#080c09"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_zaxREt",
+        "testimonial_66gwHK",
+        "testimonial_XncPRt"
+      ],
+      "custom_css": [
+        "h2.s-title {margin-top: 12px;}",
+        "@media only screen and (max-width: 767px) {section#reviews {padding-top: 0; }}"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "section_id": "reviews",
+        "section_label": "Real Results",
+        "section_title": "What our <span style=\"color:#6E7C68\">customers say</span>",
+        "heading_align": "center",
+        "title_font_size_desktop": 60,
+        "label_font_size": 15,
+        "title_font_weight": "700",
+        "bg_color": "#fbf9f6",
+        "title_color": "#3d3d3d",
+        "label_color": "#8fa889",
+        "columns": 3,
+        "padding_top": 60,
+        "padding_bottom": 100,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "content_width": 1440
+      }
+    },
+    "life_style_RkWmXd": {
+      "type": "life-style",
+      "blocks": {
+        "list_item_crUVAX": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Slip under your bedsheet — earth all night, effortlessly",
+            "icon": "moon",
+            "font_size": 13,
+            "text_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        },
+        "list_item_7ReBjk": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Place under your desk for continuous daytime grounding",
+            "icon": "bolt",
+            "font_size": 13,
+            "text_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        },
+        "list_item_L68MEU": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Use on your yoga mat for a deeper, more restorative practice",
+            "icon": "leaf",
+            "font_size": 13,
+            "text_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        },
+        "list_item_XLJFGD": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Pack the travel pad for grounding wherever you go",
+            "icon": "globe",
+            "font_size": 13,
+            "text_color": "#6b6b65",
+            "icon_color": "#b66f3e",
+            "icon_bg": "#eee9e6",
+            "icon_border": "#eddace"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_crUVAX",
+        "list_item_7ReBjk",
+        "list_item_L68MEU",
+        "list_item_XLJFGD"
+      ],
+      "name": "Lifestyle Split v2",
+      "settings": {
+        "section_id": "lifestyle",
+        "photo": "shopify://shop_images/photo-1571019613454-1cb2f99b2d8b.jpg",
+        "photo_url": "",
+        "photo_alt": "Grounding lifestyle",
+        "photo_right": false,
+        "badge_number": "2,400+",
+        "badge_label": "Happy Customers",
+        "section_label": "A Daily Ritual",
+        "section_title": "Designed for the <span style=\"color:#6E7C68\">life you live</span>",
+        "body_text": "Our mats slip seamlessly into your existing routine. No lifestyle overhaul. No special practice required. Just quiet, daily reconnection.",
+        "btn_text": "Start Your Journey",
+        "btn_url": "shopify://pages/our-story",
+        "title_font_size": 52,
+        "label_font_size": 11,
+        "body_font_size": 14,
+        "title_font_weight": "700",
+        "bg_color": "#fbf9f6",
+        "content_bg": "#ffffff",
+        "border_color": "#e8e4de",
+        "accent_color": "#7a8c72",
+        "title_color": "#1a1a1a",
+        "label_color": "#7a8c72",
+        "body_color": "#6b6b65",
+        "btn_bg": "#c08a65",
+        "btn_color": "#ffffff",
+        "btn_hover_bg": "#b66f3e",
+        "photo_ratio": 1,
+        "content_ratio": 1,
+        "min_height": 620,
+        "content_v_padding": 80,
+        "content_h_padding": 64,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "button_font_size": 12,
+        "button_font_size_mobile": 9
+      }
+    },
+    "image_banner_zwLEcT": {
+      "type": "image-banner",
+      "blocks": {
+        "text_ArKE9F": {
+          "type": "text",
+          "settings": {
+            "text": "<em>Start Today</em>",
+            "text_style": "subtitle"
+          }
+        },
+        "heading_xiKcXk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Your body is waiting <br>to <span style=\"color:#6E7C68\">reconnect</span>",
+            "heading_size": "h0"
+          }
+        },
+        "text_DUpYeW": {
+          "type": "text",
+          "settings": {
+            "text": "The earth has been healing humans for millennia. Our mats bring that connection indoors  to your bed, your desk, your practice.",
+            "text_style": "body"
+          }
+        },
+        "buttons_MFMRaV": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SHOP THE COLLECTION",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "text_ArKE9F",
+        "heading_xiKcXk",
+        "text_DUpYeW",
+        "buttons_MFMRaV"
+      ],
+      "custom_css": [
+        "@media only screen and (min-width: 1024px) {h2.banner__heading.inline-richtext.h0 {font-size: 80px; }}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/photo-1441974231531-c6227db76b6e.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 80,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-428573ce-7c00-4bc3-be29-ae27c9a0217b",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "custom_faq_MRM4Yt": {
+      "type": "custom-faq",
+      "blocks": {
+        "faq_item_9xw3mU": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is grounding actually safe?",
+            "answer": "Completely. Our mats connect only to the ground (earth) terminal of your outlet — the same terminal that protects you from electrical faults. Zero current flows through your body.",
+            "question_font_size": 17,
+            "question_font_weight": "600",
+            "answer_font_size": 14,
+            "answer_line_height": 1.9,
+            "question_color": "#121212",
+            "answer_color": "#72756f",
+            "icon_color": "#6e7c68",
+            "icon_border": "#28352a",
+            "border_color": "#1e2b1f"
+          }
+        },
+        "faq_item_FzgA9y": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long before I notice results?",
+            "answer": "Many people feel warmth or a quiet tingling within their first session. For sleep and pain benefits, most customers report a noticeable shift within 7–14 days of consistent nightly use.",
+            "question_font_size": 17,
+            "question_font_weight": "600",
+            "answer_font_size": 14,
+            "answer_line_height": 1.9,
+            "question_color": "#121212",
+            "answer_color": "#72756f",
+            "icon_color": "#6e7c68",
+            "icon_border": "#28352a",
+            "border_color": "#1e2b1f"
+          }
+        },
+        "faq_item_6rAbA3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What are the mats made from?",
+            "answer": "Our mats use a proprietary blend of natural carbon and silver fibres woven into an organic cotton or natural rubber base. All materials are non-toxic and hypoallergenic.",
+            "question_font_size": 17,
+            "question_font_weight": "600",
+            "answer_font_size": 14,
+            "answer_line_height": 1.9,
+            "question_color": "#121212",
+            "answer_color": "#72756f",
+            "icon_color": "#6e7c68",
+            "icon_border": "#28352a",
+            "border_color": "#1e2b1f"
+          }
+        },
+        "faq_item_WtARAD": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "Yes — we ship to over 60 countries with free tracked shipping on all orders. Most orders arrive within 3–7 business days.",
+            "question_font_size": 17,
+            "question_font_weight": "600",
+            "answer_font_size": 14,
+            "answer_line_height": 1.9,
+            "question_color": "#121212",
+            "answer_color": "#72756f",
+            "icon_color": "#6e7c68",
+            "icon_border": "#28352a",
+            "border_color": "#1e2b1f"
+          }
+        },
+        "faq_item_dkWYdz": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if it doesn't work for me?",
+            "answer": "We offer a full 60-day money-back guarantee — no questions, no forms, no hassle. If you use your mat consistently for two months and don't feel a meaningful difference, contact us for a complete refund.",
+            "question_font_size": 17,
+            "question_font_weight": "600",
+            "answer_font_size": 14,
+            "answer_line_height": 1.9,
+            "question_color": "#121212",
+            "answer_color": "#72756f",
+            "icon_color": "#6e7c68",
+            "icon_border": "#28352a",
+            "border_color": "#1e2b1f"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_9xw3mU",
+        "faq_item_FzgA9y",
+        "faq_item_6rAbA3",
+        "faq_item_WtARAD",
+        "faq_item_dkWYdz"
+      ],
+      "disabled": true,
+      "name": "FAQ",
+      "settings": {
+        "section_id": "faq",
+        "section_label": "Questions Answered",
+        "section_title": "Frequently Asked",
+        "title_font_size_desktop": 52,
+        "label_font_size": 15,
+        "title_font_weight": "400",
+        "bg_color": "#fbf9f6",
+        "title_color": "#3d3d3d",
+        "label_color": "#6e7c68",
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "content_width": 800
+      }
+    },
+    "collapsible_content_y8YyAd": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_QqVXmd": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I track my order?",
+            "icon": "question_mark",
+            "row_content": "<p>Simply enter your order number and email address to view the latest updates on your shipment.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_HhzMmG": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When will my order be shipped?",
+            "icon": "question_mark",
+            "row_content": "<p>Orders are typically processed and shipped within <strong>1-3 business days.</strong> You will receive an email notification with tracking details once your order has been dispatched.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Aqzidc": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long will it take to receive my order?",
+            "icon": "question_mark",
+            "row_content": "<p>Delivery times vary based on your location. Typically, orders arrive within <strong>5-10 business days</strong> for domestic shipping and <strong>10-20 business days </strong>for international shipping.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_V3Mgpc": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "I haven’t received my tracking information. What should I do?",
+            "icon": "question_mark",
+            "row_content": "<p>If you haven’t received tracking details within 3 days of placing your order, <a href=\"/pages/contact\" target=\"_blank\" title=\"Contact\">contact our customer service team</a> for assistance.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_WhNXDj": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I change or cancel my order after placing it?",
+            "icon": "question_mark",
+            "row_content": "<p>If you need to modify or cancel your order, <a href=\"/pages/contact\" target=\"_blank\" title=\"Contact\">please contact us</a> as soon as possible. We’ll do our best to accommodate your request if your order hasn’t already been processed</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_QqVXmd",
+        "collapsible_row_HhzMmG",
+        "collapsible_row_Aqzidc",
+        "collapsible_row_V3Mgpc",
+        "collapsible_row_WhNXDj"
+      ],
+      "custom_css": [
+        "h3.accordion__title.inline-richtext.h4 {font-size: 19px;}"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "FAQ's",
+        "heading_size": "hxl",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "scheme-1",
+        "container_color_scheme": "scheme-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "destination_hero_3dirDB",
+    "trust_trip_xYXhRy",
+    "custom_feature_products_jMNmJC",
+    "how_it_work_CM4ynk",
+    "science_bar_YEYRaY",
+    "product_showcase_t3F4Mh",
+    "custom_review_yqr8e9",
+    "life_style_RkWmXd",
+    "image_banner_zwLEcT",
+    "custom_faq_MRM4Yt",
+    "collapsible_content_y8YyAd"
+  ]
+}

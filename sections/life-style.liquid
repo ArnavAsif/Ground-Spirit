@@ -1,0 +1,492 @@
+{% comment %}
+  ═══════════════════════════════════════════════════════
+  LIFESTYLE SPLIT — Enhanced Premium Section
+  Light brand theme: #FBF9F6 bg, sage green accents
+  ═══════════════════════════════════════════════════════
+{% endcomment %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+  /* ── Section shell ── */
+  .gw-ls {
+    background: {{ section.settings.bg_color }};
+    margin-top:    {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── 2-col grid ── */
+  .gw-ls__grid {
+    display: grid;
+    grid-template-columns: {{ section.settings.photo_ratio }}fr {{ section.settings.content_ratio }}fr;
+    min-height: {{ section.settings.min_height }}px;
+  }
+
+  /* ── Photo side ── */
+  .gw-ls__photo {
+    position: relative;
+    overflow: hidden;
+  }
+  .gw-ls__photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 9s cubic-bezier(.25,1,.5,1);
+  }
+  .gw-ls__photo:hover img { transform: scale(1.06); }
+
+  /* Subtle gradient overlay on photo edge */
+  .gw-ls__photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to right,
+      transparent 60%,
+      {{ section.settings.content_bg }}22 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Floating stat badge on photo */
+  .gw-ls__photo-badge {
+    position: absolute;
+    bottom: 32px; right: -1px;
+    background: {{ section.settings.content_bg }};
+    border: 1px solid {{ section.settings.border_color }};
+    border-right: none;
+    padding: 18px 28px 18px 22px;
+    display: flex; flex-direction: column; gap: 2px;
+    z-index: 2;
+    opacity: 0; transform: translateX(20px);
+    transition: opacity .6s ease .4s, transform .6s cubic-bezier(.22,1,.36,1) .4s;
+  }
+  .gw-ls.is-revealed .gw-ls__photo-badge {
+    opacity: 1; transform: translateX(0);
+  }
+  .gw-ls__badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; line-height: 1;
+    color: {{ section.settings.title_color }};
+    letter-spacing: -.02em;
+  }
+  .gw-ls__badge-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .58rem; font-weight: 400;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: {{ section.settings.label_color }};
+  }
+
+  /* ── Content side ── */
+  .gw-ls__content {
+    background: {{ section.settings.content_bg }};
+    padding: {{ section.settings.content_v_padding }}px {{ section.settings.content_h_padding }}px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-left: 1px solid {{ section.settings.border_color }};
+    position: relative; overflow: hidden;
+  }
+
+  /* Corner botanical accent */
+  .gw-ls__content::before {
+    content: '';
+    position: absolute; bottom: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, {{ section.settings.accent_color }}12 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── Section label ── */
+  .gw-ls__label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: {{ section.settings.label_font_size }}px;
+    font-weight: 500; letter-spacing: .26em; text-transform: uppercase;
+    color: {{ section.settings.label_color }};
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .gw-ls__label::before {
+    content: ''; display: block;
+    width: 28px; height: 1px;
+    background: {{ section.settings.accent_color }};
+    flex-shrink: 0;
+  }
+  .gw-ls.is-revealed .gw-ls__label {
+    opacity: 1; transform: translateY(0);
+    transition-delay: .05s;
+  }
+
+  /* ── Title ── */
+  .gw-ls__title {
+    font-size: clamp(28px, 3vw, {{ section.settings.title_font_size }}px);
+    font-weight: {{ section.settings.title_font_weight }};
+    line-height: 1.1; letter-spacing: -.01em;
+    color: {{ section.settings.title_color }};
+    margin: 0 0 20px;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1);
+  }
+  .gw-ls__title em { font-style: italic; color: {{ section.settings.accent_color }}; }
+  .gw-ls__title span { color: {{ section.settings.accent_color }}; }
+  .gw-ls.is-revealed .gw-ls__title {
+    opacity: 1; transform: translateY(0);
+    transition-delay: .12s;
+  }
+
+  /* ── Body text ── */
+  .gw-ls__body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: {{ section.settings.body_font_size }}px;
+    font-weight: 300; line-height: 1.8;
+    color: {{ section.settings.body_color }};
+    margin-bottom: 36px;
+    max-width: 480px;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .gw-ls.is-revealed .gw-ls__body {
+    opacity: 1; transform: translateY(0);
+    transition-delay: .18s;
+  }
+
+  /* ── Divider before list ── */
+  .gw-ls__divider {
+    width: 40px; height: 1px;
+    background: {{ section.settings.border_color }};
+    margin-bottom: 28px;
+    opacity: 0;
+    transition: opacity .5s ease, width .6s cubic-bezier(.22,1,.36,1);
+  }
+  .gw-ls.is-revealed .gw-ls__divider {
+    opacity: 1; width: 40px;
+    transition-delay: .22s;
+  }
+
+  /* ── Feature list ── */
+  .gw-ls__list {
+    list-style: none; margin: 0 0 40px;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .gw-ls__item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid {{ section.settings.border_color }};
+    opacity: 0; transform: translateX(-12px);
+    transition: opacity .4s ease, transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  .gw-ls__item:first-child { border-top: 1px solid {{ section.settings.border_color }}; }
+  .gw-ls.is-revealed .gw-ls__item { opacity: 1; transform: translateX(0); }
+  .gw-ls.is-revealed .gw-ls__item:nth-child(1) { transition-delay: .26s; }
+  .gw-ls.is-revealed .gw-ls__item:nth-child(2) { transition-delay: .33s; }
+  .gw-ls.is-revealed .gw-ls__item:nth-child(3) { transition-delay: .40s; }
+  .gw-ls.is-revealed .gw-ls__item:nth-child(4) { transition-delay: .47s; }
+  .gw-ls.is-revealed .gw-ls__item:nth-child(5) { transition-delay: .54s; }
+  .gw-ls.is-revealed .gw-ls__item:nth-child(6) { transition-delay: .61s; }
+
+  /* Icon wrapper */
+  .gw-ls__item-icon {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .gw-ls__item:hover .gw-ls__item-icon { transform: scale(1.18); }
+  .gw-ls__item-icon svg {
+    display: block;
+    width: 12px; height: 12px;
+    fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* Item text */
+  .gw-ls__item-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300; line-height: 1.6; flex: 1;
+  }
+
+  /* ── CTA button ── */
+  .gw-ls__btn {
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: {{section.settings.button_font_size}}px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+    color: {{ section.settings.btn_color }};
+    background: {{ section.settings.btn_bg }};
+    border: 1px solid {{ section.settings.btn_bg }};
+    padding: 14px 28px; border-radius: 2px;
+    text-decoration: none; cursor: pointer;
+    position: relative; overflow: hidden;
+    transition: background .3s, border-color .3s, transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .5s ease .52s, transform .5s cubic-bezier(.34,1.56,.64,1) .52s,
+                background .3s, border-color .3s, box-shadow .3s;
+  }
+  .gw-ls.is-revealed .gw-ls__btn { opacity: 1; transform: translateY(0); }
+  .gw-ls__btn:hover {
+    background: {{ section.settings.btn_hover_bg }};
+    border-color: {{ section.settings.btn_hover_bg }};
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 28px {{ section.settings.accent_color }}33;
+  }
+  /* shimmer */
+  .gw-ls__btn::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.1), transparent);
+    transition: left .6s;
+  }
+  .gw-ls__btn:hover::after { left: 150%; }
+  .gw-ls__btn svg {
+    display: block; width: 13px; height: 13px;
+    fill: none; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    transition: transform .3s;
+    flex-shrink: 0;
+  }
+  .gw-ls__btn:hover svg { transform: translateX(3px); }
+
+  /* ── Photo-right variant ── */
+  .gw-ls--photo-right .gw-ls__grid {
+    grid-template-columns: {{ section.settings.content_ratio }}fr {{ section.settings.photo_ratio }}fr;
+  }
+  .gw-ls--photo-right .gw-ls__photo { order: 2; }
+  .gw-ls--photo-right .gw-ls__content {
+    border-left: none;
+    border-right: 1px solid {{ section.settings.border_color }};
+    order: 1;
+  }
+  .gw-ls--photo-right .gw-ls__photo::after {
+    background: linear-gradient(to left, transparent 60%, {{ section.settings.content_bg }}22 100%);
+  }
+  .gw-ls--photo-right .gw-ls__photo-badge {
+    left: -1px; right: auto;
+    border: 1px solid {{ section.settings.border_color }};
+    border-left: none;
+    transform: translateX(-20px);
+  }
+  .gw-ls--photo-right.is-revealed .gw-ls__photo-badge {
+    transform: translateX(0);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1060px) {
+    .gw-ls__grid { grid-template-columns: 1fr; }
+    .gw-ls__photo { min-height: 340px; order: 1 !important; }
+    .gw-ls__photo::after { display: none; }
+    .gw-ls__content {
+      order: 2 !important;
+      border-left: none !important; border-right: none !important;
+      border-top: 1px solid {{ section.settings.border_color }};
+    }
+    .gw-ls__photo-badge { display: none; }
+  }
+  @media (max-width: 660px) {
+    .gw-ls__btn{font-size: {{section.settings.button_font_size_mobile }}px}
+    .gw-ls__content { padding: 48px 24px; }
+    .gw-ls__title { font-size: clamp(26px, 7vw, 38px); }
+  }
+</style>
+
+<section class="gw-ls {% if section.settings.photo_right %}gw-ls--photo-right{% endif %}"
+  id="{{ section.settings.section_id | default: 'lifestyle' }}">
+  <div class="gw-ls__grid">
+
+    <!-- ── Photo ── -->
+    <div class="gw-ls__photo">
+      {%- if section.settings.photo != blank -%}
+        <img
+          src="{{ section.settings.photo | image_url: width: 1000 }}"
+          alt="{{ section.settings.photo_alt | default: 'Lifestyle' }}"
+          loading="lazy" width="1000">
+      {%- elsif section.settings.photo_url != blank -%}
+        <img
+          src="{{ section.settings.photo_url }}"
+          alt="{{ section.settings.photo_alt | default: 'Lifestyle' }}"
+          loading="lazy">
+      {%- endif -%}
+
+      {%- if section.settings.badge_number != blank -%}
+        <div class="gw-ls__photo-badge">
+          <span class="gw-ls__badge-num">{{ section.settings.badge_number }}</span>
+          <span class="gw-ls__badge-label">{{ section.settings.badge_label }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- ── Content ── -->
+    <div class="gw-ls__content">
+
+      {%- if section.settings.section_label != blank -%}
+        <div class="gw-ls__label">{{ section.settings.section_label }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.section_title != blank -%}
+        <h2 class="gw-ls__title">{{ section.settings.section_title }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.body_text != blank -%}
+        <p class="gw-ls__body">{{ section.settings.body_text }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="gw-ls__divider"></div>
+        <ul class="gw-ls__list">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'list_item' -%}
+                <li class="gw-ls__item" {{ block.shopify_attributes }}>
+                  <div class="gw-ls__item-icon"
+                    style="background:{{ block.settings.icon_bg }};
+                           border:1px solid {{ block.settings.icon_border }};
+                           color:{{ block.settings.icon_color }};">
+                    {%- case block.settings.icon -%}
+                      {%- when 'check' -%}
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                      {%- when 'leaf' -%}
+                        <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.34L5.71 21l1-.89A4.51 4.51 0 008 21c5 0 10-5 10-10 0-1-.17-2-.3-3"/></svg>
+                      {%- when 'moon' -%}
+                        <svg viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                      {%- when 'bolt' -%}
+                        <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                      {%- when 'sun' -%}
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                      {%- when 'heart' -%}
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                      {%- when 'globe' -%}
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                      {%- when 'dot' -%}
+                        <div style="width:5px;height:5px;border-radius:50%;background:currentColor;"></div>
+                    {%- endcase -%}
+                  </div>
+                  <div class="gw-ls__item-text"
+                    style="color:{{ block.settings.text_color }};font-size:{{ block.settings.font_size }}px;">
+                    {{ block.settings.item_text }}
+                  </div>
+                </li>
+            {%- endcase -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.btn_text != blank -%}
+        <a href="{{ section.settings.btn_url | default: '#' }}" class="gw-ls__btn">
+          {{ section.settings.btn_text }}
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var section = document.getElementById('{{ section.settings.section_id | default: "lifestyle" }}');
+  if (!section) return;
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { section.classList.add('is-revealed'); io.disconnect(); }
+      });
+    }, { threshold: 0.12 });
+    io.observe(section);
+  } else {
+    section.classList.add('is-revealed');
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Lifestyle Split",
+  "tag": "section",
+  "settings": [
+    { "type": "text",    "id": "section_id",     "label": "Section Anchor ID",   "default": "lifestyle" },
+    { "type": "header",  "content": "Photo" },
+    { "type": "image_picker","id": "photo",      "label": "Photo" },
+    { "type": "text",    "id": "photo_url",       "label": "Photo URL (fallback)", "default": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1000&q=82" },
+    { "type": "text",    "id": "photo_alt",       "label": "Photo Alt Text",       "default": "Grounding lifestyle" },
+    { "type": "checkbox","id": "photo_right",     "label": "Photo on Right Side",  "default": false },
+    { "type": "header",  "content": "Photo Badge" },
+    { "type": "text",    "id": "badge_number",    "label": "Badge Number (e.g. 2,400+)", "default": "2,400+" },
+    { "type": "text",    "id": "badge_label",     "label": "Badge Label",          "default": "Happy Customers" },
+    { "type": "header",  "content": "Content" },
+    { "type": "text",    "id": "section_label",   "label": "Label",                "default": "A Daily Ritual" },
+    { "type": "liquid",    "id": "section_title",   "label": "Title (HTML ok)",      "default": "Designed for the<br><em>life you live</em>" },
+    { "type": "textarea","id": "body_text",       "label": "Body Text",            "default": "Our mats slip seamlessly into your existing routine. No lifestyle overhaul. No special practice required. Just quiet, daily reconnection." },
+    { "type": "text",    "id": "btn_text",        "label": "Button Text",          "default": "Start Your Journey" },
+    { "type": "url",     "id": "btn_url",         "label": "Button URL" },
+    { "type": "header",  "content": "Typography" },
+    { "type": "range",   "id": "title_font_size", "label": "Title Size (px)",      "min": 24,"max": 80,"step": 2,"default": 52 },
+    { "type": "range",   "id": "label_font_size", "label": "Label Size (px)",      "min": 9,"max": 18,"step": 1,"default": 11 },
+    { "type": "range",   "id": "body_font_size",  "label": "Body Size (px)",       "min": 11,"max": 20,"step": 1,"default": 14 },
+    { "type": "select",  "id": "title_font_weight","label": "Title Weight",
+      "options": [{ "value": "300","label": "Light" },{ "value": "400","label": "Regular" },{ "value": "700","label": "Bold" }],
+      "default": "300" },
+    { "type": "header",  "content": "Colors" },
+    { "type": "color",   "id": "bg_color",        "label": "Section BG",           "default": "#FBF9F6" },
+    { "type": "color",   "id": "content_bg",      "label": "Content Panel BG",     "default": "#ffffff" },
+    { "type": "color",   "id": "border_color",    "label": "Border Color",         "default": "#e8e4de" },
+    { "type": "color",   "id": "accent_color",    "label": "Accent / Sage",        "default": "#7a8c72" },
+    { "type": "color",   "id": "title_color",     "label": "Title Color",          "default": "#1a1a1a" },
+    { "type": "color",   "id": "label_color",     "label": "Label Color",          "default": "#7a8c72" },
+    { "type": "color",   "id": "body_color",      "label": "Body Text Color",      "default": "#6b6b65" },
+    { "type": "color",   "id": "btn_bg",          "label": "Button BG",            "default": "#7a8c72" },
+    { "type": "color",   "id": "btn_color",       "label": "Button Text",          "default": "#ffffff" },
+    { "type": "color",   "id": "btn_hover_bg",    "label": "Button Hover BG",      "default": "#4a7a44" },
+    { "type": "header",  "content": "Layout" },
+    { "type": "range",   "id": "photo_ratio",     "label": "Photo Column Width",   "min": 1,"max": 3,"step": 1,"default": 1 },
+    { "type": "range",   "id": "content_ratio",   "label": "Content Column Width", "min": 1,"max": 3,"step": 1,"default": 1 },
+    { "type": "range",   "id": "min_height",      "label": "Min Height (px)",      "min": 300,"max": 900,"step": 20,"default": 620 },
+    { "type": "range",   "id": "content_v_padding","label": "Content Vertical Padding (px)","min": 32,"max": 120,"step": 8,"default": 80 },
+    { "type": "range",   "id": "content_h_padding","label": "Content Side Padding (px)","min": 20,"max": 100,"step": 4,"default": 64 },
+    { "type": "range",   "id": "margin_top",      "label": "Margin Top (px)",      "min": 0,"max": 80,"step": 4,"default": 0 },
+    { "type": "range",   "id": "margin_bottom",   "label": "Margin Bottom (px)",   "min": 0,"max": 80,"step": 4,"default": 0 },
+    {"type": "range", "id": "button_font_size", "label": "Button font size", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "button_font_size_mobile", "label": "Button font size mobile", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 9}
+  ],
+  "blocks": [
+    {
+      "type": "list_item",
+      "name": "List Item",
+      "limit": 8,
+      "settings": [
+        { "type": "text",   "id": "item_text",    "label": "Text",                "default": "Slip under your bedsheet — earth all night, effortlessly" },
+        { "type": "select", "id": "icon",         "label": "Icon",
+          "options": [
+            { "value": "check",  "label": "Checkmark" },
+            { "value": "leaf",   "label": "Leaf"      },
+            { "value": "moon",   "label": "Moon"      },
+            { "value": "bolt",   "label": "Bolt"      },
+            { "value": "sun",    "label": "Sun"       },
+            { "value": "heart",  "label": "Heart"     },
+            { "value": "globe",  "label": "Globe"     },
+            { "value": "dot",    "label": "Dot"       }
+          ],
+          "default": "check"
+        },
+        { "type": "range",  "id": "font_size",    "label": "Font Size (px)",      "min": 10,"max": 18,"step": 1,"default": 13 },
+        { "type": "header", "content": "Colors" },
+        { "type": "color",  "id": "text_color",   "label": "Text Color",          "default": "#6b6b65" },
+        { "type": "color",  "id": "icon_color",   "label": "Icon Color",          "default": "#7a8c72" },
+        { "type": "color",  "id": "icon_bg",      "label": "Icon BG",             "default": "#f0f4ee" },
+        { "type": "color",  "id": "icon_border",  "label": "Icon Border",         "default": "#dde8d9" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lifestyle Split v2",
+      "blocks": [
+        { "type": "list_item", "settings": { "item_text": "Slip under your bedsheet — earth all night, effortlessly",        "icon": "moon"  } },
+        { "type": "list_item", "settings": { "item_text": "Place under your desk for continuous daytime grounding",          "icon": "bolt"  } },
+        { "type": "list_item", "settings": { "item_text": "Use on your yoga mat for a deeper, more restorative practice",    "icon": "leaf"  } },
+        { "type": "list_item", "settings": { "item_text": "Pack the travel pad for grounding wherever you go",               "icon": "globe" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

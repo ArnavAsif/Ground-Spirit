@@ -1,0 +1,400 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_4DL8Nc": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_6KjkgN": {
+          "type": "heading",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_6KjkgN"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Desktop_-_32_11_50_1.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "image_banner_8hzRiE": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_rFMHHr": {
+          "type": "heading",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rFMHHr"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_-_2024-09-11T030903.851.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_YBjywd": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_RjUaji": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is Grounding?",
+            "icon": "check_mark",
+            "row_content": "<p>Grounding, or Earthing, is the practice of connecting your body directly to the earth’s natural energy field. This can be as simple as walking barefoot outside or using “barefoot substitutes” like our Grounded Spirit products. Our products connect to the ground port of home outlets or use a ground rod kit to bring the earth’s healing energy indoors. Made with conductive materials, they transfer this energy to your body through direct skin contact, helping you stay balanced, connected, and restored.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_3AY6eH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What’s the Difference Between Grounding and Earthing?",
+            "icon": "check_mark",
+            "row_content": "<p>Grounding and Earthing both reconnect you to the Earth’s natural energy, and the terms are often used interchangeably. Some people, however, make a subtle distinction: “Earthing” refers specifically to direct skin contact with the Earth, like walking barefoot on grass or sand, while “Grounding” can also refer to the process of connecting electrical devices to the earth for safety.<br/><br/>For most, these terms are interchangeable when talking about the health benefits of connecting to the Earth’s surface. Whether through direct contact or using our trusted “barefoot substitutes,” like Grounded Spirit products, reconnecting is easy, natural, and restorative.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_rXbXPz": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What’s the Technology Behind Grounding Products?",
+            "icon": "check_mark",
+            "row_content": "<p>Grounded Spirit products use simple yet effective technology. Each product is made with conductive materials, like silver threading, which allows the Earth’s energy to flow through. When connected via a ground cord to the ground port of an outlet or an optional ground rod, this energy is safely transferred to your body. Our products are designed to be safe, durable, and accessible, with options to fit every lifestyle. Explore how you can bring the healing power of grounding into your everyday life with Grounded Spirit.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_JxdLdW": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Does Grounding Affect Pets?",
+            "icon": "check_mark",
+            "row_content": "<p>Just like humans, pets benefit from grounding—especially indoor animals like dogs and cats who rarely connect with the Earth’s natural energy. Grounding can help reduce inflammation, improve circulation, and support overall well-being in pets. It may also ease stress and anxiety, providing a sense of calm.<br/><br/>Many pets instinctively gravitate towards grounding products, like grounded bedsheets, sensing the soothing effects even if they can’t express it. Their actions speak volumes about the natural comfort and healing grounding provides, reminding us that all beings thrive when connected to the Earth.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_hRUENB": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can Grounding Help with Neuropathy?",
+            "icon": "check_mark",
+            "row_content": "<ol><li><strong>Improved Blood Flow: </strong>Grounding has been shown to enhance circulation, which may help with neuropathy, especially diabetic neuropathy. Better blood flow supports healing and nerve regeneration in the extremities, where neuropathy commonly affects the hands and feet.</li><li><strong>Reduced Inflammation: </strong>Neuropathy is often linked to nerve damage caused by inflammation. Grounding can help neutralize free radicals, which contribute to inflammation, potentially easing the inflammatory response associated with neuropathy.</li><li><strong>Pain Relief: </strong>Some studies suggest grounding can reduce chronic pain. Since neuropathy involves nerve pain, grounding may provide relief by altering nerve electrical activity or reducing inflammation.</li><li><strong>Stress Reduction: </strong>Grounding induces a calming effect, which can be beneficial since stress can worsen neuropathy symptoms. By reducing stress, grounding may help manage these symptoms more effectively.</li><li><strong>Better Sleep:</strong> Grounding is known to improve sleep quality, which is essential for healing and managing pain. Improved rest can indirectly support neuropathy management, enhancing overall well-being.</li></ol>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_RjUaji",
+        "collapsible_row_3AY6eH",
+        "collapsible_row_rXbXPz",
+        "collapsible_row_JxdLdW",
+        "collapsible_row_hRUENB"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Grounding Basics",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_h7dBnU": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_ziaMhz": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How to Test My Grounded Spirit™ Sheet or Mat",
+            "icon": "check_mark",
+            "row_content": "<p>To check if your Grounded Spirit™ product is working, you can use a multimeter or voltmeter, available at most hardware stores. This device measures your body voltage. When your grounding sheet or mat is functioning correctly, your body voltage will decrease as soon as you place any part of your body on it, indicating a connection to the Earth’s energy.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_d964Ut": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do Grounding Products Emit EMFs or Magnetic Fields?",
+            "icon": "check_mark",
+            "row_content": "<p>No, grounding products do not emit EMF radiation, magnetic, or electric fields. They don’t use live electricity but simply connect you directly to the Earth’s natural energy. You can rest assured—grounding products are free of Wi-Fi, EMF signals, and electromagnetic fields.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_9XtYY9": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Why Can’t I Detect Continuity in My Grounding Cord?",
+            "icon": "check_mark",
+            "row_content": "<p>If you’re not detecting continuity in your grounding cord, it’s likely an issue with your multimeter settings. Our grounding cords include a 100,000 Ohm resistor, a safety feature designed to prevent any unexpected current from flowing through the cord while still allowing your body’s excess voltage to discharge safely into the ground.<br/><br/>Most multimeters use a continuity test to quickly check if a circuit is open or closed, but these tests are usually set to detect lower resistance values. Because of the high resistance of our grounding cord, the multimeter may not register continuity even though the cord is working perfectly.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_KCRTbQ": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will It Work If I Live in an Apartment?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes, our grounding products work perfectly in high-rise apartments. No matter which floor you live on, your grounding socket remains connected to the earth, allowing you to enjoy the full benefits of grounding.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_4MXy7T": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What If My Home Doesn’t Have a Grounding Outlet?",
+            "icon": "check_mark",
+            "row_content": "<p>If your home doesn’t have a grounding outlet, you can use our grounding rod. Simply place the rod into the earth outside, run the 40-foot cord into your home, and connect it to your Grounded Spirit product to enjoy the benefits of grounding.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_LyKaVq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will Grounding Products Interfere with My Pacemaker or Metal Implants?",
+            "icon": "check_mark",
+            "row_content": "<p>There is no evidence that grounding interferes with pacemakers or metal implants. Using grounding products is akin to walking barefoot or lying on the ground outdoors. No one with pacemakers or implants has been advised against barefoot contact with the earth.<br/><br/>Grounding also has an anticoagulant effect, which improves circulation and reduces the risk of blood clots. If you’re on blood-thinning medications, we recommend consulting your doctor before using grounding products.<br/><br/>Many of our customers with pacemakers or metal implants use grounding products without issues, but if you’re uncertain, it’s always best to consult with your healthcare provider.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_fakCzn": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Which Plug Type Should I Select?",
+            "icon": "check_mark",
+            "row_content": "<ul><li><strong>Canada and United States: </strong>Select the USA Plug option. This grounding wire plugs directly into the grounding socket of your outlet without an adaptor.</li><li><strong>United Kingdom: </strong>Select the UK Plug option.</li><li><strong>Germany, France, and other EU countries:</strong> Select the EU Plug option.</li><li><strong>Australia and New Zealand: </strong>Select the AU/NZ Plug option.</li><li><strong>Singapore and Malaysia: </strong>Select the UK Plug option.</li><li><strong>Indonesia: </strong>Select the EU Plug option for Type F sockets. </li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_ziaMhz",
+        "collapsible_row_d964Ut",
+        "collapsible_row_9XtYY9",
+        "collapsible_row_KCRTbQ",
+        "collapsible_row_4MXy7T",
+        "collapsible_row_LyKaVq",
+        "collapsible_row_fakCzn"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "General Product Questions",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_yLRqbA": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_FPYYh4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How to Clean and Care for My Grounded Spirit Mat?",
+            "icon": "check_mark",
+            "row_content": "<ul><li><strong>Protect from Sunlight:</strong> Keep your mat out of direct sunlight to extend the lifespan of the PU leather.</li><li><strong>Cleaning:</strong> Wipe the surface with mild soap, detergent, or cleaning wipes. Rinse with water and dry with a cloth or paper towel.</li></ul>",
+            "page": ""
+          }
+        },
+        "collapsible_row_78enW3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Long Will the Grounded Spirit Mat Last?",
+            "icon": "check_mark",
+            "row_content": "<p>With proper care, your Grounded Spirit Mat can last a lifetime. Made from durable leatherette, it’s designed to withstand the test of time. Just keep it dry and away from excessive moisture to maintain its longevity.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Nnr9pL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Wear Socks on the Grounded Spirit Mat?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes, you can still ground effectively while wearing cotton socks.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_FPYYh4",
+        "collapsible_row_78enW3",
+        "collapsible_row_Nnr9pL"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Grounded Spirit Mat Product Questions",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_XV8JJF": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_aXKJK9": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Use a Regular Sheet Over the Grounded Spirit Sheet?",
+            "icon": "check_mark",
+            "row_content": "<p>For the best results, grounding works most effectively when your bare skin directly touches the grounded sheet. While some energy may pass through thin layers with moisture, direct skin contact is the most reliable method—even a fingertip can make a difference.<br/><br/>We recommend avoiding additional sheets over your grounding sheet, as this may reduce conductivity. Our grounding sheets are designed for comfort and are easy to wash, ensuring a restful and connected sleep experience.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Kh7T8B": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Wear Pajamas While Sleeping on the Grounded Spirit Sheet?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes, you can wear pajamas while sleeping on Grounded Spirit sheets. Although direct skin contact maximizes the grounding benefits, it’s not necessary to sleep without clothing. As long as some part of your body—such as your arms, legs, or feet—makes contact with the sheet, you’ll still receive the grounding effects.<br/><br/>For targeted benefits, having uncovered areas of skin in direct contact with the sheet can be especially helpful, particularly if you’re focusing on specific areas that may need healing support. To enhance conductivity, we recommend using the grounding sheet directly on your mattress without an extra sheet on top.<br/><br/>The key is ensuring some skin contact with the sheet to experience the full benefits of grounding, so choose whatever makes you feel most comfortable while staying connected to the Earth’s energy.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_m8K6NN": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How to Wash My Grounded Spirit Sheets?",
+            "icon": "check_mark",
+            "row_content": "<p>Your Grounded Spirit sheets contain silver threads that are naturally antibacterial and odor-resistant, so they require less frequent washing than regular sheets. However, keeping them clean from sweat and oils is essential to maintain conductivity.<br/><br/><strong>DO’s:</strong></p><ul><li>Wash your sheets twice per month or as needed.</li><li>Hand wash or machine wash on a gentle cycle.</li><li>Use cold water only.</li><li>Air dry; do not tumble dry.</li><li>Wait one hour after applying lotions or oils before touching the sheets.</li></ul><p><strong>DON’Ts:</strong></p><ul><li>Avoid bleach, fabric softeners, whitening detergents, or oxi-detergents.</li><li>Do not use detergents containing oils like lavender or coconut oil.</li><li>Avoid dryer sheets.</li><li>Do not apply lotions or body oils right before bed.</li><li>Do not iron or tumble dry.</li></ul><p>Using these products or methods can damage the silver threads, reducing the sheet’s effectiveness. Follow these care tips to keep your sheets conductive and enjoy their benefits for years to come.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_yzxzdc": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How Long Will Grounded Spirit Sheets Last?",
+            "icon": "check_mark",
+            "row_content": "<p>With proper care, Grounded Spirit sheets are designed to last as long as regular cotton bedsheets. By following the care instructions, you can maintain their conductivity and enjoy the grounding benefits for years.<br/><br/>Treat them like any well-maintained bedding, and you can expect the same durability, comfort, and grounding support as your everyday sheets.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_xnkVhY": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What Are Grounded Spirit Sheets Made Of?",
+            "icon": "check_mark",
+            "row_content": "<p>Our Grounded Spirit sheets are crafted from a blend of 95% premium cotton and 5% silver. The silver threads act as a conductive element, allowing the sheets to transfer the Earth’s beneficial free electrons directly to your skin through an innovative grid weave.<br/><br/>We prioritize both comfort and effectiveness, using high-quality cotton to ensure a soft, scratch-free feel. This thoughtful design allows you to enjoy the full grounding experience with maximum comfort, making your connection to the Earth’s energy both soothing and effective.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_64htqW": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I Use Grounding Products During Winter?",
+            "icon": "check_mark",
+            "row_content": "<p>Absolutely! Winter is an ideal time to use indoor grounding products. Stay cozy and connected to the Earth’s energy without braving the cold—ground comfortably from the warmth of your home.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_tWkHpq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What’s the Difference Between the Grounded Spirit Bedsheet and Fitted Sheet?",
+            "icon": "check_mark",
+            "row_content": "<ul><li><strong>Grounded Spirit Bedsheet:</strong> Measuring 60 cm x 265 cm, this sheet is designed to lay across your bed, grounding everyone who sleeps on it. Lightweight and compact, it’s perfect for home use and ideal for staying grounded while traveling.</li><li><strong>Grounded Spirit Fitted Sheet:</strong> This full-sized fitted sheet covers your entire mattress, providing grounding benefits across the entire surface.</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_aXKJK9",
+        "collapsible_row_Kh7T8B",
+        "collapsible_row_m8K6NN",
+        "collapsible_row_yzxzdc",
+        "collapsible_row_xnkVhY",
+        "collapsible_row_64htqW",
+        "collapsible_row_tWkHpq"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Grounded Spirit Bedsheet Product Questions",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner_4DL8Nc",
+    "image_banner_8hzRiE",
+    "main",
+    "collapsible_content_YBjywd",
+    "collapsible_content_h7dBnU",
+    "collapsible_content_yLRqbA",
+    "collapsible_content_XV8JJF"
+  ]
+}

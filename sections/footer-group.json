@@ -1,0 +1,130 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "custom_new_footer_efCMJd": {
+      "type": "custom-new-footer",
+      "blocks": {
+        "brand_EVmt3k": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/Brand_Logo_Grounded-Spirit_5e1ceb47-683c-4005-a557-c6e8815d8f20.png",
+            "brand_name": "Maison",
+            "tagline": "Science-backed earthing mats that restore your body's natural electrical balance. Sleep deeper, ache less, live more fully."
+          }
+        },
+        "links_qmX3Dq": {
+          "type": "links",
+          "settings": {
+            "title": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "links_9jjgQG": {
+          "type": "links",
+          "settings": {
+            "title": "Help",
+            "menu": "important-links"
+          }
+        },
+        "newsletter_LcWnHC": {
+          "type": "newsletter",
+          "settings": {
+            "label": "Stay in the loop",
+            "heading": "Join our world of quiet luxury",
+            "placeholder": "Your email address",
+            "btn_label": "Subscribe",
+            "social_instagram": "",
+            "social_x": "",
+            "social_facebook": "",
+            "social_tiktok": "",
+            "social_pinterest": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_EVmt3k",
+        "links_qmX3Dq",
+        "links_9jjgQG",
+        "newsletter_LcWnHC"
+      ],
+      "name": "Custom Footer",
+      "settings": {
+        "above_bg": "#fbf9f6",
+        "footer_bg": "#6e7c68",
+        "text_color": "#ffffff",
+        "muted_color": "#fafafa",
+        "accent_color": "#f2f2f2",
+        "wave_height": 110,
+        "policy_links": true,
+        "policy_menu": "footer"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "image_Lnqr68": {
+          "type": "image",
+          "settings": {
+            "image_width": 175,
+            "alignment": "center"
+          }
+        },
+        "link_list_PztPnd": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Our Solutions",
+            "menu": "our-solutions"
+          }
+        },
+        "link_list_KfBAHL": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Get In Touch",
+            "menu": "footer-get-in-touch"
+          }
+        }
+      },
+      "block_order": [
+        "image_Lnqr68",
+        "link_list_PztPnd",
+        "link_list_KfBAHL"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".footer__content-bottom-wrapper {display: flex; width: 100%; justify-content: center; align-items: center;}",
+        ".footer__content-bottom {padding-top: 0rem;}",
+        ".footer-block__heading {font-size: 18px;}",
+        ".list-social__item {width: 37px; height: 88px;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-c6eb1d2c-0c6d-4c29-afc6-9715152c943b",
+        "newsletter_enable": true,
+        "newsletter_heading": "Lorem ipsum dolor",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "branding_text": "",
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "custom_new_footer_efCMJd",
+    "footer"
+  ]
+}

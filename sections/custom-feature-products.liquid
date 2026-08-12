@@ -1,0 +1,961 @@
+{% comment %}
+  ═══════════════════════════════════════════════════════
+  FEATURED PRODUCTS — Premium Section
+  - Pulls real products from a selected collection
+  - Defaults to 3, configurable up to 12
+  - Add-to-cart fires Shopify AJAX API + opens cart drawer
+  - Layout: full image → title → price → description
+  - No reviews/stars
+  ═══════════════════════════════════════════════════════
+{% endcomment %}
+
+{%- liquid
+  assign fp_collection = section.settings.collection
+  assign fp_limit      = section.settings.products_limit | default: 3
+  assign fp_cols       = section.settings.columns        | default: 3
+-%}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+  /* ── SECTION ── */
+  .fp {
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px clamp(20px, 5vw, 80px) {{ section.settings.padding_bottom }}px;
+    margin: {{ section.settings.margin_top }}px 0 {{ section.settings.margin_bottom }}px;
+    position: relative;
+  }
+  .fp__inner { max-width: {{ section.settings.content_width }}px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  .fp__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+  .fp__label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: {{ section.settings.label_font_size }}px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: {{ section.settings.label_color }};
+    margin-bottom: 10px;
+    display: block;
+  }
+  .fp__title {
+    font-size: clamp(30px, 3.8vw, {{ section.settings.title_font_size_desktop }}px);
+    font-weight: 700;
+    color: {{ section.settings.title_color }};
+    line-height: 1.1;
+    letter-spacing: -.01em;
+    margin: 0;
+  }
+  .fp__title em   { font-style: italic; }
+  .fp__title span { color: {{ section.settings.title_accent_color }}; }
+  .fp__view-all {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .68rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: {{ section.settings.view_all_color }};
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid currentColor;
+    transition: gap .3s, opacity .3s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 40px;
+    opacity: .55;
+  }
+  .fp__view-all:hover { gap: 16px; opacity: 1; }
+
+  /* ── GRID ── */
+  .fp__grid {
+    display: grid;
+    grid-template-columns: repeat({{ fp_cols }}, 1fr);
+    gap: clamp(16px, 2vw, 28px);
+  }
+
+  /* ── CARD ── */
+  .fp__card {
+    background: {{ section.settings.card_bg }};
+    border-radius: {{ section.settings.card_radius }}px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow .5s cubic-bezier(.22,1,.36,1);
+  }
+  .fp__card:hover {
+    box-shadow: 0 20px 60px rgba(0,0,0,.10), 0 4px 16px rgba(0,0,0,.05);
+  }
+
+  /* ── IMAGE ── */
+  .fp__img-wrap {
+    position: relative;
+    aspect-ratio: {{ section.settings.img_ratio }};
+    overflow: hidden;
+    background: {{ section.settings.img_bg }};
+    flex-shrink: 0;
+  }
+  .fp__img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 1s cubic-bezier(.22,1,.36,1);
+  }
+  .fp__card:hover .fp__img-wrap img { transform: scale(1.06); }
+
+  /* Badge */
+  .fp__badge {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .58rem; letter-spacing: .18em; text-transform: uppercase;
+    font-weight: 500; padding: 5px 10px; border-radius: 2px;
+    backdrop-filter: blur(6px);
+  }
+  .fp__badge--sale {  color: {{ section.settings.price_color }}; border: 1px solid #B66F3E; font-size: 9px; font-weight: 500 }
+  .fp__badge--new  {  color: {{ section.settings.name_color }};  border: 1px solid {{ section.settings.card_border }}; font-size: 9px; font-weight: 500  }
+
+  /* ── BODY ── */
+  .fp__body {
+    padding: 20px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 1px solid {{ section.settings.card_border }};
+    border-top: none;
+    border-radius: 0 0 {{ section.settings.card_radius }}px {{ section.settings.card_radius }}px;
+    transition: border-color .4s;
+  }
+  .fp__card:hover .fp__body { border-color: {{ section.settings.card_border_hover }}; }
+
+  /* Name */
+  .fp__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(17px, 1.5vw, {{ section.settings.name_font_size }}px);
+    font-weight: 400;
+    color: {{ section.settings.name_color }};
+    line-height: 1.25;
+    letter-spacing: .01em;
+    margin: 0 0 6px;
+    transition: color .25s;
+  }
+  .fp__card:hover .fp__name { color: {{ section.settings.name_hover_color }}; }
+
+  /* Price row */
+  .fp__price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .fp__price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem; font-weight: 600;
+    color: {{ section.settings.price_color }};
+    letter-spacing: .06em;
+  }
+  .fp__compare {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .72rem; font-weight: 300;
+    color: {{ section.settings.compare_color }};
+    text-decoration: line-through;
+  }
+  .fp__saving {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .58rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: {{ section.settings.price_color }};
+    opacity: .8;
+  }
+
+  /* Description */
+  .fp__desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: {{ section.settings.desc_font_size }}px;
+    font-weight: 300;
+    color: {{ section.settings.desc_color }};
+    line-height: 1.7;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+
+  /* ── CTA ── */
+  .fp__cta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  /* Add to Cart — wide, confident, readable */
+  .fp__atc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 3px;
+    border: 1px solid {{ section.settings.btn_border }};
+    background: transparent;
+    color: {{ section.settings.btn_color }};
+    font-family: 'Montserrat', sans-serif;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .3s, border-color .3s, color .3s, transform .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .fp__atc:hover {
+    background: {{ section.settings.btn_hover_bg }};
+    border-color: {{ section.settings.btn_hover_bg }};
+    color: {{ section.settings.btn_hover_color }};
+    transform: translateY(-1px);
+  }
+  .fp__atc:active { transform: translateY(0); }
+
+  /* ATC icon */
+  .fp__atc svg { transition: transform .3s; flex-shrink: 0; }
+  .fp__atc:hover svg { transform: rotate(90deg) scale(1.1); }
+
+  /* Loading */
+  .fp__atc.is-loading {
+    pointer-events: none;
+    background: {{ section.settings.btn_hover_bg }};
+    border-color: {{ section.settings.btn_hover_bg }};
+    color: {{ section.settings.btn_hover_color }};
+  }
+  .fp__atc.is-loading .fp__atc-text { opacity: 0; }
+  .fp__atc.is-loading::after {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    border: 1.5px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: fp-spin .7s linear infinite;
+  }
+  .fp__atc-text{font-size: 14px ; font-weight: bold}
+  /* Added */
+  .fp__atc.is-added {
+    background: {{ section.settings.price_color }};
+    border-color: {{ section.settings.price_color }};
+    color: #fff;
+    pointer-events: none;
+  }
+  .fp__atc.is-added .fp__atc-text::before { content: '✓  Added'; }
+  .fp__atc.is-added .fp__atc-text { display: block; }
+  .fp__atc.is-added .fp__atc-icon { display: none; }
+  .fp__atc.is-added::after { display: none; }
+
+  /* Sold out */
+  .fp__atc--soldout {
+    opacity: .35;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  /* View Details — square icon button */
+  .fp__link {
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid {{ section.settings.btn_border }};
+    border-radius: 3px;
+    color: {{ section.settings.desc_color }};
+    text-decoration: none;
+    transition: border-color .3s, color .3s, background .3s, transform .2s;
+  }
+  .fp__link:hover {
+    border-color: {{ section.settings.card_border_hover }};
+    color: {{ section.settings.name_color }};
+    background: {{ section.settings.img_bg }};
+    transform: translateY(-1px);
+  }
+
+  @keyframes fp-spin { to { transform: rotate(360deg); } }
+
+  /* ── EMPTY ── */
+  .fp__empty {
+    grid-column: 1/-1; padding: 72px 0; text-align: center;
+    font-family: 'Montserrat', sans-serif; font-size: .75rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: {{ section.settings.desc_color }}; opacity: .4;
+  }
+
+  /* ── REVEAL ── */
+  .fp__card { opacity: 0; transform: translateY(20px); }
+  .fp__card.is-visible { animation: fp-in .65s cubic-bezier(.22,1,.36,1) forwards; }
+  @keyframes fp-in { to { opacity: 1; transform: none; } }
+
+  /* ── CART DRAWER (light, matches brand) ── */
+  .fp-cart-overlay {
+    position: fixed; inset: 0; z-index: 8999;
+    background: rgba(26,26,26,.28);
+    backdrop-filter: blur(3px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .38s;
+  }
+  .fp-cart-overlay.is-open { opacity: 1; pointer-events: auto; }
+  .fp-cart-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: min(400px, 100vw);
+    background: {{ section.settings.bg_color }};
+    border-left: 1px solid {{ section.settings.card_border }};
+    box-shadow: -24px 0 64px rgba(0,0,0,.07);
+    z-index: 9000;
+    transform: translateX(100%);
+    transition: transform .42s cubic-bezier(.22,1,.36,1);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .fp-cart-drawer.is-open { transform: translateX(0); }
+  .fp-cart-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 26px 26px 20px;
+    border-bottom: 1px solid {{ section.settings.card_border }};
+    flex-shrink: 0;
+  }
+  .fp-cart-head h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 300; letter-spacing: .06em;
+    color: {{ section.settings.title_color }}; margin: 0;
+  }
+  .fp-cart-count-badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .58rem; letter-spacing: .14em;
+    background: {{ section.settings.img_bg }};
+    color: {{ section.settings.label_color }};
+    border: 1px solid {{ section.settings.card_border }};
+    padding: 3px 8px; border-radius: 2px; margin-left: 10px;
+  }
+  .fp-cart-close {
+    background: none; border: none; cursor: pointer;
+    color: {{ section.settings.compare_color }}; padding: 5px;
+    transition: color .2s; font-size: 0; line-height: 0;
+  }
+  .fp-cart-close:hover { color: {{ section.settings.title_color }}; }
+  .fp-cart-body { flex: 1; overflow-y: auto; }
+  .fp-cart-body::-webkit-scrollbar { width: 2px; }
+  .fp-cart-body::-webkit-scrollbar-thumb { background: {{ section.settings.card_border }}; }
+  .fp-cart-item {
+    display: flex; gap: 14px; padding: 18px 26px;
+    border-bottom: 1px solid {{ section.settings.img_bg }};
+    animation: fp-item-in .25s ease;
+  }
+  @keyframes fp-item-in { from { opacity:0; transform:translateX(8px); } to { opacity:1; transform:none; } }
+  .fp-cart-item-img {
+    width: 64px; height: 64px; object-fit: cover;
+    border-radius: 2px; flex-shrink: 0;
+    background: {{ section.settings.img_bg }};
+    border: 1px solid {{ section.settings.card_border }};
+  }
+  .fp-cart-item-info { flex: 1; min-width: 0; }
+  .fp-cart-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .95rem; color: {{ section.settings.title_color }};
+    margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .fp-cart-item-variant {
+    font-family: 'Montserrat', sans-serif; font-size: .58rem;
+    letter-spacing: .1em; color: {{ section.settings.compare_color }};
+    text-transform: uppercase; margin-bottom: 9px;
+  }
+  .fp-cart-item-qty { display: flex; align-items: center; gap: 10px; }
+  .fp-cart-item-qty button {
+    width: 22px; height: 22px;
+    border: 1px solid {{ section.settings.card_border }};
+    background: none; color: {{ section.settings.desc_color }};
+    border-radius: 2px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .2s, color .2s;
+  }
+  .fp-cart-item-qty button:hover { border-color: {{ section.settings.title_color }}; color: {{ section.settings.title_color }}; }
+  .fp-cart-item-qty span {
+    font-family: 'Montserrat', sans-serif; font-size: .75rem;
+    color: {{ section.settings.name_color }}; min-width: 14px; text-align: center;
+  }
+  .fp-cart-item-price {
+    font-family: 'Montserrat', sans-serif; font-size: .82rem;
+    color: {{ section.settings.price_color }};
+    white-space: nowrap; margin-left: auto; align-self: center;
+  }
+  .fp-cart-item-remove {
+    background: none; border: none; cursor: pointer;
+    color: {{ section.settings.card_border }}; padding: 0; font-size: 0;
+    transition: color .2s; align-self: flex-start;
+  }
+  .fp-cart-item-remove:hover { color: {{ section.settings.desc_color }}; }
+  .fp-cart-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; padding: 60px 26px; text-align: center; gap: 14px;
+  }
+  .fp-cart-empty svg { opacity: .1; color: {{ section.settings.title_color }}; }
+  .fp-cart-empty p {
+    font-family: 'Montserrat', sans-serif; font-size: .68rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: {{ section.settings.compare_color }};
+  }
+  .fp-cart-foot {
+    flex-shrink: 0; border-top: 1px solid {{ section.settings.card_border }};
+    padding: 22px 26px 28px;
+  }
+  .fp-cart-subtotal {
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;
+  }
+  .fp-cart-subtotal span:first-child {
+    font-family: 'Montserrat', sans-serif; font-size: .64rem;
+    letter-spacing: .22em; text-transform: uppercase; color: {{ section.settings.desc_color }};
+  }
+  .fp-cart-subtotal span:last-child {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+    font-weight: 300; color: {{ section.settings.title_color }};
+  }
+  .fp-cart-checkout {
+    display: block; width: 100%; padding: 13px 20px;
+    background: {{ section.settings.btn_hover_bg }};
+    color: {{ section.settings.btn_hover_color }};
+    font-family: 'Montserrat', sans-serif;
+    font-size: .68rem; letter-spacing: .24em; text-transform: uppercase;
+    border: none; border-radius: 3px; cursor: pointer;
+    transition: opacity .28s, transform .2s;
+    text-decoration: none; text-align: center;
+  }
+  .fp-cart-checkout:hover { opacity: .88; transform: translateY(-1px); }
+  .fp-cart-cont {
+    display: block; width: 100%; margin-top: 10px; padding: 11px;
+    background: none; color: {{ section.settings.desc_color }};
+    font-family: 'Montserrat', sans-serif; font-size: .62rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    border: 1px solid {{ section.settings.card_border }}; border-radius: 3px; cursor: pointer;
+    transition: border-color .25s, color .25s;
+  }
+  .fp-cart-cont:hover { border-color: {{ section.settings.card_border_hover }}; color: {{ section.settings.title_color }}; }
+
+  /* ── TABLET ── */
+  @media (max-width: 960px) {
+    .fp__grid { grid-template-columns: repeat(2, 1fr); gap: clamp(12px, 2vw, 20px); }
+  }
+
+  /* ── MOBILE: horizontal snap scroll, one card at a time ── */
+  @media (max-width: 600px) {
+    .fp { padding-left: 0; padding-right: 0; overflow: hidden; }
+    .fp__inner { padding-left: 20px; padding-right: 20px; }
+    .fp__head { flex-direction: column; align-items: flex-start; gap: 18px; }
+    .fp__view-all { margin-left: 0; }
+
+    /* Turn grid into horizontal scroll track */
+    .fp__grid {
+      display: flex;
+      flex-direction: row;
+      gap: 14px;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      padding: 4px 20px 20px;
+      margin: 0 -20px;          /* bleed past inner padding so cards peek */
+      /* hide scrollbar cross-browser */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .fp__grid::-webkit-scrollbar { display: none; }
+
+    /* Each card: full width snap item */
+    .fp__card {
+      flex: 0 0 calc(100% - 40px);
+      min-width: calc(100% - 40px);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    /* Body tweaks on mobile */
+    .fp__body { padding: 16px 18px 18px; }
+    .fp__name { font-size: 17px; }
+    .fp__desc { -webkit-line-clamp: 2; }
+    .fp__atc { height: 42px; font-size: .68rem; letter-spacing: .16em; }
+    .fp__atc-text { font-size: .68rem; }
+    .fp__link { width: 42px; height: 42px; }
+
+    /* Dot indicators */
+    .fp__dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 18px;
+    }
+    .fp__dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: {{ section.settings.card_border }};
+      border: none; padding: 0; cursor: pointer;
+      transition: background .3s, transform .3s;
+      flex-shrink: 0;
+    }
+    .fp__dot.is-active {
+      background: {{ section.settings.label_color }};
+      transform: scale(1.25);
+    }
+  }
+  }
+</style>
+
+
+
+
+<div class="fp-cart-overlay" id="fpCartOverlay" aria-hidden="true"></div>
+<aside class="fp-cart-drawer" id="fpCartDrawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="fp-cart-head">
+    <div style="display:flex;align-items:center;">
+      <h3>Your Cart</h3>
+      <span class="fp-cart-count-badge" id="fpCartBadge">0 items</span>
+    </div>
+    <button class="fp-cart-close" id="fpCartClose" aria-label="Close cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="fp-cart-body" id="fpCartBody">
+    <div class="fp-cart-empty" id="fpCartEmpty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p>Your cart is empty</p>
+    </div>
+  </div>
+  <div class="fp-cart-foot" id="fpCartFoot" style="display:none;">
+    <div class="fp-cart-subtotal">
+      <span>Subtotal</span>
+      <span id="fpCartSubtotal">$0.00</span>
+    </div>
+    <a href="/checkout" class="fp-cart-checkout">Proceed to Checkout</a>
+    <button class="fp-cart-cont" id="fpCartCont">Continue Shopping</button>
+  </div>
+</aside>
+
+<section class="fp section" id="{{ section.settings.section_id | default: 'products' }}">
+  <div class="fp__inner">
+    <div class="fp__head">
+      <div>
+        <span class="fp__label">{{ section.settings.section_label }}</span>
+        <h2 class="fp__title">{{ section.settings.section_title }}</h2>
+      </div>
+      {%- if section.settings.view_all_text != blank -%}
+        <a href="{{ fp_collection.url | default: '/collections/all' }}" class="fp__view-all">
+          {{ section.settings.view_all_text }}
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="fp__grid" id="fpGrid">
+      {%- if fp_collection != blank -%}
+        {%- assign thirty_days_ago = 'now' | date: '%s' | minus: 2592000 | date: '%Y-%m-%dT%H:%M:%SZ' -%}
+        {%- for product in fp_collection.products limit: fp_limit -%}
+          {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
+          {%- assign has_compare = false -%}
+          {%- if first_variant.compare_at_price > first_variant.price -%}
+            {%- assign has_compare = true -%}
+          {%- endif -%}
+          {%- assign saving_pct = first_variant.compare_at_price | minus: first_variant.price | times: 100 | divided_by: first_variant.compare_at_price | round -%}
+
+          <article class="fp__card" onclick="window.location='{{ product.url }}'">
+
+            {{- '<!-- IMAGE -->' }}
+            <div class="fp__img-wrap">
+              {%- if product.featured_image -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 800 }}"
+                  alt="{{ product.featured_image.alt | escape | default: product.title }}"
+                  loading="lazy" width="800">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'fp__img-placeholder' }}
+              {%- endif -%}
+              {%- if product.available == false -%}
+                <span class="fp__badge fp__badge--new">Sold Out</span>
+              {%- elsif has_compare -%}
+                <span class="fp__badge fp__badge--sale">−{{ saving_pct }}%</span>
+              {%- elsif product.created_at > thirty_days_ago -%}
+                <span class="fp__badge fp__badge--new">New</span>
+              {%- endif -%}
+            </div>
+
+            {{- '<!-- BODY -->' }}
+            <div class="fp__body">
+              <h3 class="fp__name">{{ product.title }}</h3>
+
+              <div class="fp__price-row">
+                <span class="fp__price">{{ first_variant.price | money }}</span>
+                {%- if has_compare -%}
+                  <span class="fp__compare">{{ first_variant.compare_at_price | money }}</span>
+                  <span class="fp__saving">Save {{ saving_pct }}%</span>
+                {%- endif -%}
+              </div>
+
+              <p class="fp__desc">{{ product.description | strip_html }}</p>
+
+              <div class="fp__cta">
+                {%- if product.available -%}
+                  <button class="fp__atc"
+                    data-variant-id="{{ first_variant.id }}"
+                    data-product-title="{{ product.title | escape }}"
+                    data-product-price="{{ first_variant.price | money }}"
+                    data-product-img="{{ product.featured_image | image_url: width: 200 }}"
+                    onclick="event.stopPropagation(); fpAddToCart(this)"
+                    aria-label="Add {{ product.title | escape }} to cart">
+                    <span class="fp__atc-text">Add to Cart</span>
+                  </button>
+                {%- else -%}
+                  <button class="fp__atc fp__atc--soldout" aria-disabled="true">
+                    <span class="fp__atc-text">Sold Out</span>
+                  </button>
+                {%- endif -%}
+                <a href="{{ product.url }}"
+                  class="fp__link"
+                  onclick="event.stopPropagation()"
+                  aria-label="View {{ product.title | escape }}">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="fp__empty">Select a collection in the theme editor to display products.</div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Mobile scroll dots — shown via CSS only on ≤600px {%- endcomment -%}
+    <div class="fp__dots" id="fpDots" aria-hidden="true"></div>
+
+  </div>
+</section>
+
+
+
+<script>
+(function() {
+  'use strict';
+
+  var drawer   = document.getElementById('fpCartDrawer');
+  var overlay  = document.getElementById('fpCartOverlay');
+  var body     = document.getElementById('fpCartBody');
+  var foot     = document.getElementById('fpCartFoot');
+  var empty    = document.getElementById('fpCartEmpty');
+  var badge    = document.getElementById('fpCartBadge');
+  var subtotal = document.getElementById('fpCartSubtotal');
+
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    overlay.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('fpCartClose').addEventListener('click', closeDrawer);
+  document.getElementById('fpCartCont').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function renderCart(cart) {
+    var count = cart.item_count || 0;
+    badge.textContent = count + (count === 1 ? ' item' : ' items');
+    document.dispatchEvent(new CustomEvent('cart:updated', { detail: { itemCount: count } }));
+
+    if (!cart.items || cart.items.length === 0) {
+      empty.style.display = '';
+      foot.style.display  = 'none';
+      body.querySelectorAll('.fp-cart-item').forEach(function(el) { el.remove(); });
+      return;
+    }
+
+    empty.style.display = 'none';
+    foot.style.display  = '';
+    subtotal.textContent = formatMoney(cart.total_price);
+
+    body.querySelectorAll('.fp-cart-item').forEach(function(el) { el.remove(); });
+
+    cart.items.forEach(function(item) {
+      var el = document.createElement('div');
+      el.className = 'fp-cart-item';
+      el.dataset.key = item.key;
+      el.innerHTML =
+        '<img class="fp-cart-item-img" src="' + (item.image || '') + '" alt="' + item.title + '">' +
+        '<div class="fp-cart-item-info">' +
+          '<div class="fp-cart-item-name">' + item.product_title + '</div>' +
+          (item.variant_title && item.variant_title !== 'Default Title'
+            ? '<div class="fp-cart-item-variant">' + item.variant_title + '</div>'
+            : '<div class="fp-cart-item-variant">&nbsp;</div>') +
+          '<div class="fp-cart-item-qty">' +
+            '<button data-key="' + item.key + '" data-delta="-1" aria-label="Decrease quantity">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+            '</button>' +
+            '<span>' + item.quantity + '</span>' +
+            '<button data-key="' + item.key + '" data-delta="1" aria-label="Increase quantity">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">' +
+          '<button class="fp-cart-item-remove" data-key="' + item.key + '" aria-label="Remove item">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+          '</button>' +
+          '<span class="fp-cart-item-price">' + formatMoney(item.line_price) + '</span>' +
+        '</div>';
+      body.insertBefore(el, empty);
+    });
+
+    body.querySelectorAll('[data-delta]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var key = this.dataset.key;
+        var delta = parseInt(this.dataset.delta, 10);
+        var qtyEl = this.closest('.fp-cart-item-qty').querySelector('span');
+        var newQty = parseInt(qtyEl.textContent, 10) + delta;
+        updateCartItem(key, Math.max(0, newQty));
+      });
+    });
+    body.querySelectorAll('.fp-cart-item-remove').forEach(function(btn) {
+      btn.addEventListener('click', function() { updateCartItem(this.dataset.key, 0); });
+    });
+  }
+
+  function fetchCart(cb) {
+    fetch('/cart.js', { headers: { 'Content-Type': 'application/json' } })
+      .then(function(r) { return r.json(); })
+      .then(function(cart) { if (cb) cb(cart); })
+      .catch(function(err) { console.warn('[fp] fetchCart error', err); });
+  }
+
+  function updateCartItem(key, qty) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    })
+    .then(function(r) { return r.json(); })
+    .then(renderCart)
+    .catch(function(err) { console.warn('[fp] updateCartItem error', err); });
+  }
+
+  window.fpAddToCart = function(btn) {
+    var variantId = btn.dataset.variantId;
+    if (!variantId) return;
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ id: parseInt(variantId, 10), quantity: 1 })
+    })
+    .then(function(r) { if (!r.ok) throw new Error('add failed'); return r.json(); })
+    .then(function() {
+      btn.classList.remove('is-loading');
+      btn.classList.add('is-added');      fetchCart(function(cart) { renderCart(cart); openDrawer(); });
+      setTimeout(function() {
+        btn.classList.remove('is-added');
+        btn.disabled = false;
+      }, 2500);
+    })
+    .catch(function(err) {
+      console.warn('[fp] add to cart error', err);
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    });
+  };
+
+  fetchCart(renderCart);
+
+  document.addEventListener('cart:updated', function(e) {
+    if (e.detail && typeof e.detail.itemCount !== 'undefined') {
+      badge.textContent = e.detail.itemCount + (e.detail.itemCount === 1 ? ' item' : ' items');
+    }
+  });
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var cards = entry.target.querySelectorAll('.fp__card');
+          cards.forEach(function(card, i) {
+            setTimeout(function() {
+              card.classList.add('is-visible');
+              card.style.animationDelay = (i * 0.1) + 's';
+            }, i * 80);
+          });
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    var grid = document.getElementById('fpGrid');
+    if (grid) io.observe(grid);
+  } else {
+    document.querySelectorAll('.fp__card').forEach(function(c) { c.style.opacity='1'; c.style.transform='none'; });
+  }
+
+  /* ── Mobile snap-scroll dot indicators ── */
+  (function() {
+    var grid  = document.getElementById('fpGrid');
+    var dotsC = document.getElementById('fpDots');
+    if (!grid || !dotsC) return;
+
+    function isMobile() { return window.innerWidth <= 600; }
+
+    var cards   = [];
+    var dots    = [];
+    var current = 0;
+    var ticking = false;
+
+    function buildDots() {
+      dotsC.innerHTML = '';
+      dots = [];
+      cards = Array.from(grid.querySelectorAll('.fp__card'));
+      if (!isMobile() || cards.length <= 1) { dotsC.style.display = 'none'; return; }
+
+      dotsC.style.display = 'flex';
+      cards.forEach(function(_, i) {
+        var d = document.createElement('button');
+        d.className = 'fp__dot' + (i === 0 ? ' is-active' : '');
+        d.setAttribute('aria-label', 'Go to product ' + (i + 1));
+        d.addEventListener('click', function() { scrollToCard(i); });
+        dotsC.appendChild(d);
+        dots.push(d);
+      });
+      current = 0;
+    }
+
+    function setActive(idx) {
+      if (idx === current && dots[idx] && dots[idx].classList.contains('is-active')) return;
+      current = idx;
+      dots.forEach(function(d, i) {
+        d.classList.toggle('is-active', i === idx);
+      });
+    }
+
+    function scrollToCard(idx) {
+      var card = cards[idx];
+      if (!card) return;
+      var gridLeft  = grid.getBoundingClientRect().left;
+      var cardLeft  = card.getBoundingClientRect().left;
+      var offset    = grid.scrollLeft + (cardLeft - gridLeft);
+      grid.scrollTo({ left: offset, behavior: 'smooth' });
+    }
+
+    function onScroll() {
+      if (!isMobile() || !cards.length) return;
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(function() {
+          ticking = false;
+          var gridW   = grid.clientWidth;
+          var scrollL = grid.scrollLeft;
+          var best    = 0;
+          var bestDist = Infinity;
+          cards.forEach(function(card, i) {
+            var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            var dist = Math.abs(cardCenter - scrollL - gridW / 2);
+            if (dist < bestDist) { bestDist = dist; best = i; }
+          });
+          setActive(best);
+        });
+      }
+    }
+
+    grid.addEventListener('scroll', onScroll, { passive: true });
+
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(buildDots, 120);
+    });
+
+    // Build after a tick so cards are laid out
+    setTimeout(buildDots, 50);
+  })();
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "tag": "section",
+  "settings": [
+    { "type": "header",      "content": "Collection" },
+    { "type": "collection",  "id": "collection",               "label": "Product Collection" },
+    { "type": "range",       "id": "products_limit",           "label": "Number of Products",       "min": 1, "max": 12, "step": 1, "default": 3 },
+    { "type": "range",       "id": "columns",                  "label": "Columns (desktop)",         "min": 2, "max": 4,  "step": 1, "default": 3 },
+    {
+      "type": "select", "id": "img_ratio", "label": "Image Aspect Ratio",
+      "options": [
+        { "value": "1/1",   "label": "Square (1:1)" },
+        { "value": "4/3",   "label": "Landscape (4:3)" },
+        { "value": "3/4",   "label": "Portrait (3:4)" },
+        { "value": "16/9",  "label": "Wide (16:9)" }
+      ],
+      "default": "3/4"
+    },
+    { "type": "header",      "content": "Content" },
+    { "type": "text",        "id": "section_id",               "label": "Section Anchor ID",         "default": "products" },
+    { "type": "text",        "id": "section_label",            "label": "Section Label",             "default": "The Collection" },
+    { "type": "liquid",        "id": "section_title",            "label": "Section Title",             "default": "Shop <em>Grounding Mats</em>" },
+    { "type": "text",        "id": "view_all_text",            "label": "View All Text",             "default": "All products" },
+    { "type": "header",      "content": "Typography" },
+    { "type": "range",       "id": "title_font_size_desktop",  "label": "Title Font Size Desktop (px)", "min": 28, "max": 80, "step": 2, "default": 40 },
+    { "type": "range",       "id": "label_font_size",          "label": "Label Font Size (px)",      "min": 10, "max": 18, "step": 1, "default": 11 },
+    { "type": "range",       "id": "name_font_size",           "label": "Product Name Size (px)",    "min": 14, "max": 32, "step": 1, "default": 18 },
+    { "type": "range",       "id": "desc_font_size",           "label": "Description Font Size (px)", "min": 10, "max": 20, "step": 1, "default": 13 },
+    { "type": "header",      "content": "Colors" },
+    { "type": "color",       "id": "bg_color",                 "label": "Section Background",        "default": "#FBF9F6" },
+    { "type": "color",       "id": "title_color",              "label": "Title Color",               "default": "#1a1a1a" },
+    { "type": "color",       "id": "label_color",              "label": "Label Color",               "default": "#7a8c72" },
+    { "type": "color",       "id": "view_all_color",           "label": "View All Color",            "default": "#888880" },
+    { "type": "color",       "id": "card_bg",                  "label": "Card Background",           "default": "#ffffff" },
+    { "type": "color",       "id": "card_border",              "label": "Card Border",               "default": "#e8e4de" },
+    { "type": "color",       "id": "card_border_hover",        "label": "Card Border Hover",         "default": "#b5c4af" },
+    { "type": "color",       "id": "img_bg",                   "label": "Image Placeholder BG",      "default": "#f0ece6" },
+    { "type": "color",       "id": "name_color",               "label": "Product Name Color",        "default": "#1a1a1a" },
+    { "type": "color",       "id": "price_color",              "label": "Price Color",               "default": "#4a7a44" },
+    { "type": "color",       "id": "compare_color",            "label": "Compare Price Color",       "default": "#aaa9a3" },
+    { "type": "color",       "id": "desc_color",               "label": "Description Color",         "default": "#6b6b65" },
+    { "type": "color",       "id": "title_accent_color",       "label": "Title Accent (span) Color",  "default": "#7a8c72" },
+    { "type": "color",       "id": "name_hover_color",         "label": "Product Name Hover Color",   "default": "#1a1a1a" },
+    { "type": "color",       "id": "btn_color",                "label": "Add Button Icon Color",     "default": "#6e7c68" },
+    { "type": "color",       "id": "btn_border",               "label": "Add Button Border",         "default": "#c8d4c4" },
+    { "type": "color",       "id": "btn_hover_bg",             "label": "Add Button Hover BG",       "default": "#7a8c72" },
+    { "type": "color",       "id": "btn_hover_color",          "label": "Add Button Hover Text",     "default": "#ffffff" },
+    { "type": "header",      "content": "Spacing" },
+    { "type": "range",       "id": "padding_top",              "label": "Padding Top (px)",          "min": 0, "max": 180, "step": 4, "default": 64 },
+    { "type": "range",       "id": "padding_bottom",           "label": "Padding Bottom (px)",       "min": 0, "max": 180, "step": 4, "default": 64 },
+    { "type": "range",       "id": "margin_top",               "label": "Margin Top (px)",           "min": 0, "max": 80,  "step": 4, "default": 0 },
+    { "type": "range",       "id": "margin_bottom",            "label": "Margin Bottom (px)",        "min": 0, "max": 80,  "step": 4, "default": 0 },
+    { "type": "range",       "id": "content_width",            "label": "Max Content Width (px)",    "min": 800, "max": 1800, "step": 40, "default": 1440 },
+    { "type": "range",       "id": "card_radius",              "label": "Card Border Radius (px)",   "min": 0, "max": 24, "step": 1, "default": 6 }
+  ],
+  "presets": [
+    { "name": "Featured Products" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,242 @@
+{% comment %}
+  Renders a megamenu for the header.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span
+                  {%- if link.child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  <a href="{{ link.url }}" style="color:#272727; text-decoration: none;">{{- link.title | escape -}}</a>
+                </span>
+                {% render 'icon-caret' %}
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+              >
+                <ul
+                  class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                  role="list"
+                >
+                  <!-- Custom Code -->
+                  {% if true %}
+                    <div class="flex-container">
+                      {% for block in section.blocks %}
+                        {% if block.type == 'collection1' %}
+                          <div class="flex-item">
+                            <h3 class="megamenu_collection_title">{{ block.settings.first_collection.title }}</h3>
+                            {% for product in block.settings.first_collection.products %}
+                              <a href="{{ product.url }}" class="megamenu_products_link_a">
+                                <div class="flex-item-inner">
+                                  <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+                                  <div class="product-details">
+                                    <h4 class="product-title">{{ product.title }}</h4>
+                                    <p class="product-description">
+                                      {{ product.description | strip_html | truncate: 60 }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+
+                      {% for block in section.blocks %}
+                        {% if block.type == 'collection2' %}
+                          <div class="flex-item">
+                            <h3 class="megamenu_collection_title">{{ block.settings.second_collection.title }}</h3>
+                            {% for product in block.settings.second_collection.products %}
+                              <a href="{{ product.url }}" class="megamenu_products_link_a">
+                                <div class="flex-item-inner">
+                                  <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+                                  <div class="product-details">
+                                    <h4 class="product-title">{{ product.title }}</h4>
+                                    <p class="product-description">
+                                      {{ product.description | strip_html | truncate: 60 }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+
+                      {% for block in section.blocks %}
+                        {% if block.type == 'collection3' %}
+                          <div class="flex-item">
+                            <h3 class="megamenu_collection_title">{{ block.settings.third_collection.title }}</h3>
+                            {% for product in block.settings.third_collection.products %}
+                              <a href="{{ product.url }}" class="megamenu_products_link_a">
+                                <div class="flex-item-inner">
+                                  <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+                                  <div class="product-details">
+                                    <h4 class="product-title">{{ product.title }}</h4>
+                                    <p class="product-description">
+                                      {{ product.description | strip_html | truncate: 60 }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+
+                      {% for block in section.blocks %}
+                        {% if block.type == 'collection4' %}
+                          <div class="flex-item">
+                            <h3 class="megamenu_collection_title">{{ block.settings.forth_collection.title }}</h3>
+                            {% for product in block.settings.forth_collection.products %}
+                              <a href="{{ product.url }}" class="megamenu_products_link_a">
+                                <div class="flex-item-inner">
+                                  <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+                                  <div class="product-details">
+                                    <h4 class="product-title">{{ product.title }}</h4>
+                                    <p class="product-description">
+                                      {{ product.description | strip_html | truncate: 60 }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+
+                      {% for block in section.blocks %}
+                        {% if block.type == 'collection5' %}
+                          <div class="flex-item">
+                            <h3 class="megamenu_collection_title">{{ block.settings.fifth_collection.title }}</h3>
+                            {% for product in block.settings.fifth_collection.products %}
+                              <a href="{{ product.url }}" class="megamenu_products_link_a">
+                                <div class="flex-item-inner">
+                                  <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+                                  <div class="product-details">
+                                    <h4 class="product-title">{{ product.title }}</h4>
+                                    <p class="product-description">
+                                      {{ product.description | strip_html | truncate: 60 }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </a>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+
+                      <style>
+                        .megamenu_products_link_a{
+                          text-decoration: none;
+                        }
+                        .megamenu_collection_title{
+                          color: {{ section.settings.collection_title_colors }};
+                          font-size: 20px;
+                          text-align: {{ section.settings.collection_title_alignment }};
+                        }
+                        .flex-container {
+                            display: flex;
+                            flex-wrap: wrap;
+                            width: 100%;
+                            max-width: 1400px;
+                            margin: 0 auto;
+                            padding: 5px;
+                            box-sizing: border-box;
+                            gap: 40px;
+                        }
+
+                        .flex-item {
+                            flex: 1 1 calc(100% / 5);
+                            /* 1 1 calc(100% / number of columns) */
+                            margin-bottom: 10px;
+                            padding: 5px 0px;
+                            background-color: #FAFAFA;
+                            border: 0;
+                            text-align: center;
+                            box-sizing: border-box;
+                        }
+                        .flex-item-inner{
+                          display: flex;
+                          background-color: #FAFAFA;
+                          border: 0;
+                          margin: 20px 0px;
+                          width: 100%;
+                          max-width: 100%;
+                          box-sizing: border-box;
+                          align-items: center;
+                        }
+
+                        .flex-item-inner img {
+                            max-width: 80px;
+                            max-height: 80px;
+                            width: 100%;
+                            object-fit: cover;
+                        }
+                        .flex-item-inner .product-details {
+                            padding: 10px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                        }
+                        .flex-item-inner .product-details h4{
+                            font-size: 15px;
+                            margin: 0 0 5px;
+                            text-align: left;
+                        }
+                        .flex-item-inner .product-details p {
+                            margin: 0;
+                            color: #666;
+                            font-size: 12px;
+                            line-height: 18px;
+                          text-align: left;
+                        }
+                      </style>
+                  {% endif %}
+                  <!-- End of Custom Code -->
+                </ul>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span
+              {%- if link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+{%- if section.settings.menu_hover -%}
+  <script src="{{ 'megamenu-hover.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

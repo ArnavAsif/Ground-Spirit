@@ -1,0 +1,401 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_iPppDP": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_akiQDn": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Story of Grounded Spirit",
+            "heading_size": "h1"
+          }
+        },
+        "text_jAhfx9": {
+          "type": "text",
+          "settings": {
+            "text": "Inspired by Nature, Designed for Your Well-being",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_akiQDn",
+        "text_jAhfx9"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Desktop_-_32_12_50.png",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 20,
+        "image_height": "adapt",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": true
+      }
+    },
+    "image_banner_gQz4Ey": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_4rjetp": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Story of Grounded Spirit",
+            "heading_size": "h2"
+          }
+        },
+        "text_6VPykK": {
+          "type": "text",
+          "settings": {
+            "text": "Inspired by Nature, Designed for Your Well-being",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_4rjetp",
+        "text_6VPykK"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_-_2024-09-11T033020.936.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 20,
+        "image_height": "adapt",
+        "desktop_content_position": "bottom-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "horizontal_ticker_89QDnN": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "text_wqdezG": {
+          "type": "text",
+          "settings": {
+            "title": "Ground Yourself Daily ☘"
+          }
+        }
+      },
+      "block_order": [
+        "text_wqdezG"
+      ],
+      "settings": {
+        "speed": 3,
+        "text_spacing": 3,
+        "text_size": "2.5",
+        "italic_text": false,
+        "uppercase_text": false,
+        "bold_text": false,
+        "color_scheme": "scheme-3",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "image_with_text_X3RNaB": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_Qpkw48": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our Beginning",
+            "heading_size": "h2"
+          }
+        },
+        "text_FxHKiE": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Grounded Spirit was born from a simple realization—our modern lifestyle has disconnected us from nature. We felt the impact of this disconnection in our own lives, experiencing stress, fatigue, and a longing for balance. So, we began our journey to rediscover the ancient practice of grounding, and Grounded Spirit was created to share these benefits with the world.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Qpkw48",
+        "text_FxHKiE"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/EarthFilled_with_negative_charged_electrons._2_2_50.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "background-1",
+        "color_scheme": "accent-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 76,
+        "padding_bottom": 76
+      }
+    },
+    "image_with_text_MrgLVm": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_6tzJpf": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our Mission",
+            "heading_size": "h2"
+          }
+        },
+        "text_kxN3pz": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At Grounded Spirit, we are dedicated to making grounding accessible and effortless for everyone, no matter where you are. Our thoughtfully crafted products are designed to reconnect you with the Earth’s healing energy, allowing you to feel balanced, restored, and revitalized from the comfort of your home.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_6tzJpf",
+        "text_kxN3pz"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/EarthFilled_with_negative_charged_electrons._1.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "background-1",
+        "color_scheme": "accent-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 0,
+        "padding_bottom": 76
+      }
+    },
+    "image_with_text_UJgYQV": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_wEzcDH": {
+          "type": "heading",
+          "settings": {
+            "heading": "Lorem ipsum dolor",
+            "heading_size": "h2"
+          }
+        },
+        "text_fxatp6": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wEzcDH",
+        "text_fxatp6"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "background-1",
+        "color_scheme": "accent-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 0,
+        "padding_bottom": 76
+      }
+    },
+    "multicolumn_bUVrVr": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_77Fzc4": {
+          "type": "column",
+          "settings": {
+            "title": "Reconnect with Nature",
+            "text": "<p>Rediscover the healing power of the Earth’s energy and bring a sense of calm and balance back into your everyday life.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_3BFJWX": {
+          "type": "column",
+          "settings": {
+            "title": "Enhance Well-being",
+            "text": "<p>Grounding helps reduce stress, improve sleep, and restore balance, allowing you to feel more centered and revitalized.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_HeiHFa": {
+          "type": "column",
+          "settings": {
+            "title": "Simple and Effective",
+            "text": "<p>Our grounding products make it easy to connect to the Earth’s energy—just plug in and enjoy the benefits.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_NFbpgT": {
+          "type": "column",
+          "settings": {
+            "title": "Designed with Care",
+            "text": "<p>Thoughtfully crafted from soft, high-quality materials, our products ensure a comfortable and effective grounding experience.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_77Fzc4",
+        "column_3BFJWX",
+        "column_HeiHFa",
+        "column_NFbpgT"
+      ],
+      "settings": {
+        "title": "Feel the Benefits",
+        "heading_size": "h2",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_pj8gb6": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_wFaCYk": {
+          "type": "heading",
+          "settings": {
+            "heading": "@Grounded Spirit ",
+            "heading_size": "h1"
+          }
+        },
+        "text_BzQX9g": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Duis aute irure dolor in reprehenderit",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wFaCYk",
+        "text_BzQX9g"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Desktop_-_32_13.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-right",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "image_banner_krMndr": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_4DA7Pt": {
+          "type": "heading",
+          "settings": {
+            "heading": "@Grounded Spirit ",
+            "heading_size": "h2"
+          }
+        },
+        "text_bpTEdr": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Duis aute irure dolor in reprehenderit",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_4DA7Pt",
+        "text_bpTEdr"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_-_2024-09-11T045841.048.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_iPppDP",
+    "image_banner_gQz4Ey",
+    "horizontal_ticker_89QDnN",
+    "image_with_text_X3RNaB",
+    "image_with_text_MrgLVm",
+    "image_with_text_UJgYQV",
+    "multicolumn_bUVrVr",
+    "image_banner_pj8gb6",
+    "image_banner_krMndr"
+  ]
+}

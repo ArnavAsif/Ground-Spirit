@@ -1,0 +1,301 @@
+<style>
+  /* ═══════════════════════════════════════
+     TRUST STRIP — section styles
+  ═══════════════════════════════════════ */
+  .gw-trust {
+    background: {{ section.settings.bg_color }};
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: 52px;
+    padding-right: 52px;
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  .gw-trust-inner {
+    max-width: {{ section.settings.content_width }}px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .gw-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 17px 0;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .gw-trust-item svg { flex-shrink: 0; }
+  .gw-trust-div {
+    width: 1px;
+    background: var(--border);
+    margin: 12px 0;
+  }
+
+  /* ── Desktop: marquee hidden ── */
+  @media (min-width: 661px) {
+    .gw-trust-marquee-wrap { display: none !important; }
+  }
+
+  /* ── Mobile: hide normal layout, show marquee ── */
+  @media (max-width: 660px) {
+    .gw-trust {
+      padding-left: 0;
+      padding-right: 0;
+      overflow: hidden;
+    }
+    .gw-trust-inner { display: none !important; }
+
+    /* Marquee wrapper */
+    .gw-trust-marquee-wrap {
+      display: block;
+      overflow: hidden;
+      width: 100%;
+    }
+    /* Scrolling track — duplicated items for seamless loop */
+    .gw-trust-marquee-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: gw-trust-scroll {{ section.settings.marquee_speed }}s linear infinite;
+    }
+    .gw-trust-marquee-wrap:hover .gw-trust-marquee-track {
+      animation-play-state: paused;
+    }
+    .gw-trust-marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .gw-trust-marquee-item svg { flex-shrink: 0; }
+    /* Dot separator between items */
+    .gw-trust-marquee-sep {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--border, #e8e4de);
+      flex-shrink: 0;
+      opacity: .6;
+    }
+
+    @keyframes gw-trust-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  }
+</style>
+
+<div class="gw-trust">
+
+  {%- comment -%} ── DESKTOP: original layout ── {%- endcomment -%}
+  <div class="gw-trust-inner">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'trust_item' %}
+          {% unless forloop.first %}<div class="gw-trust-div"></div>{% endunless %}
+          <div class="gw-trust-item reveal d{{ forloop.index }}"
+            style="color: {{ block.settings.text_color }};
+                   font-size: {{ block.settings.font_size }}px;
+                   font-weight: {{ block.settings.font_weight }};"
+            {{ block.shopify_attributes }}>
+            {% case block.settings.icon %}
+              {% when 'star' %}
+                <svg width="14" height="14" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {% when 'shield' %}
+                <svg width="14" height="14" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              {% when 'box' %}
+                <svg width="14" height="14" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              {% when 'clock' %}
+                <svg width="14" height="14" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              {% when 'heart' %}
+                <svg width="14" height="14" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              {% when 'leaf' %}
+                <svg width="14" height="14" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.34L5.71 21l1-.89A4.51 4.51 0 008 21c5 0 10-5 10-10 0-1-.17-2-.3-3"/></svg>
+            {% endcase %}
+            {{ block.settings.text }}
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+
+  {%- comment -%} ── MOBILE: marquee (items duplicated for seamless loop) ── {%- endcomment -%}
+  <div class="gw-trust-marquee-wrap">
+    <div class="gw-trust-marquee-track">
+
+      {%- comment -%} First copy {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'trust_item' -%}
+          {%- unless forloop.first -%}<span class="gw-trust-marquee-sep"></span>{%- endunless -%}
+          <div class="gw-trust-marquee-item"
+            style="color:{{ block.settings.text_color }};
+                   font-size:{{ block.settings.font_size }}px;
+                   font-weight:{{ block.settings.font_weight }};">
+            {%- case block.settings.icon -%}
+              {%- when 'star' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {%- when 'shield' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              {%- when 'box' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              {%- when 'clock' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              {%- when 'heart' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              {%- when 'leaf' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.34L5.71 21l1-.89A4.51 4.51 0 008 21c5 0 10-5 10-10 0-1-.17-2-.3-3"/></svg>
+            {%- endcase -%}
+            {{ block.settings.text }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Duplicate copy — makes the loop seamless {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'trust_item' -%}
+          <span class="gw-trust-marquee-sep"></span>
+          <div class="gw-trust-marquee-item"
+            style="color:{{ block.settings.text_color }};
+                   font-size:{{ block.settings.font_size }}px;
+                   font-weight:{{ block.settings.font_weight }};">
+            {%- case block.settings.icon -%}
+              {%- when 'star' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {%- when 'shield' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              {%- when 'box' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              {%- when 'clock' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              {%- when 'heart' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              {%- when 'leaf' -%}
+                <svg width="13" height="13" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.34L5.71 21l1-.89A4.51 4.51 0 008 21c5 0 10-5 10-10 0-1-.17-2-.3-3"/></svg>
+            {%- endcase -%}
+            {{ block.settings.text }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Trust Strip",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color Controls"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#111712"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Marquee"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "Scroll Speed (lower = faster)",
+      "min": 10, "max": 60, "step": 2, "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Layout Controls"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0, "max": 80, "step": 4, "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 0, "max": 80, "step": 4, "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin Top (px)",
+      "min": 0, "max": 80, "step": 4, "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin Bottom (px)",
+      "min": 0, "max": 80, "step": 4, "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Max Content Width (px)",
+      "min": 800, "max": 1600, "step": 40, "default": 1440
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        { "type": "header", "content": "Content" },
+        { "type": "text",   "id": "text",   "label": "Text",  "default": "Trust Item" },
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "star",   "label": "Star"   },
+            { "value": "shield", "label": "Shield" },
+            { "value": "box",    "label": "Box"    },
+            { "value": "clock",  "label": "Clock"  },
+            { "value": "heart",  "label": "Heart"  },
+            { "value": "leaf",   "label": "Leaf"   }
+          ],
+          "default": "star"
+        },
+        { "type": "header", "content": "Typography" },
+        { "type": "range",  "id": "font_size",   "label": "Font Size (px)",  "min": 9,  "max": 18, "step": 1, "default": 11 },
+        {
+          "type": "select", "id": "font_weight", "label": "Font Weight",
+          "options": [
+            { "value": "300", "label": "Light"   },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium"  }
+          ],
+          "default": "400"
+        },
+        { "type": "header", "content": "Colors" },
+        { "type": "color",  "id": "text_color",  "label": "Text Color",  "default": "#72756f" },
+        { "type": "color",  "id": "icon_color",  "label": "Icon Color",  "default": "#6e7c68" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Strip",
+      "blocks": [
+        { "type": "trust_item", "settings": { "text": "4.9 Stars · 2,400+ Reviews",  "icon": "star"   } },
+        { "type": "trust_item", "settings": { "text": "60-Day Money Back",            "icon": "shield" } },
+        { "type": "trust_item", "settings": { "text": "Free Worldwide Shipping",      "icon": "box"    } },
+        { "type": "trust_item", "settings": { "text": "Ships Within 24 Hours",        "icon": "clock"  } },
+        { "type": "trust_item", "settings": { "text": "Carbon + Silver Fibre",        "icon": "leaf"   } }
+      ]
+    }
+  ]
+}
+{% endschema %}

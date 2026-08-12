@@ -1,0 +1,297 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "image_banner_cQ3HLM": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_DzAHHm": {
+          "type": "heading",
+          "settings": {
+            "heading": "Track Your Order Status",
+            "heading_size": "h1"
+          }
+        },
+        "text_3TpjVj": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_AQnPkK": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_DzAHHm",
+        "text_3TpjVj",
+        "buttons_AQnPkK"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Desktop_-_32_6.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 10,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "image_banner_tCVYEd": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_KdThqT": {
+          "type": "heading",
+          "settings": {
+            "heading": "Track Your Order Status",
+            "heading_size": "h2"
+          }
+        },
+        "text_x6FV4T": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_LXNQpp": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_KdThqT",
+        "text_x6FV4T",
+        "buttons_LXNQpp"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.banner {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_-_2024-09-11T025155.383.jpg",
+        "video_background": false,
+        "video_url": "",
+        "image_overlay_opacity": 10,
+        "image_height": "adapt",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "custom_liquid_nyHahP": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "17197728328c55eacb": {
+      "type": "apps",
+      "blocks": {
+        "parcel_panel_app_mURNqH": {
+          "type": "shopify://apps/parcel-panel/blocks/app/fc785c3f-90e0-4c98-a20c-7cde9ba5e4b5",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "parcel_panel_app_mURNqH"
+      ],
+      "custom_css": [
+        ".pp-link {display: none;}",
+        ".pp_tracking_title {display: none;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "custom_liquid_jrV7ra": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "collapsible_content_4BHPmK": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_D7jcMq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I track my order?",
+            "icon": "question_mark",
+            "row_content": "<p>Simply enter your order number and email address to view the latest updates on your shipment.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_iXGpXm": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When will my order be shipped?",
+            "icon": "question_mark",
+            "row_content": "<p>Orders are typically processed and shipped within <strong>1-3 business days.</strong> You will receive an email notification with tracking details once your order has been dispatched.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Xx74cE": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long will it take to receive my order?",
+            "icon": "question_mark",
+            "row_content": "<p>Delivery times vary based on your location. Typically, orders arrive within <strong>5-10 business days</strong> for domestic shipping and <strong>10-20 business days </strong>for international shipping.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_KkW9WC": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "I haven’t received my tracking information. What should I do?",
+            "icon": "question_mark",
+            "row_content": "<p>If you haven’t received tracking details within 3 days of placing your order, <a href=\"/pages/contact\" target=\"_blank\" title=\"Contact\">contact our customer service team</a> for assistance.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_tgwtHM": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I change or cancel my order after placing it?",
+            "icon": "question_mark",
+            "row_content": "<p>If you need to modify or cancel your order, <a href=\"/pages/contact\" target=\"_blank\" title=\"Contact\">please contact us</a> as soon as possible. We’ll do our best to accommodate your request if your order hasn’t already been processed</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_D7jcMq",
+        "collapsible_row_iXGpXm",
+        "collapsible_row_Xx74cE",
+        "collapsible_row_KkW9WC",
+        "collapsible_row_tgwtHM"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "FAQ's",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "scheme-2",
+        "container_color_scheme": "scheme-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 40
+      }
+    },
+    "rich_text_HcHWrP": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_g6emwL": {
+          "type": "heading",
+          "settings": {
+            "heading": "Lorem ipsum dolor",
+            "heading_size": "h2"
+          }
+        },
+        "text_RT3Tcf": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "button_cxzwcN": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_g6emwL",
+        "text_RT3Tcf",
+        "button_cxzwcN"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "@media screen and (min-width: 990px) {.rich-text__blocks {max-width: 105rem; }}"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-2",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_cQ3HLM",
+    "image_banner_tCVYEd",
+    "custom_liquid_nyHahP",
+    "17197728328c55eacb",
+    "custom_liquid_jrV7ra",
+    "collapsible_content_4BHPmK",
+    "rich_text_HcHWrP"
+  ]
+}
